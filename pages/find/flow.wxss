@@ -1,0 +1,5 @@
+/* pages/find/business.wxss */
+.intro{
+  width: 100%;
+  height: 3392rpx
+}

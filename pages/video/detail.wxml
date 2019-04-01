@@ -1,0 +1,86 @@
+
+  <tx-video wx-if="{{video.isqq == true}}" vid="{{video.url}}" playerid="111"></tx-video>
+ 
+ <video wx-if="{{video.isqq == false}}" src="{{video.url}}" binderror="videoErrorCallback"></video>
+
+<!--index.wxml-->
+<view class="container video-box">
+  <!--输入文字 则隐藏-->
+  <view class="other-content">
+
+    <view class="video-info-box">
+      <view class="key-line no-top"> 
+        <text class="video-main-title">{{video.video_name}}</text><text class="video-price">¥{{video.price}}</text>
+      </view>
+    </view>
+
+    <view class="sep"></view>
+
+    <view class="video-info-box">
+        <view class="header">视频信息</view>
+         <view class="key-line">
+          <text>平台</text><text>{{video.platform_name || '其他'}}</text>
+        </view> 
+         <view class="key-line">
+          <text>栏目</text><text>{{video.column_name || '其他'}}</text>
+        </view> 
+        <view class="key-line">
+          <text>品类</text><text>{{video.category_name}}</text>
+        </view>   
+         <view class="key-line">
+          <text>视频功能</text><text>{{video.usage_name || '其他'}}</text>
+        </view> 
+         <view class="key-line">
+          <text>视频风格</text><text>{{video.style_name || '其他'}}</text>
+        </view> 
+    </view>
+     <view class="sep"></view>
+ 
+    <view class="video-info-box" wx-if="{{video.keystring !== ''}}">
+        <view class="header" >颗粒度参数</view>
+
+ <block wx:for="{{video.keystring}}" wx:key="*this">
+        <view class="key-line">
+          <text>{{item[0]}}</text><text>{{item[1]}}</text>
+        </view>  
+                </block>
+    </view>
+    
+        <view class="action-button">
+                 <a wx-if="{{isFav == false}}" class="add-fav" bindtap="addFav"> <image class="weui-grid__icon" src="../../images/fav.png" /> 收藏</a>
+        <a wx-if="{{isFav == true}}"  class="add-fav" bindtap="deleteFav"> <image class="weui-grid__icon" src="../../images/fav-press.png" /> 已收藏</a>
+        <navigator id="brief-action" url="/pages/video/confirm?id={{video.video_id}}">
+          <button disabled='{{disabled}}'>定制视频</button>
+        </navigator>   
+        </view>
+
+
+
+<view class="sep"></view>
+    <view class="video-info-box">
+  <view class="header">视频推荐</view>
+<scroll-view class="tuijian-lists">
+              <view class="lists-content">
+
+                <block wx:for="{{reVideos}}" wx:key="*this">
+                  <navigator url="/pages/video/detail?id={{item.id}}" class="video-content" hover-class="weui-grid_active" bindtap='sendVideoData' data-video="{{item.id}}">
+                    <image mode="widthFix" class="short_image" src="{{item.short_image}}"><text>{{item.time}}</text></image>
+
+
+                    <view class="video-title">{{item.name}}</view>
+                    <view class="view-desc">
+                      <text>{{video.usage_name || '其他'}}</text> <text>{{video.style_name || '其他'}}</text>
+                    </view>
+                    <view class="video-price">¥{{item.price}}</view>
+                  </navigator>
+                </block>
+
+
+              </view>
+
+            </scroll-view>
+    </view>
+
+  </view>
+
+</view>

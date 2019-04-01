@@ -1,0 +1,56 @@
+<!--pages/my/fav.wxml-->
+<view class="container">
+  <view class="action-button" bindtap='onEdit' wx:if="{{edit === false}}">
+    编辑
+  </view>
+  <view class="action-button" wx:if="{{edit === true}}">
+    <view id="cancel" bindtap='onCancelEdit'>取消</view>
+    <view id="selectAll" wx:if="{{select_all === false}}" bindtap='onSelectAll'>全选</view>
+    <view id="selectNone" wx:if="{{select_all === true}}" bindtap='onSelectNone'>取消全选</view>
+    <view id="delete" bindtap='onDelete'>删除
+      <span>({{middlearr.length}})</span>
+    </view>
+  </view>
+  <scroll-view class="video-lists">
+
+    <block wx:for="{{videos}}" wx:key="*this">
+      <view class="video-box">
+
+        <view wx:if="{{edit === true}}" class='checkbox-box' bindtap='select' data-id="{{index}}">
+          <view wx:if="{{edit === true}}" class='lefts'>
+            <block wx-if="{{!item.checked}}">
+              <image class="check-icon" src="/images/check.png"></image>
+            </block>
+            <block wx-if="{{item.checked}}">
+              <image class="check-icon" src="/images/checked.png"></image>
+            </block>
+          </view>
+        </view>
+
+        <navigator url="/pages/video/detail?id={{item.video_id}}" data-video="{{item.video_id}}">
+          <view class="video-item">
+                    <!--
+                    <tx-video wx-if="{{item.isqq == true}}" vid="{{item.url}}" playerid="111"></tx-video>
+
+                    <video wx-if="{{item.isqq == false}}" src="{{item.url}}" binderror="videoErrorCallback"></video>-->
+                    <image class="short_image" src="{{item.short_image}}"><text>{{item.time}}</text></image>
+
+          </view>
+          <view class="video-item">
+            <view class="video-title">{{item.name}}</view>
+                        <view class="view-desc">
+                      <text>{{video.usage_name || '其他'}}</text> <text>{{video.style_name || '其他'}}</text>
+                    </view>
+            <view class="video-price">¥{{item.price}}</view>
+          </view>
+        </navigator>
+      </view>
+    </block>
+
+    <image wx:if="{{videos.length === 0}}" class="image" src="/images/empty-box.png"></image>
+
+    <view wx:if="{{videos.length === 0}}" class="title2">目前还没有任何记录！！</view>
+
+  </scroll-view>
+
+</view>

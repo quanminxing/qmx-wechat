@@ -1,0 +1,5 @@
+<view class="container">
+<input type="text" bindinput='change' value="{{text}}"></input>
+<view class="info">请输入您要更改的名称</view>
+<button class="save" bindtap="save">保存</button>
+</view>

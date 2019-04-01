@@ -1,0 +1,31 @@
+/* pages/account/setting.wxss */
+
+input{
+  border-bottom: 1px solid rgba(26,173,25,1);
+  height:44rpx;
+  line-height: 44rpx;
+  font-size:24rpx;
+  font-family:PingFangSC-Regular;
+  font-weight:400;
+  color:rgba(53,53,53,1);
+  margin-bottom:22rpx
+}
+
+.info{
+  font-size:24rpx;
+font-family:PingFangSC-Regular;
+font-weight:400;
+color:rgba(153,153,153,1);
+}
+button{
+  margin-top: 50rpx;
+  background:rgba(9,187,7,1);
+border-radius:10rpx;
+font-size:36rpx;
+font-family:PingFangSC-Regular;
+font-weight:400;
+color:rgba(255,255,255,1);
+}
+.container{
+  padding: 32rpx
+}

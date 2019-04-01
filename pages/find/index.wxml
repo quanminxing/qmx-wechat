@@ -1,0 +1,62 @@
+<!--index.wxml-->
+<view class="container">
+
+  <!--输入文字 则隐藏-->
+  <swiper wx:if='{{banner.length > 0}}' class='banner' autoplay='{{bannerSetting.autoplay}}' circular interval='{{bannerSetting.interval}}' indicator-dots='{{bannerSetting.indicatorDot}}' indicator-color='{{bannerSetting.indicatorColor}}' indicator-active-color='{{bannerSetting.indicatorActiveColor}}'>
+    <swiper-item wx:for='{{banner}}'>
+
+      <navigator wx:if='{{item.type_id !== 3}}' url='{{item.url}}' hover-class='none' class='banner-navigator' open-type='{{item.type_id === 2 ? "switchTab" : "navigate"}}'>
+        <image src='{{item.img_url}}' class='banner-img' mode='aspectFill'></image>
+      </navigator>
+      <block wx:if='{{item.type_id === 3}}'>
+        <image src='{{item.img_url}}' class='banner-img' mode='aspectFill' id='{{item.id}}' bindtap='showWebView'></image>
+        <block wx:if='{{item.showWebView}}'>
+          <web-view src='{{item.url}}' bindload='hideWebView' binderror='hideWebView' id='{{item.id}}'></web-view>
+        </block>
+      </block>
+    </swiper-item>
+  </swiper>
+  <!-- <view class="guide">
+          <image src="/images/xgzx.png"></image>
+          <view class="guide-info">
+            <view class="guide-info-list">
+              <text class="guide-alert">重点</text> 
+              <navigator url="/pages/find/business">关于此小程序的业务介绍!</navigator>
+            </view>
+            <view class="guide-info-list">
+              <text class="guide-alert">重点</text> 
+              <navigator url="/pages/find/flow">小程序下单流程</navigator>
+            </view>
+          </view>
+        </view> -->
+  <!-- <view class="sep"></view> -->
+  <view class="other-content" hidden="{{inputVal.length > 0}}">
+
+    <scroll-view class="tuijian-lists bottom-box">
+      <view class="lists-content">
+
+        <block wx:for="{{reVideos}}" wx:key="*this">
+          <navigator url="/pages/video/multidetail?id={{item.id}}" class="video-content" hover-class="weui-grid_active" data-video="{{item.id}}">
+
+            <!--
+                    <tx-video wx-if="{{item.isqq == true}}" vid="{{item.url}}" playerid="111"></tx-video>
+
+                    <video wx-if="{{item.isqq == false}}" src="{{item.url}}" binderror="videoErrorCallback"></video>-->
+            <image class="package-image" src="{{item.pic}}">
+            </image>
+          </navigator>
+        </block>
+      </view>
+
+    </scroll-view>
+
+  </view>
+
+  <view class="fix-tip">
+    <text bindtap="makephonecall">如有更多需求请拨打电话：17034642312
+</text>
+    <text>周一至周日 09:00 ~ 21:00
+</text>
+  </view>
+
+</view>

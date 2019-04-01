@@ -1,0 +1,78 @@
+
+
+.container.video-box{
+  padding:0 30rpx
+}
+.weui-navbar__slider{
+  width:30rpx;
+  background-color: #333
+}
+.fixed-bar{
+  position: fixed;top:0;left:0;
+  background: white;
+  height: 80rpx;
+  padding-bottom:4rpx
+}
+.weui-tab__panel{
+  padding-top:86rpx;
+}
+
+.weui-navbar__slider {
+  margin-bottom:4rpx;
+  width:80rpx;
+
+}
+.bill-info{
+  padding:0 30rpx
+}
+
+.bill-title{
+  width:118rpx;
+height:25rpx;
+font-size:26rpx;
+font-family:PingFangSC-Regular;
+font-weight:400;
+color:rgba(136,136,136,1);
+line-height:18rpx;
+margin-right:42rpx;
+display: inline-block
+}
+
+.bill-text{
+  font-size:26rpx;
+font-family:PingFangSC-Regular;
+font-weight:400;
+color:rgba(53,53,53,1);
+line-height:18rpx;
+}
+.bill-video-name{
+  text-align: left;
+  font-size:26rpx;
+font-family:PingFangSC-Regular;
+font-weight:400;
+color:rgba(53,53,53,1);
+padding:25rpx 30rpx;
+border-top:1px solid rgba(238,238,238,1);
+}
+.bill-price-text{
+  height:30rpx;
+font-size:26rpx;
+color:rgba(241,83,72,1);
+}
+
+
+.image{
+  width:200rpx;
+  height:200rpx;
+  margin:101rpx auto 59rpx auto;
+  background-size: 100% 100%;
+  display:block;
+}
+.title2{
+  font-size:34rpx;
+  font-family:PingFangSC-Regular;
+  font-weight:400;
+  color:rgba(136,136,136,1);
+  margin-bottom:45rpx;
+  text-align: center;
+}

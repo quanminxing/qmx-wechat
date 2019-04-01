@@ -1,0 +1,55 @@
+<!--index.wxml-->
+
+<!--index.wxml-->
+<view class="container">
+  <view bindtap="bindViewTap" class="userinfo">
+    <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+    <text class="userinfo-nickname">{{userInfo.name}}</text>
+    <text class="userinfo-title">普通会员</text>
+    <text class="userinfo-auth">{{userInfo.company}}</text>
+  </view>
+  <view class="weui-grids">
+    <navigator class="weui-grid-span2" hover-class="weui-grid_active" url="/pages/my/fav">
+      <image class="weui-grid__icon" src="/images/fm.png" />
+      <view class="weui-grid__label">我的收藏</view>
+    </navigator>
+    <navigator class="weui-grid-span2" hover-class="weui-grid_active" url="/pages/my/log">
+      <image class="weui-grid__icon" src="/images/step.png" />
+      <view class="weui-grid__label">我的足迹</view>
+    </navigator>
+  </view>
+  <view class="sep"></view>
+  <view class="weui-cells weui-cells_after-title">
+    <navigator url="/pages/my/bill" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+      <image class="weui-grid__icon" src="/images/wddd.png" />
+
+      <view class="weui-cell__bd">我的订单</view>
+      <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+    </navigator>
+    <navigator url="/pages/account/webview" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+      <image class="weui-grid__icon" src="/images/gywm.png" />
+      <view class="weui-cell__bd">关于我们</view>
+      <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+    </navigator>
+    <navigator url="/pages/account/feedback" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+      <image class="weui-grid__icon" src="/images/yjfk.png" />
+      <view class="weui-cell__bd">意见反馈</view>
+      <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+    </navigator>
+    <navigator url="/pages/account/contact" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+      <image class="weui-grid__icon" src="/images/lxwm.png" />
+      <view class="weui-cell__bd">联系我们</view>
+      <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+    </navigator>
+  </view>
+  <view class="sep"></view>
+
+  <view class="weui-cells weui-cells_after-title info-setup">
+    <navigator url="/pages/account/info" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+      <image class="weui-grid__icon" src="/images/sz.png" />
+      <view class="weui-cell__bd">设置</view>
+      <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+    </navigator>
+  </view>
+
+</view>

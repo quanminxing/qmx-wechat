@@ -1,0 +1,209 @@
+<!--index.wxml-->
+<view class="container">
+
+  <!--输入文字 则隐藏-->
+  <view class="other-content">
+    <view class="weui-tab">
+      <view class="weui-navbar fixed-bar">
+        <block wx:for="{{tabs}}" wx:key="*this">
+          <view id="{{item.id}}" class="weui-navbar__item {{activeIndex == index ? 'weui-bar__item_on' : ''}}" bindtap="tabClick">
+            <view class="weui-navbar__title">{{item.name}}</view>
+          </view>
+        </block>
+        <view class="weui-navbar__slider" style="left: {{sliderLeft}}px;  transform: translateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px);">
+        </view>
+      </view>
+      <view class="weui-tab__panel bill-list-box">
+        <!--选项一-->
+        <view class="weui-tab__content" hidden="{{activeIndex != 0}}">
+          <block wx:for="{{bills}}" wx:key="*this">
+            <view id="bill_{{index}}">
+              <view class="sep"></view>
+              <view class="bill-info">
+
+                <view class='bill-info-list'>
+                  <text class="bill-title">订单编号</text>
+                  <text class="bill-text">{{item.id}}</text>
+                </view>
+                <view class='bill-info-list'>
+                  <text class="bill-title">创建时间</text>
+                  <text class="bill-text">{{item.timestamp}}</text>
+                </view>
+                <view class='bill-info-list'>
+                  <text class="bill-title">预留电话</text>
+                  <text class="bill-text">{{item.phone}}</text>
+                </view>
+                <view class='bill-info-list'>
+                  <text class="bill-title">平台</text>
+                  <text class="bill-text">{{item.platform_name}}</text>
+                </view>
+                <view class='bill-info-list'>
+                  <text class="bill-title">栏目</text>
+                  <text class="bill-text">{{item.column_name}}</text>
+                </view>
+                <view class='bill-info-list'>
+                  <text class="bill-title">品类</text>
+                  <text class="bill-text">{{item.category_name}}</text>
+                </view>
+                 <view class='bill-info-list'>
+                  <text class="bill-title">价格</text>
+                  <text class="bill-text">¥{{item.price}}</text>
+                </view>
+              </view>
+
+              <view class="bill-video-name"> 样片视频:
+                <text class="bill-text">{{item.video_name}}</text>
+              </view>
+
+            </view>
+          </block>
+
+        <image wx:if="{{bills.length === 0}}" class="image" src="/images/empty-bill.png"></image>
+        <view wx:if="{{bills.length === 0}}" class="title2">目前还没有任何订单！！</view>
+
+        </view>
+        <view class="weui-tab__content" hidden="{{activeIndex != 1}}">
+          <block wx:for="{{bills}}" wx:key="*this">
+            <view id="bill_{{index}}">
+              <view class="sep"></view>
+              <view class="bill-info">
+
+                <view class='bill-info-list'>
+                  <text class="bill-title">订单编号</text>
+                  <text class="bill-text">{{item.id}}</text>
+                </view>
+                <view class='bill-info-list'>
+                  <text class="bill-title">创建时间</text>
+                  <text class="bill-text">{{item.timestamp}}</text>
+                </view>
+                <view class='bill-info-list'>
+                  <text class="bill-title">预留电话</text>
+                  <text class="bill-text">{{item.phone}}</text>
+                </view>
+
+                <view class='bill-info-list'>
+                  <text class="bill-title">平台</text>
+                  <text class="bill-text">{{item.platform_name}}</text>
+                </view>
+                <view class='bill-info-list'>
+                  <text class="bill-title">栏目</text>
+                  <text class="bill-text">{{item.column_name}}</text>
+                </view>
+                <view class='bill-info-list'>
+                  <text class="bill-title">品类</text>
+                  <text class="bill-text">{{item.category_name}}</text>
+                </view>
+                 <view class='bill-info-list'>
+                  <text class="bill-title">价格</text>
+                  <text class="bill-text">¥{{item.price}}</text>
+                </view>
+              </view>
+
+              <view class="bill-video-name"> 样片视频:
+                <text class="bill-text">{{item.video_name}}</text>
+              </view>
+
+            </view>
+          </block>
+                <image wx:if="{{bills.length === 0}}" class="image" src="/images/empty-bill.png"></image>
+        <view wx:if="{{bills.length === 0}}" class="title2">目前还没有任何订单！！</view>
+
+        </view>
+        <view class="weui-tab__content" hidden="{{activeIndex != 2}}">
+          <block wx:for="{{bills}}" wx:key="*this">
+            <view id="bill_{{index}}">
+              <view class="sep"></view>
+              <view class="bill-info">
+
+                <view class='bill-info-list'>
+                  <text class="bill-title">订单编号</text>
+                  <text class="bill-text">{{item.id}}</text>
+                </view>
+                <view class='bill-info-list'>
+                  <text class="bill-title">创建时间</text>
+                  <text class="bill-text">{{item.timestamp}}</text>
+                </view>
+                <view class='bill-info-list'>
+                  <text class="bill-title">预留电话</text>
+                  <text class="bill-text">{{item.phone}}</text>
+                </view>
+                <view class='bill-info-list'>
+                  <text class="bill-title">平台</text>
+                  <text class="bill-text">{{item.platform_name}}</text>
+                </view>
+                <view class='bill-info-list'>
+                  <text class="bill-title">栏目</text>
+                  <text class="bill-text">{{item.column_name}}</text>
+                </view>
+                <view class='bill-info-list'>
+                  <text class="bill-title">品类</text>
+                  <text class="bill-text">{{item.category_name}}</text>
+                </view>
+                 <view class='bill-info-list'>
+                  <text class="bill-title">价格</text>
+                  <text class="bill-text">¥{{item.price}}</text>
+                </view>
+              </view>
+
+              <view class="bill-video-name"> 样片视频:
+                <text class="bill-text">{{item.video_name}}</text>
+              </view>
+
+            </view>
+          </block>
+                  <image wx:if="{{bills.length === 0}}" class="image" src="/images/empty-bill.png"></image>
+        <view wx:if="{{bills.length === 0}}" class="title2">目前还没有任何订单！！</view>
+
+        </view>
+        <view class="weui-tab__content" hidden="{{activeIndex != 3}}">
+          <block wx:for="{{bills}}" wx:key="*this">
+            <view id="bill_{{index}}">
+              <view class="sep"></view>
+              <view class="bill-info">
+
+                <view class='bill-info-list'>
+                  <text class="bill-title">订单编号</text>
+                  <text class="bill-text">{{item.id}}</text>
+                </view>
+                <view class='bill-info-list'>
+                  <text class="bill-title">创建时间</text>
+                  <text class="bill-text">{{item.timestamp}}</text>
+                </view>
+                <view class='bill-info-list'>
+                  <text class="bill-title">预留电话</text>
+                  <text class="bill-text">{{item.phone}}</text>
+                </view>
+                <view class='bill-info-list'>
+                  <text class="bill-title">平台</text>
+                  <text class="bill-text">{{item.platform_name}}</text>
+                </view>
+                <view class='bill-info-list'>
+                  <text class="bill-title">栏目</text>
+                  <text class="bill-text">{{item.column_name}}</text>
+                </view>
+                <view class='bill-info-list'>
+                  <text class="bill-title">品类</text>
+                  <text class="bill-text">{{item.category_name}}</text>
+                </view>
+                 <view class='bill-info-list'>
+                  <text class="bill-title">价格</text>
+                  <text class="bill-text">¥{{item.price}}</text>
+                </view>
+              </view>
+
+              <view class="bill-video-name"> 样片视频:
+                <text class="bill-text">{{item.video_name}}</text>
+              </view>
+
+            </view>
+          </block>
+                  <image wx:if="{{bills.length === 0}}" class="image" src="/images/empty-bill.png"></image>
+        <view wx:if="{{bills.length === 0}}" class="title2">目前还没有任何订单！！</view>
+
+        </view>
+      </view>
+    </view>
+  </view>
+
+
+</view>

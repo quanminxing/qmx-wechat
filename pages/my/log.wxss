@@ -1,0 +1,93 @@
+/* pages/my/log.wxss */
+
+
+.image{
+width:336rpx;
+height:214rpx;
+  margin:101rpx auto 59rpx auto;
+  background-size: 100% 100%;
+  display:block;
+
+  
+}
+image.short_image{
+  width:298rpx!important;
+  height:168rpx!important;
+}
+.title2{
+  font-size:34rpx;
+  font-family:PingFangSC-Regular;
+  font-weight:400;
+  color:rgba(136,136,136,1);
+  margin-bottom:45rpx;
+  text-align: center;
+}
+
+video, tx-video, .video--mod_player {
+  width:298rpx!important;
+  height:168rpx!important;
+  margin-top:6rpx;
+    pointer-events: none
+}
+
+.action-button{
+  position: fixed;
+  bottom:0;
+  height:98rpx;
+  font-size:32rpx;
+font-family:PingFangSC-Regular;
+font-weight:400;
+color:rgba(53,53,53,1);
+line-height: 98rpx;
+text-align: center;
+width:100%;
+border-top:1px solid #EEEEEE;
+z-index: 999;
+background: white
+}
+.action-button view{
+  width:33%;
+  display: inline-block;
+}
+#selectAll{
+color:rgba(53,53,53,1);
+}
+
+#cancel{
+color:rgba(136,136,136,1);
+}
+
+#delete{
+color:rgba(241,83,72,1);
+}
+
+
+.check-icon{
+  width:46rpx;
+height:46rpx;
+display: inline-block
+}
+
+.checkbox-box{
+  display:inline-block;
+height:168rpx;
+vertical-align:top;
+position:relative;
+width:55rpx;
+
+}
+.checkbox-box+navigator{
+  display:inline-block
+}
+
+.checkbox-box .lefts{
+  position:absolute;
+top:calc(50% - 23rpx);
+}
+.video-box{
+  width: 100%
+}
+.video-item{
+  width:298rpx;
+  margin-right:10rpx
+}

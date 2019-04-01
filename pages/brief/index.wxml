@@ -1,0 +1,43 @@
+<!--pages/brief/index.wxml-->
+<view class="container parameter-box">
+<view class='parameter-title'>品类 <text>(请选择您的产品)</text></view>
+  <view class='parameter-wrap'>
+    <block wx:for="{{category}}" wx:key="category">
+    <text class='parameter-info text-over {{item.checked?"checked_parameter":""}}' data-id='{{item.id}}' bindtap='categoryTap'>{{item.name}}</text>
+    </block>
+  </view>
+<view class='parameter-title'>价格 <text>(请选择预算范围)</text></view>
+  <view class='parameter-wrap'>
+    <block wx:for="{{parameter}}" wx:key="parameter">
+    <text class='parameter-info text-over {{item.checked?"checked_parameter":""}}' data-id='{{item.id}}' bindtap='parameterTap'>{{item.name}}</text>
+    </block>
+  </view>
+<view class='parameter-title'>时长 <text>（请选择视频的时间长度）</text> </view>
+  <view class='parameter-wrap'>
+    <block wx:for="{{time}}" wx:key="time">
+    <text class='parameter-info text-over {{item.checked?"checked_parameter":""}}' data-id='{{item.id}}' bindtap='timeTap'>{{item.name}}</text>
+    </block>
+  </view>
+<view class='parameter-title'>视频比例 <text>（请选择视频的长宽比例）</text> </view>
+  <view class='parameter-wrap'>
+    <block wx:for="{{scale}}" wx:key="scale">
+    <text class='parameter-info text-over {{item.checked?"checked_parameter":""}}' data-id='{{item.id}}' bindtap='scaleTap'>{{item.name}}</text>
+    </block>
+  </view>
+<view class='parameter-title'>渠道 <text>（请选择视频的投放地点）</text> </view>
+  <view class='parameter-wrap'>
+    <block wx:for="{{channel}}" wx:key="channel">
+    <text class='parameter-info text-over {{item.checked?"checked_parameter":""}}' data-id='{{item.id}}' bindtap='channelTap'>{{item.name}}</text>
+    </block>
+  </view>
+  <view class="brief-action">
+    <navigator id="cancel-brief">
+    <button bindtap='clear'>清除</button>
+  </navigator>
+  <view id="generator-brief" bindtap='generate'>
+    <button>生成需求表单</button>
+  </view>
+  </view>
+  
+</view>
+

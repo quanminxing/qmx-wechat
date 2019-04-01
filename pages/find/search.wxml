@@ -1,0 +1,73 @@
+<!--index.wxml-->
+<view class="container">
+  
+   <view class="weui-search-bar">
+
+            <view class="weui-search-bar__form">
+                <view class="weui-search-bar__box">
+                <!--搜索icon + input + 叉叉icon -->
+                    <icon class="weui-icon-search_in-box" type="search" size="14"></icon>
+                    <input type="text" bindfocus="initKeyword" bindinput="inputTyping" class="weui-search-bar__input" placeholder="搜索"
+                           value="{{inputVal}}" focus="{{inputShowed}}" />
+                    <view class="weui-icon-clear" wx:if="{{inputVal.length > 0}}" bindtap="clearInput">
+                        <icon type="clear" size="14"></icon>
+                    </view>
+                </view>
+                <!--focus时 搜索icon-->
+                <label class="weui-search-bar__label" hidden="{{inputShowed}}" bindtap="showInput">
+                    <icon class="weui-icon-search" type="search" size="14"></icon>
+                    <view class="weui-search-bar__text">搜索</view>
+                </label>
+            </view>
+          
+            <view class="weui-search-bar__cancel-btn" hidden="{{!inputShowed}}" bindtap="search">搜索</view>
+            
+        </view>
+
+  <view class="video-lists"  scroll-x="false" wx:if="{{inputShowed === true}}" >
+
+    <block wx:for="{{videos}}" wx:key="*this">
+      <view class="video-box">
+
+        <view wx:if="{{edit === true}}" class='checkbox-box' bindtap='select' data-id="{{index}}">
+          <view wx:if="{{edit === true}}" class='lefts'>
+            <block wx-if="{{!item.checked}}">
+              <image class="check-icon" src="/images/check.png"></image>
+            </block>
+            <block wx-if="{{item.checked}}">
+              <image class="check-icon" src="/images/checked.png"></image>
+            </block>
+          </view>
+        </view>
+
+        <navigator url="/pages/video/detail?id={{item.id}}" data-video="{{item.video_id}}">
+          <view class="video-item">
+                    <!--
+                    <tx-video wx-if="{{item.isqq == true}}" vid="{{item.url}}" playerid="111"></tx-video>
+
+                    <video wx-if="{{item.isqq == false}}" src="{{item.url}}" binderror="videoErrorCallback"></video>-->
+                    <image class="short_image" src="{{item.short_image}}"></image>
+
+          </view>
+          <view class="video-item item-info">
+            <view class="video-title">{{item.name}}</view>
+                        <view class="view-desc">
+                      <text>{{video.usage_name || '其他'}}</text> <text>{{video.style_name || '其他'}}</text>
+                    </view>
+            <view class="video-price">¥{{item.price}}</view>
+          </view>
+        </navigator>
+      </view>
+    </block>
+    <view wx:if="{{videos.length === 0}}" class="title2">未搜索到任何视频</view>
+    <view wx:if="{{videos.length === 0}}" class="search-title">
+    
+      <view class="search-title-main">历史搜索</view>
+      <view class="search-title-sub" bindtap='cleanhistory'>清空历史</view>
+    </view>
+    <block wx:if="{{videos.length === 0 || keywords.length ===0}}" wx:for="{{keywords}}" wx:key="*this">
+      <view class="keyword-block" bindtap="usesearch" data-keyword="{{item}}">{{item}}</view>
+    </block>
+  
+  </view>
+</view>

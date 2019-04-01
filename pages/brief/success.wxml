@@ -1,0 +1,13 @@
+<!--pages/brief/success.wxml-->
+
+<image src="/images/daicon_complete.png"></image>
+
+ <view class="title2">操作成功</view>
+ <view class="title3">相关工作人员会尽快与您取得联系</view>
+ <view  class="brief-btn" id="brief-btn-confirm">
+<button lang="zh_CN" bindtap="onConfirm">确定</button>
+</view>
+
+<view  class="brief-btn" id="brief-btn-back">
+<button lang="zh_CN" bindtap="onBack">返回首页</button>
+</view>

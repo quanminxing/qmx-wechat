@@ -1,0 +1,123 @@
+/**index.wxss**/
+.userinfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.userinfo-title{
+  font-size:22rpx;
+font-family:PingFangSC-Light;
+font-weight:300;
+color:rgba(153,153,153,1);
+margin-bottom:10rpx
+}
+.userinfo-auth{
+  font-size:26rpx;
+font-family:PingFangSC-Light;
+font-weight:300;
+color:rgba(53,53,53,1);
+margin-bottom:47rpx
+}
+.userinfo-avatar {
+  width: 128rpx;
+  height: 128rpx;
+  margin: 20rpx;
+  border-radius: 50%;
+}
+
+.userinfo-nickname {
+  font-size:28rpx;
+font-family:PingFangSC-Regular;
+font-weight:400;
+color:rgba(53,53,53,1);
+}
+
+.usermotto {
+  margin-top: 200px;
+}
+.flex-item{
+  width: 100rpx;
+  height: 100rpx;
+  background-color: red; 
+}
+
+
+
+.listen-content .item{
+  display: flex;
+  padding: 10px;
+  align-items: center;
+  
+}
+.bg-img{
+  width: 60rpx;
+  height:80rpx;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.count{
+  color: #888888;
+}
+.listen-content .bg-img{
+  width: 50px;
+  height: 50px;
+}
+.header{
+  padding-left: 15px;
+  background-color: #eeeff0;
+}
+.listen-content .weui-cell:first-child{
+
+}
+.weui-cells::before {
+border-top:none;
+}
+
+.weui-grids {
+  border-left:0px;
+  border-bottom: 0px
+}
+.weui-grid-span2:last-child
+{
+border-right: 0px;
+
+}
+  
+
+.weui-grid-span2{
+  text-align: center;
+  height:78rpx;
+  line-height: 78rpx;
+  padding:0;
+  font-size:28rpx;
+  font-family:PingFangSC-Regular;
+  font-weight:400;
+  color:rgba(53,53,53,1);
+  border-bottom: 0px
+}
+
+.weui-grid-span2 .weui-grid__icon{
+  width:36rpx;
+  height:36rpx;
+  margin-right:20rpx;
+}
+.weui-grid__icon{
+  width:60rpx;
+  height:80rpx;
+}
+
+.weui-grid-span2 .weui-grid__icon, .weui-grid-span2 .weui-grid__label{
+ display: inline-block;
+ vertical-align: middle;
+}
+.weui-grid-span2 .weui-grid__label{
+ display: inline-block
+}
+
+.weui-grid__label {
+margin-top: 0;
+font-size: inherit;
+height:78rpx;
+line-height:78rpx;
+}

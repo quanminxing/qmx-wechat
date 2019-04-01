@@ -1,0 +1,72 @@
+
+<!-- <view class="top-tip">请在以下{{videos.length}}个视频中选择1个作为样片，左右滑动可切换视频</view> -->
+<swiper
+bindchange = "changeVideo"
+  indicator-dots="{{indicatorDots}}"
+  autoplay="{{autoplay}}"
+  interval="{{interval}}"
+  duration="{{duration}}"
+>
+  <block wx:for="{{videos}}">
+    <swiper-item>
+
+  <tx-video wx-if="{{item.isqq == true}}" vid="{{item.url}}" playerid="111"></tx-video>
+ 
+ <video wx-if="{{item.isqq == false}}" src="{{item.url}}" binderror="videoErrorCallback"></video>
+
+    </swiper-item>
+  </block>
+</swiper>
+
+<!--index.wxml-->
+<view class="container video-box">
+  <!--输入文字 则隐藏-->
+  <view class="other-content">
+
+    <view class="video-info-box">
+      <view class="key-line no-top"> 
+        <text class="video-main-title">{{video.video_name}}</text><text class="video-price">¥{{video.price}}</text>
+      </view>
+    </view>
+
+    <view class="sep"></view>
+
+    <view class="video-info-box">
+        <view class="header">样片说明</view>
+          <text class="demo_description">
+           {{video.demo_description}}
+          </text>
+    </view>
+
+    <view class="video-info-box">
+        <view class="header">拍摄流程及脚本说明</view>
+        
+          <block wx:for="{{video.demo_pics}}" wx:key="*this">
+        <image mode="widthFix" class="short_image short_image_large" src="{{item}}"></image>
+          </block>
+    </view>
+
+     <view class="sep"></view>
+ 
+    <view class="video-info-box bottom-box" >
+        <view class="header">颗粒度参数</view>
+
+ <block wx:for="{{video.keystring}}" wx:key="*this">
+        <view class="key-line">
+          <text>{{item[0]}}</text><text>{{item[1]}}</text>
+        </view>  
+                </block>
+    </view>
+    
+        <view class="action-button">
+        <navigator id="brief-action" url="/pages/video/confirm?id={{video.video_id}}">
+          <button disabled='{{disabled}}'>确认样片</button>
+        </navigator>   
+        </view>
+
+  <view class="sep"></view>
+
+
+  </view>
+
+</view>

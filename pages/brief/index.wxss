@@ -1,0 +1,86 @@
+/* pages/brief/index.wxss */
+
+.parameter-title{
+  font-size:32rpx;
+  font-family:PingFangSC-Medium;
+  font-weight:400;
+  color:rgba(53,53,53,1);
+  padding:42rpx 30rpx;
+}
+.parameter-title text{
+font-size:22rpx;
+font-family:PingFangSC-Regular;
+font-weight:200;
+color:#888888;
+}
+
+.parameter-wrap text{
+  background:rgba(238,238,238,1);
+  border-radius:8rpx;
+  min-width:32%;
+  margin-right: calc((100% - 32% * 3)/3);
+  height:60rpx;
+  line-height: 60rpx;
+  display: inline-block;
+  text-align: center;
+  font-family:PingFangSC-Light;
+  font-weight:300;
+  font-size:26rpx;
+  margin-bottom:30rpx
+}
+.parameter-wrap text:last-child{
+  margin-right: 0;
+}
+
+.parameter-wrap text.checked_parameter{
+  background:rgba(241,83,72,1);
+  opacity:0.8;
+  color:rgba(255,255,255,1);
+}
+
+.parameter-wrap {
+  padding:0 30rpx;
+}
+
+.brief-action{
+  display:-webkit-box;
+  display:-webkit-flex;
+  display:flex;
+  padding:30rpx;
+  position: fixed;
+  bottom: 0
+}
+.brief-action navigator{
+ -webkit-box-flex:1;
+  -webkit-flex:1;
+  flex:1;
+}
+
+#generator-brief button{
+  width:450rpx;
+height:70rpx;
+line-height: 70rpx;
+background:rgba(241,83,72,1);
+border-radius:8rpx;
+font-size:28rpx;
+font-family:PingFangSC-Regular;
+font-weight:400;
+color:rgba(255,255,255,1);
+
+}
+
+#cancel-brief button{
+  width:210rpx;
+  height:70rpx;
+  line-height: 70rpx;
+  margin-right:34rpx;
+background:rgba(136,136,136,1);
+  border-radius:8rpx;
+  font-size:28rpx;
+  font-family:PingFangSC-Regular;
+  font-weight:400;
+  color:rgba(255,255,255,1);
+}
+.parameter-box{
+  padding-bottom:100rpx;
+}

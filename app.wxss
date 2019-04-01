@@ -1,0 +1,291 @@
+/**app.wxss**/
+@import 'style/weui.wxss';
+
+/* Iris */
+.page {
+	font-family: PingFangSC-Regular, sans-serif;
+	color: #353535;
+	height: 100vh;
+}
+
+.toolbar {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	z-index: 9;
+	width: 100vw;
+	height: 100rpx;
+	background-color: #fff;
+}
+.toolbar-bottom {
+	height: 100rpx;
+}
+
+.btn {
+	background:linear-gradient(90deg,#F98D77 0%,#F05442 100%);
+	border-radius:8px;
+	color: #fff;
+}
+
+.h2 {
+	font-size: 18px;
+	font-weight: 500;
+	line-height: 25px;
+	padding: 8rpx 0 0 0;
+}
+.h3 {
+	font-size: 16px;
+	font-weight: 500;
+}
+
+/* 分割线 */
+.bd-line {
+	border-bottom: 10px solid #eee; 
+}
+
+.float-l {
+	float: left;
+}
+.float-r {
+	float: right;
+}
+.clear {
+	overflow: hidden;
+}
+.clearfix::after {
+	display: block;
+	content: '';
+	height: 0;
+	clear: both;
+	overflow: hidden;
+}
+
+
+/* Iris */
+
+.container {
+  height: 100%;
+ 	width: 100%;
+  box-sizing: border-box;
+  font-size: 16px;
+  font-family:PingFangSC-Regular;
+  font-weight:400;
+  color:rgba(53,53,53,1);
+} 
+.searchbar-result{
+  position: fixed;
+  left: 0;
+  top: 26px;
+  width: 100%;
+
+}
+.weui-navbar__item.weui-bar__item_on {
+color:#D43C33;
+
+}
+.weui-navbar__slider {
+background-color:#D43C33;
+
+}
+swiper image{
+  width: 100%;
+}
+.three-circle .weui-grids navigator{
+  background-color: #fff;
+  border-right:none;
+
+}
+.weui-grid__label {
+font-size:12px;
+
+
+}
+.weui-grid__icon {
+width:40px;
+height:40px;
+margin:0 auto;
+}
+.header{
+  position: relative;
+  background-color: #fff;
+  color:#353535;
+  font-size: 32rpx
+}
+.header text{
+  font-weight:400;
+  padding: 20px 0;
+}
+.header text:first-child{
+  padding-left: 15px;
+  
+}
+.header text:first-child::before{
+  content: '';
+  display: inline-block;
+  width: 2px;
+  height: 20px;
+  vertical-align: middle;
+  background-color: #D43C33;
+  position: absolute;
+  left: 0;
+  top: 6px;
+}
+.header text:last-child{
+  padding-left: 10px;
+}
+.lists-content{
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+/*瀑布流*/
+
+.list-masonry{
+  display: block;
+  column-count: 2;      
+  column-gap: 20rpx;  
+}
+.list-masonry image{
+  height: auto
+}
+.list-masonry navigator{
+  display: inline-block; /*内部卡片需要设置为inline-block,否则会截断显示，如图一*/
+justify-content: center;
+flex-direction: column;
+align-items: center;
+}
+
+.tuijian-lists{
+  margin-bottom:130rpx;
+}
+
+.lists-content navigator{
+  margin-top: 24rpx;
+}
+
+.lists-content .video-content{
+  margin-top: 24rpx;
+  width:50%
+}
+
+.lists-content .image{
+width: 100%;
+  height: 188rpx;
+  margin: 0 auto;
+background-position:50%!important;
+}
+.image{
+  background-size: cover;
+}
+.lists-content navigator view:last-child{
+  width: 100%;
+  display:block;white-space: normal; overflow: hidden; text-overflow:ellipsis;
+}
+.weui-cells::after {
+border-bottom:none;
+}
+.weui-cell::before {
+left:60px;
+ border-top: none
+}
+.weui-cell_access{
+  border-bottom:1px solid #eee;
+}
+
+.weui-cell__bd{
+  padding-left: 20rpx;
+}
+.listen-content .weui-cell::before {
+left:80px;
+
+}
+.searchbar-result .weui-cell::before {
+left: 0;
+
+}
+.searchbar-result .weui-cells{
+  overflow-y: scroll;
+}
+.weui-search-bar__cancel-btn{
+  color: #D43C33;
+}
+
+.sep{
+  height:20rpx;
+  background: #EEEEEE
+}
+
+.video-title{
+  overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
+  font-size:32rpx;
+  font-family:PingFangSC-Medium;
+  font-weight:500;
+}
+
+/*隐藏掉功能和风格*/
+.view-desc{
+  font-size:20rpx;
+  font-family:PingFangSC-Regular;
+  font-weight:400;
+  color:rgba(53,53,53,1);
+  display: none;
+}
+.view-desc text{
+  display: inline-block;
+  margin-right:26rpx
+}
+
+.video-price{
+  font-size:26rpx;
+  color:#F15348
+}
+
+.video-lists {
+  overflow: hidden;
+  padding:20rpx 30rpx;
+}
+.video-item {
+  position: relative;
+  display: inline-block;
+  width: 46%;
+  box-sizing: border-box;
+}
+
+.video-lists .video-title{
+  white-space: normal;
+  height:146rpx;
+}
+.video-lists navigator{
+  margin-bottom:10rpx;
+}
+
+image.short_image{
+  width:335rpx;
+height:188rpx;
+position:relative
+}
+.short_image text{
+  color:white;
+  position:absolute;
+  bottom:4rpx;
+  right:10rpx;
+  background: rgba(0,0,0,0.3);
+  padding:4rpx 10rpx;
+  font-size:24rpx;
+}
+.bottom-box{
+  padding-bottom:90rpx;
+}
+
+.show-more{
+  font-size:32rpx;
+  font-family:PingFangSC-Regular;
+  font-weight:400;
+  color:rgba(74,158,255,1);
+  height: 88rpx;
+  line-height: 88rpx;
+  text-align: center;
+  width: 100%
+}
+

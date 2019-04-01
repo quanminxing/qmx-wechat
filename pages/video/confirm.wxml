@@ -1,0 +1,52 @@
+<!--pages/video/confirm.wxml 下单页 -->
+<view class='page'>
+	<view class='header .bd-line'>
+		<view class='h2'>需求信息</view>
+		<view class='h3'>
+			<view class='float-r'>{{video.name}}</view>
+			<view>样片信息</view>
+		</view>
+	</view>
+
+	<view class='content'>
+		<view class='detail bd-line'>
+			<view class='detail-item'>
+				<text>平台</text><text class='float-r'>{{video.platform}}</text>
+			</view>
+			<view class='detail-item'>
+				<text>栏目</text><text class='float-r'>{{video.column}}</text>
+			</view>
+			<view class='detail-item'>
+				<text>品类</text><text class='float-r'>{{video.category}}</text>
+			</view>
+			<view class='showmore' wx:if='{{!showMore}}' bindtap='viewMore'>
+				<image class='view-more' src='{{viewMoreIcon}}'></image>
+				<text>查看更多</text>
+			</view>
+			<view class='detail-more'  wx:if='{{showMore}}'>
+				<view class='detail-item' wx:for="{{video.keystrings}}" wx:key="*this">
+					<view>{{item.name}}</view><view>{{item.value}}</view>
+				</view>
+			</view>
+		</view>
+
+		<view class='brief'>
+			<view class='brief-item' wx:for='{{formInfo}}' wx:key='*this'>
+				<view class='brief-required'>{{item.necessity ? '*' : ''}}</view>
+				<view class='brief-tag brief-info'>{{item.label}}</view>
+					<input class='brief-input brief-info' type='{{item.type}}' placeholder-class='brief-input-placehoder' placeholder='{{item.placeholder}}' data-variables='{{item}}' value='{{item.value}}' focus='{{item.focus}}' cursor-spacing='{{cursorSpacing}}' bindinput='formInput' cursor='{{cursor}}'></input>
+			</view>
+		</view>
+	</view>
+	
+	<view class='footer'>
+		<!-- 空标签兼容iphonex -->
+		<view class='toolbar-bottom'></view>
+		<view class='promise'>服务承诺：提交订单后，客户经理会在24小时内与您联系</view>
+		<view class='toolbar'>
+			<view class='total-price confirm-info'>总计：<text class='price'>￥{{video.price}}</text></view>
+		<view class='confirm confirm-info' bindtap='submit'>确认订单</view>
+		</view>
+		
+	</view>
+</view>
