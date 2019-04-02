@@ -56,39 +56,40 @@ Page({
         'Content-Type': 'application/json'
       },
       success: function (res) {
+        console.log(res)
         let videos = res.data || [];
+          videos = videos.map((video)=>{
+            console.log(video)
+            if(video[0]['demo_pic']){
+              video[0]['demo_pics'] = video[0]['demo_pic'].split('|')
+            }else{
+              video[0]['demo_pics'] = []
+            }
+  
+            if (video[0].keystring) {
+              video[0].keystring = video[0].keystring.split('\n');
+              video[0].keystring = video[0].keystring.map((key) => {
+                return key.split('|')
+              });
+            } else {
+              video[0].keystring = '';
+            }
+  
+            if (video[0].url && video[0].url.indexOf('embed') !== -1) {
+              video[0].url = video[0].url.match(/vid=([^&]+)/)[1];
+              video[0].isqq = true;
+            } else {
+              video[0].isqq = false;
+            }
+            return video[0]
+          })
+        
+          that.setData({
+            videos,
+            video:videos[0],
+            disabled: false
+          });
 
-        videos = videos.map((video)=>{
-
-          if(video[0]['demo_pic']){
-            video[0]['demo_pics'] = video[0]['demo_pic'].split('|')
-          }else{
-            video[0]['demo_pics'] = []
-          }
-
-          if (video[0].keystring) {
-            video[0].keystring = video[0].keystring.split('\n');
-            video[0].keystring = video[0].keystring.map((key) => {
-              return key.split('|')
-            });
-          } else {
-            video[0].keystring = '';
-          }
-
-          if (video[0].url && video[0].url.indexOf('embed') !== -1) {
-            video[0].url = video[0].url.match(/vid=([^&]+)/)[1];
-            video[0].isqq = true;
-          } else {
-            video[0].isqq = false;
-          }
-          return video[0]
-        })
-      
-        that.setData({
-          videos,
-          video:videos[0],
-					disabled: false
-        });
         wx.hideLoading();
       }
     });

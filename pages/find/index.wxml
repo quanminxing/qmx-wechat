@@ -30,18 +30,13 @@
           </view>
         </view> -->
   <!-- <view class="sep"></view> -->
-  <view class="other-content" hidden="{{inputVal.length > 0}}">
+  <!-- <view class="other-content" hidden="{{inputVal.length > 0}}">
 
     <scroll-view class="tuijian-lists bottom-box">
       <view class="lists-content">
 
         <block wx:for="{{reVideos}}" wx:key="*this">
           <navigator url="/pages/video/multidetail?id={{item.id}}" class="video-content" hover-class="weui-grid_active" data-video="{{item.id}}">
-
-            <!--
-                    <tx-video wx-if="{{item.isqq == true}}" vid="{{item.url}}" playerid="111"></tx-video>
-
-                    <video wx-if="{{item.isqq == false}}" src="{{item.url}}" binderror="videoErrorCallback"></video>-->
             <image class="package-image" src="{{item.pic}}">
             </image>
           </navigator>
@@ -50,13 +45,27 @@
 
     </scroll-view>
 
+  </view> -->
+  <view class="category">
+    <view class="category-item" wx:for='{{category}}' data-id='{{item.id}}' data-name='{{item.name}}' bindtap='switchTab'>
+      <image class="category-item-img" src="{{item.img}}" mode="aspectFill">
+      </image>
+    </view>
+  </view>
+  <view class="category-tvc">
+    <navigator class="tvc" url="../video/confirm?category=tvc" hover-class="navigator-hover" open-type="navigate">
+      <image class="tvc-img" src="{{tvc.img}}"></image>
+      <view class="tvc-name">
+        {{tvc.name}}
+      </view>
+    </navigator>
   </view>
 
-  <view class="fix-tip">
+  <!-- <view class="fix-tip">
     <text bindtap="makephonecall">如有更多需求请拨打电话：17034642312
 </text>
     <text>周一至周日 09:00 ~ 21:00
 </text>
-  </view>
+  </view> -->
 
 </view>

@@ -117,3 +117,24 @@
 	text-align: center;
 	line-height: 50rpx;
 }
+
+
+.tvc-header {
+	padding: 30rpx;
+	font-size: 16px;
+	font-weight: 500;
+	line-height: 22px;
+}
+.tvc-contact {
+	font-size: 14px;
+	line-height: 20px;
+}
+.tvc .phone-call {
+	padding: 30rpx 30rpx 64rpx 30rpx
+}
+.tvc .stay-info {
+	padding: 0 30rpx;
+}
+.tvc .tvc-phone {
+	color: #4a9eff;
+}

@@ -11,23 +11,46 @@ Page({
 			indicatorActiveColor: 'rgba(255, 255, 255, 1)'
 		},
 		banner: [],
-		// banner: [
-		// 	{
-		// 		img: 'http://video.qmxpower.com/qmx/banner/banner.png',
-		// 	},
-		// 	{
-		// 		img: 'http://video.qmxpower.com/qmx/banner/banner.png',
-		// 	},
-		// 	{
-		// 		img: 'http://video.qmxpower.com/qmx/banner/banner.png',
-		// 	}
-		// ],
+		category: [{
+			img: '../../images/category1.png',
+			id: '74',
+			name: '美妆'
+		},{
+			img: '../../images/category2.png',
+			id: '77',
+			name: '食品'
+		},{
+			img: '../../images/category3.png',
+			id: '76',
+			name: '母婴'
+		},{
+			img: '../../images/category4.png',
+			id: '94',
+			name: '小家电'
+		}],
+		tvc: {
+			img: '../../images/tvc.png',
+			name: 'TVC、视频定制服务'
+		},
 		inputShowed: false,
 		inputVal: "",
 		videos: [],
 		keywords: [],
 		reVideos: [],
 		char_gt: '>'
+	},
+
+	switchTab(e) {
+		console.log(e)
+		let categoryId = e.currentTarget.dataset.id;
+		console.log(categoryId)
+		app.globalData.tabBarParam = {
+			category_id: categoryId,
+			category_name: e.currentTarget.dataset.name
+		};
+		wx.switchTab({
+			url: '../video/index'
+		})
 	},
 
   onShareAppMessage(res) {

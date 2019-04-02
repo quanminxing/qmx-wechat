@@ -47,52 +47,59 @@ Page({
         'Content-Type': 'application/json'
       },
       success: function (res) {
+        console.log(res)
         let video = res.data.detail[0];
         
-        if (video.keystring){
+        if(video['demo_pic']){
+          video['demo_pics'] = video['demo_pic'].split('|')
+        }else{
+          video['demo_pics'] = []
+        }
+
+        if (video.keystring) {
           video.keystring = video.keystring.split('\n');
           video.keystring = video.keystring.map((key) => {
             return key.split('|')
           });
-        }else{
-          video.keystring='';
+        } else {
+          video.keystring = '';
         }
-        
 
-        if(video.url && video.url.indexOf('embed')!==-1){
+        if (video.url && video.url.indexOf('embed') !== -1) {
           video.url = video.url.match(/vid=([^&]+)/)[1];
           video.isqq = true;
-        }else{
+        } else {
           video.isqq = false;
         }
+
         that.setData({
           video,
           video_id,
 					disabled: false
         });
         
-        wx.request({
-          url: app.globalData.domain + '/video/listByRecommand?category_id=' + video.category_id,
-          header: {
-            'Content-Type': 'application/json'
-          },
-          success: function (res) {
-            let videos = [];
-            res.data.rows.forEach((d) => {
-              if (d.url && d.url.indexOf('embed') !== -1) {
-                d.url = d.url.match(/vid=([^&]+)/)[1];
-                d.isqq = true;
-              } else {
-                d.isqq = false;
-              }
-              videos.push(d);
-            });
-            that.setData({
-              reVideos: videos,
-            });
-          }
+        // wx.request({
+        //   url: app.globalData.domain + '/video/listByRecommand?category_id=' + video.category_id,
+        //   header: {
+        //     'Content-Type': 'application/json'
+        //   },
+        //   success: function (res) {
+        //     let videos = [];
+        //     res.data.rows.forEach((d) => {
+        //       if (d.url && d.url.indexOf('embed') !== -1) {
+        //         d.url = d.url.match(/vid=([^&]+)/)[1];
+        //         d.isqq = true;
+        //       } else {
+        //         d.isqq = false;
+        //       }
+        //       videos.push(d);
+        //     });
+        //     that.setData({
+        //       reVideos: videos,
+        //     });
+        //   }
 
-        });
+        // });
 
         wx.hideLoading();
         wx.setStorageSync('video', video);

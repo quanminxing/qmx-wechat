@@ -243,3 +243,15 @@ width:120rpx;
 .other-content{
   margin-top: 200rpx
 }
+
+.no-video {
+    width: 100vw;
+    padding: 100rpx 0 0 0;
+    text-align: center;
+}
+.no-video-icon {
+    width: 320rpx;
+    padding: 16rpx 30rpx;
+    font-size: 17px;
+    color: #888;
+}

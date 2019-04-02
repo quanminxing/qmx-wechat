@@ -1,6 +1,7 @@
 //app.js
 App({
   onLaunch: function () {
+    
     //调用API从本地缓存中获取数据
       wx.showLoading({
         title: '加载中',
@@ -28,7 +29,37 @@ App({
         })
       }
     });
+
+    const updateManager = wx.getUpdateManager()
+    updateManager.onUpdateReady(function () {
+      wx.showModal({
+        title: '更有新版本啦！',
+        content: '小程序发布了新功能，是否更新至最新版本?',
+        cancelColor: '#999',
+        confirmColor: '',
+        success: function (res) {
+          if (res.confirm) {
+            // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
+            updateManager.applyUpdate()
+          }
+        }
+      })
+    })
+    updateManager.onUpdateFailed(function () {
+      wx.showToast({
+        title: '更新失败，请关闭微信后重新打开小程序。',
+        icon: 'none',
+        duration: 2500,
+        mask: false
+      })
+    })
   },
+  onPageNotFound(res) {
+    wx.switchTab({
+      url: 'pages/find/index',
+    });
+  },
+
   getUserInfo:function(cb){
     var that = this
     if(this.globalData.userInfo){
@@ -78,10 +109,11 @@ App({
 
   globalData:{
     userInfo:null,
+    tabBarParam: {},
     //domain: 'http://192.168.2.183',
     //domain:'http://localhost:7001'
-   domain:'https://admin.qmxpower.com',
-		// domain: 'https://test.qmxpower.com'
+  //  domain:'https://admin.qmxpower.com',
+		domain: 'https://test.qmxpower.com'
   }
 })
 

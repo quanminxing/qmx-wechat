@@ -1,7 +1,7 @@
 // pages/video/confirm.js
 const { each } = require('../../utils/util.js')
 const app = getApp();
-let openId;
+let openId = app.globalData.openid;
 let domain;
 let briefInfo = {
 	name: '',
@@ -13,6 +13,7 @@ let briefInfo = {
 
 Page({
 data: {
+	tvc: false,
 	viewMoreIcon: '../../images/more_icon.png',
 	cursor: -1,
 	cursorSpacing: 80,
@@ -40,16 +41,39 @@ data: {
 },
 
 onLoad(e) {
+	console.log(e)
 	openId = app.globalData.openid;
 	domain = app.globalData.domain;
 	wx.hideLoading();
 	const that = this;
 	if (!openId) {
+		console.log(openId)
 		app.login(function (openId) {
-			that.requestData(e, that, openId)
+			if(e.category === 'tvc') {
+				that.setData({
+					tvc: true
+				})
+				wx.setNavigationBarTitle({
+					title: 'TVC、视频定制'
+				});
+			} else {
+				that.requestData(e, that, openId)
+			}
+			
 		})
+	}else {
+		if(e.category === 'tvc') {
+			that.setData({
+				tvc: true
+			})
+			wx.setNavigationBarTitle({
+				title: 'TVC、视频定制'
+			});
+		} else {
+			that.requestData(e, that, openId)
+		}
+		
 	}
-	that.requestData(e, that, openId);
 },
 
 onHide() {
@@ -57,6 +81,15 @@ onHide() {
 	this.setData({
 		'formInfo[4].value': ''
 	})
+},
+
+phoneCall(e) {
+	console.log(e)
+	let phoneNum = e.currentTarget.dataset.phonenum;
+	console.log(phoneNum)
+	wx.makePhoneCall({
+		phoneNumber: phoneNum
+	});
 },
 
 /** start bind 事件函数 */
@@ -226,20 +259,20 @@ submitBrief(openId) {
 	console.log(`提交${briefInfo.name}`)
 	console.log(this.data.formInfo)
 	let data = {
-		openid: openId,
+		openid: app.globalData.openid,
 		oper: 'add',
 		name: briefInfo.name,
 		business: briefInfo.business,
 		phone: briefInfo.phone,
 		comment: briefInfo.comment,
 		email: briefInfo.email,
-		category_id: this.data.video.category_id,
-		price: this.data.video.price,
-		platform_id: this.data.video.platform_id,
-		column_id: this.data.video.column_id,
-		video_id: this.data.video.video_id
+		category_id: this.data.video.category_id || null,
+		price: this.data.video.price || null,
+		platform_id: this.data.video.platform_id || null,
+		column_id: this.data.video.column_id || null,
+		video_id: this.data.video.video_id || null
 	}
-	console.log(briefInfo)
+	console.log(data)
 	wx.request({
 		url: domain + '/bill',
 		method: 'POST',

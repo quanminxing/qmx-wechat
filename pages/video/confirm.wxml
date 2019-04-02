@@ -1,6 +1,19 @@
 <!--pages/video/confirm.wxml 下单页 -->
 <view class='page'>
-	<view class='header .bd-line'>
+	<view wx:if='{{tvc}}' class="tvc">
+		<view class="tvc-header">
+			您选择了TVC、视频定制服务，您可以选择以下两种方式与我们联系：
+		</view>
+		<view class="sep"></view>
+		<view class="tvc-contact phone-call" bindtap='phoneCall' data-phoneNum='17034642312'>
+			1) 拨打电话：拨打咨询电话<text class="tvc-phone"> 17034642312 </text>直接与我们联系
+		</view>
+		<view class="tvc-contact stay-info">
+			2) 预留信息：按下面信息格式填写您的信息，客户经理会在24小时内与您联系沟通需求
+		</view>
+	</view>
+
+	<view wx:if='{{!tvc}}' class='header .bd-line'>
 		<view class='h2'>需求信息</view>
 		<view class='h3'>
 			<view class='float-r'>{{video.name}}</view>
@@ -9,7 +22,7 @@
 	</view>
 
 	<view class='content'>
-		<view class='detail bd-line'>
+		<view wx:if='{{!tvc}}' class='detail bd-line'>
 			<view class='detail-item'>
 				<text>平台</text><text class='float-r'>{{video.platform}}</text>
 			</view>
@@ -42,10 +55,15 @@
 	<view class='footer'>
 		<!-- 空标签兼容iphonex -->
 		<view class='toolbar-bottom'></view>
-		<view class='promise'>服务承诺：提交订单后，客户经理会在24小时内与您联系</view>
-		<view class='toolbar'>
-			<view class='total-price confirm-info'>总计：<text class='price'>￥{{video.price}}</text></view>
-		<view class='confirm confirm-info' bindtap='submit'>确认订单</view>
+		<block wx:if='{{!tvc}}'>
+			<view class='promise'>服务承诺：提交订单后，客户经理会在24小时内与您联系</view>
+			<view class='toolbar'>
+				<view class='total-price confirm-info'>总计：<text class='price'>￥{{video.price}}</text></view>
+				<view class='confirm confirm-info' bindtap='submit'>确认订单</view>
+			</view>
+		</block>
+		<view wx:else class="toolbar">
+			<view class='confirm confirm-info' bindtap='submit'>确认</view>
 		</view>
 		
 	</view>

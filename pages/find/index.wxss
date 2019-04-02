@@ -1,6 +1,6 @@
 .banner {
 	height: 400rpx;
-	padding-bottom: 40rpx;
+	padding-bottom: 65rpx;
 }
 .banner-navigator {
 	width: 100%;
@@ -161,4 +161,45 @@ line-height:28rpx;
 margin: 0 auto;
 width: 100%;
 text-align: center;
+}
+
+/* 临时版 */
+.category {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 0 30rpx;
+}
+.category-item {
+  width: 334rpx;
+  height: 206rpx;
+  padding: 0 0 24rpx 0;
+}
+.category-item .category-item-img {
+  width: 100%;
+  height: 100%;
+}
+.category-tvc {
+  height: 160rpx;
+  margin-bottom: 80rpx;
+  padding: 41rpx 30rpx 30rpx 30rpx;
+}
+.category-tvc .tvc {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.category-tvc .tvc-img {
+  width: 100%;
+  height: 100%;
+}
+.category-tvc .tvc-name {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  color: #fff;
+  font-size: 20px;
+  text-align: center;
+  transform: translateY(-50%);
 }

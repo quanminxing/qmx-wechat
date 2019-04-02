@@ -122,3 +122,6 @@ color:rgba(53,53,53,1);
   border-top:none
 }
 
+.video-img {
+  width: 100%;
+}

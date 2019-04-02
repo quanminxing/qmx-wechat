@@ -95,6 +95,7 @@ Page({
 
     const app = getApp();
     const openid = app.globalData.openid;
+
     wx.showLoading({
       title: '加载中',
       mask: true
@@ -114,7 +115,7 @@ Page({
         });
       }
     });
-    wx.request({
+    wx.request({  // 功能
       url: app.globalData.domain + '/usage',
       header: {
         'Content-Type': 'application/json'
@@ -171,41 +172,156 @@ Page({
         that.setData({
           nv: category,
         });
-        wx.request({
-          url: app.globalData.domain + '/video/listByFilter',
-          header: {
-            'Content-Type': 'application/json'
-          },
-          data: that.data.search,
-          success: function (res) {
-            let videos = [];
-            res.data.rows.forEach((d) => {
-
-              let categoryChoose = that.data.tabs.filter((category) => {
-                return category.id === d.category_id
+        
+        console.log(app.globalData)
+        let categoryId = app.globalData.tabBarParam.category_id;
+        console.log(categoryId)
+        if(categoryId === null || categoryId === undefined) {
+          wx.request({
+            url: app.globalData.domain + '/video/listByFilter',
+            header: {
+              'Content-Type': 'application/json'
+            },
+            data: that.data.search,
+            success: function (res) {
+              let videos = [];
+              res.data.rows.forEach((d) => {
+  
+                let categoryChoose = that.data.tabs.filter((category) => {
+                  return category.id === d.category_id
+                });
+  
+                d.category_name = categoryChoose[0] ? categoryChoose[0].name : '';
+                // 判断用什么播放器播放
+                if (d.url && d.url.indexOf('embed') !== -1) {
+                  d.url = d.url.match(/vid=([^&]+)/)[1];
+                  d.isqq = true;
+                } else {
+                  d.isqq = false;
+                }
+                videos.push(d);
               });
-
-              d.category_name = categoryChoose[0] ? categoryChoose[0].name : '';
-              // 判断用什么播放器播放
-              if (d.url && d.url.indexOf('embed') !== -1) {
-                d.url = d.url.match(/vid=([^&]+)/)[1];
-                d.isqq = true;
-              } else {
-                d.isqq = false;
-              }
-              videos.push(d);
-            });
-            wx.hideLoading();
-            that.setData({
-              videos,
-            });
+              wx.hideLoading();
+              that.setData({
+                videos,
+              });
+            }
+  
+          });
+        } else {
+          const domain = app.globalData.domain;
+          
+          let categoryName = app.globalData.tabBarParam.category_name;
+          console.log(categoryId)
+          console.log(categoryName)
+          const search = that.data.search;
+          search.page = 1;
+          search.category_id = categoryId;
+          if (categoryId == 0){
+            delete search.category_id
           }
+          const queryString = '';
+          wx.showLoading({
+            title: '加载中',
+            mask: true
+          });
+          console.log(search)
+          wx.request({
+            url: domain + '/video/listByFilter',
+            data:search,
+            header: {
+              'Content-Type': 'application/json'
+            },
+            success: function (res) {
 
-        });
+              res.data.rows = res.data.rows.map((d) => {
+                // 判断用什么播放器播放
+                if (d.url.indexOf('embed') !== -1) {
+                  d.url = d.url.match(/vid=([^&]+)/)[1];
+                  d.isqq = true;
+                } else {
+                  d.isqq = false;
+                }
+                return d
+              });
+              wx.hideLoading();
+              that.setData({
+                videos: res.data.rows,
+                nzopen: false,
+                isfull:false,
+                shownavindex: 0,
+                category_name: categoryName,
+                search
+              });
+              app.globalData.tabBarParam = {}
+            }
+          });
+        }
+        
       }
     });
     
   },
+
+onShow() {
+  var that = this;
+
+    const app = getApp();
+    console.log(app.globalData)
+    let categoryId = app.globalData.tabBarParam.category_id;
+    console.log(categoryId)
+    if(categoryId === null || categoryId === undefined) {
+    } else {
+      const domain = app.globalData.domain;
+      
+      let categoryName = app.globalData.tabBarParam.category_name;
+      console.log(categoryId)
+      console.log(categoryName)
+      const search = that.data.search;
+      search.page = 1;
+      search.category_id = categoryId;
+      if (categoryId == 0){
+        delete search.category_id
+      }
+      const queryString = '';
+      wx.showLoading({
+        title: '加载中',
+        mask: true
+      });
+      console.log(search)
+      wx.request({
+        url: domain + '/video/listByFilter',
+        data:search,
+        header: {
+          'Content-Type': 'application/json'
+        },
+        success: function (res) {
+
+          res.data.rows = res.data.rows.map((d) => {
+            // 判断用什么播放器播放
+            if (d.url.indexOf('embed') !== -1) {
+              d.url = d.url.match(/vid=([^&]+)/)[1];
+              d.isqq = true;
+            } else {
+              d.isqq = false;
+            }
+            return d
+          });
+          wx.hideLoading();
+          that.setData({
+            videos: res.data.rows,
+            nzopen: false,
+            isfull:false,
+            shownavindex: 0,
+            category_name: categoryName,
+            search
+          });
+          app.globalData.tabBarParam = {}
+        }
+      });
+    }
+},
+
   sendVideoData(e) {
     return false
     let videoData = this.data.videos.filter((d) => { return d.id === e.currentTarget.dataset.video });
@@ -225,6 +341,9 @@ Page({
     let category_name = e.currentTarget.dataset.name;
     const that = this;
     let url = domain + '/video/listByFilter';
+
+    console.log('chooseCategory')
+
     if (category_name === '全部') {
       category_name = '品类'
     }
@@ -369,6 +488,7 @@ Page({
     let category_id = e.currentTarget.id;
     const that = this;
     let url;
+    console.log('tabClick')
     if (category_id == 0) {
       url = domain + '/video/listByHot';
     } else {
@@ -417,9 +537,6 @@ Page({
       activeIndex: e.currentTarget.id
     });
   },
-
-
-
 
   listqy: function (e) {
     if (this.data.qyopen) {
