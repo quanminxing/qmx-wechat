@@ -56,9 +56,8 @@ onLoad(e) {
 				wx.setNavigationBarTitle({
 					title: 'TVC、视频定制'
 				});
-			} else {
-				that.requestData(e, that, openId)
 			}
+			that.requestData(e, that, openId)
 			
 		})
 	}else {
@@ -69,9 +68,8 @@ onLoad(e) {
 			wx.setNavigationBarTitle({
 				title: 'TVC、视频定制'
 			});
-		} else {
-			that.requestData(e, that, openId)
 		}
+		that.requestData(e, that, openId)
 		
 	}
 },
