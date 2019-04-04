@@ -31,6 +31,7 @@ App({
     });
 
     const updateManager = wx.getUpdateManager()
+		console.log(updateManager)
     updateManager.onUpdateReady(function () {
       wx.showModal({
         title: '更有新版本啦！',
@@ -112,8 +113,8 @@ App({
     tabBarParam: {},
     //domain: 'http://192.168.2.183',
     //domain:'http://localhost:7001'
-  //  domain:'https://admin.qmxpower.com',
-		domain: 'https://test.qmxpower.com'
+   domain:'https://admin.qmxpower.com',
+		// domain: 'https://test.qmxpower.com'
   }
 })
 

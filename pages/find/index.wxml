@@ -54,10 +54,7 @@
   </view>
   <view class="category-tvc">
     <navigator class="tvc" url="../video/confirm?category=tvc" hover-class="navigator-hover" open-type="navigate">
-      <image class="tvc-img" src="{{tvc.img}}"></image>
-      <view class="tvc-name">
-        {{tvc.name}}
-      </view>
+      <image class="tvc-img" src="{{tvc}}"></image>
     </navigator>
   </view>
 

@@ -12,21 +12,23 @@
     </view>
     <view class="sep"></view>
     <view class="video-info-box">
-      <view class="header">样片详情</view>
+      <!-- <view class="header">样片详情</view> -->
       <block wx:for="{{video.demo_pics}}" wx:key="*this">
         <image mode="widthFix" class="video-img" src="{{item}}"></image>
       </block>
     </view>
-    <view class="sep"></view>
-    <view class="video-info-box">
-      <view class="header">颗粒度参数</view>
-      <block wx:for="{{video.keystring}}" wx:key="*this">
-        <view class="key-line">
-          <text>{{item[0]}}</text>
-          <text>{{item[1]}}</text>
-        </view>
-      </block>
-    </view>
+		<block wx:if='{{video.keystring.length > 0}}'>
+			<view class="sep"></view>
+			<view class="video-info-box">
+				<view class="header">颗粒度参数</view>
+				<block wx:for="{{video.keystring}}" wx:key="*this">
+					<view class="key-line">
+						<text>{{item[0]}}</text>
+						<text>{{item[1]}}</text>
+					</view>
+				</block>
+			</view>
+		</block>
     <!-- <view class="video-info-box">
         <view class="header">视频信息</view>
          <view class="key-line">

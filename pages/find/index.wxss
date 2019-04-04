@@ -186,20 +186,10 @@ text-align: center;
   padding: 41rpx 30rpx 30rpx 30rpx;
 }
 .category-tvc .tvc {
-  position: relative;
   width: 100%;
   height: 100%;
 }
 .category-tvc .tvc-img {
   width: 100%;
   height: 100%;
-}
-.category-tvc .tvc-name {
-  position: absolute;
-  top: 50%;
-  width: 100%;
-  color: #fff;
-  font-size: 20px;
-  text-align: center;
-  transform: translateY(-50%);
 }

@@ -307,6 +307,10 @@ onShow() {
             }
             return d
           });
+					wx.pageScrollTo({
+						scrollTop: 0,
+						duration: 0,
+					})
           wx.hideLoading();
           that.setData({
             videos: res.data.rows,

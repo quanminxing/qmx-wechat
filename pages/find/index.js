@@ -28,10 +28,7 @@ Page({
 			id: '94',
 			name: '小家电'
 		}],
-		tvc: {
-			img: '../../images/tvc.png',
-			name: 'TVC、视频定制服务'
-		},
+		tvc:  '../../images/tvc.png',
 		inputShowed: false,
 		inputVal: "",
 		videos: [],
