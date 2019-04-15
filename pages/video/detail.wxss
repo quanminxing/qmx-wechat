@@ -11,7 +11,7 @@ page {
   color: #f15348;
 }
 .summarry .name {
-  max-width: 550rpx;
+  max-width: 550rpxz;
   color: #fff;
 }
 .summarry .price, .summarry .name {
