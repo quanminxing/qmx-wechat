@@ -1,0 +1,6 @@
+/* pages/prices/prices.wxss */
+@import '../../style/common.wxss';
+
+.col-list .name {
+  font-size: 14px;
+}

@@ -1,63 +1,65 @@
 <!--index.wxml-->
 <view class="container video-box">
+  <!-- <view wx:if='{{!!tvc}}' class="tvc-temp">
+    {{tvcTemp}}
+  </view> -->
 
-
-
-  <view class="nav">
-    <view class="nav-son {{shownavindex == 1? 'active' : ''}}" bindtap="listqy" data-nav="1">
-      <view class="content">{{platform_name == '' ? '平台' : platform_name}}</view>
-      <image class="icon" src="{{shownavindex == 1? '/images/jiantou2.png' : '/images/jiantou1.png'}}"></image>
-    </view>
-    <view class="nav-son {{shownavindex == 2? 'active' : ''}}" bindtap="list" data-nav="2">
-      <view class="content">{{category_name == '' ? '品类' : category_name}}</view>
-      <image class="icon" src="{{shownavindex == 2? '/images/jiantou2.png' : '/images/jiantou1.png'}}"></image>
-    </view>
-    <view class="nav-son {{shownavindex == 3? 'active' : ''}}" bindtap="listpx" data-nav="3">
-      <view class="content">{{usage_name == '' ? '功能' : usage_name}}</view>
-      <image class="icon" src="{{shownavindex == 3? '/images/jiantou2.png' : '/images/jiantou1.png'}}"></image>
-    </view>
-    <!--
-        <view class="nav-son {{shownavindex == 4? 'active' : ''}}" bindtap="listst" data-nav="4">
-            <view class="content">风格</view>
-            <view class="icon"></view>
-        </view>-->
-  </view>
-  <view class="quyu {{qyopen ? 'slidown' : 'slidup'}} {{qyshow ? 'disappear':''}}">
-    <view class="qy quyu-left">
-      <view class="{{select1 == index ? 'current' : ''}}" wx:for="{{cityleft}}" bindtap="selectleft" data-city='{{index}}'>
-        {{index}}
+  <block wx:if='{{!tvc}}'>
+    <view class="nav">
+      <view class="nav-son {{shownavindex == 1? 'active' : ''}}" bindtap="listqy" data-nav="1">
+        <view class="content">{{platform_name == '' ? '平台' : platform_name}}</view>
+        <image class="icon" src="{{shownavindex == 1? '/images/jiantou2.png' : '/images/jiantou1.png'}}"></image>
       </view>
+      <view class="nav-son {{shownavindex == 2? 'active' : ''}}" bindtap="list" data-nav="2">
+        <view class="content">{{category_name == '' ? '品类' : category_name}}</view>
+        <image class="icon" src="{{shownavindex == 2? '/images/jiantou2.png' : '/images/jiantou1.png'}}"></image>
+      </view>
+      <view class="nav-son {{shownavindex == 3? 'active' : ''}}" bindtap="listpx" data-nav="3">
+        <view class="content">{{usage_name == '' ? '功能' : usage_name}}</view>
+        <image class="icon" src="{{shownavindex == 3? '/images/jiantou2.png' : '/images/jiantou1.png'}}"></image>
+      </view>
+      <!--
+          <view class="nav-son {{shownavindex == 4? 'active' : ''}}" bindtap="listst" data-nav="4">
+              <view class="content">风格</view>
+              <view class="icon"></view>
+          </view>-->
     </view>
-    <view class="qy quyu-center">
-      <view class="{{select2 == index ? 'current2' : ''}}" wx:for="{{citycenter}}" bindtap="selectcenter" data-name='{{item.name}}' data-id='{{item.id}}' data-index='{{index}}'>
+    <view class="quyu {{qyopen ? 'slidown' : 'slidup'}} {{qyshow ? 'disappear':''}}">
+      <view class="qy quyu-left">
+        <view class="{{select1 == index ? 'current' : ''}}" wx:for="{{cityleft}}" bindtap="selectleft" data-city='{{index}}'>
+          {{index}}
+        </view>
+      </view>
+      <view class="qy quyu-center">
+        <view class="{{select2 == index ? 'current2' : ''}}" wx:for="{{citycenter}}" bindtap="selectcenter" data-name='{{item.name}}' data-id='{{item.id}}' data-index='{{index}}'>
+          {{item.name}}
+        </view>
+      </view>
+      <!--
+          <view class="qy quyu-right">
+              <view wx:for="{{cityright}}">
+                  {{item}}
+              </view>
+          </view>
+          -->
+    </view>
+    <view class="temp temp1 {{nzopen ? 'slidown' : 'slidup'}} {{nzshow ? 'disappear':''}}">
+      <view wx:for="{{content}}" bindtap="chooseCategory" data-id='{{item.id}}' data-name='{{item.name}}'>
         {{item.name}}
       </view>
     </view>
-    <!--
-        <view class="qy quyu-right">
-            <view wx:for="{{cityright}}">
-                {{item}}
-            </view>
-        </view>
-        -->
-  </view>
-  <view class="temp temp1 {{nzopen ? 'slidown' : 'slidup'}} {{nzshow ? 'disappear':''}}">
-    <view wx:for="{{content}}" bindtap="chooseCategory" data-id='{{item.id}}' data-name='{{item.name}}'>
-      {{item.name}}
+    <view class="temp temp2 {{pxopen ? 'slidown' : 'slidup'}} {{pxshow ? 'disappear':''}}">
+      <view wx:for="{{content}}" bindtap="chooseUsage" data-id='{{item.id}}' data-name='{{item.name}}'>
+        {{item.name}}
+      </view>
     </view>
-  </view>
-  <view class="temp temp2 {{pxopen ? 'slidown' : 'slidup'}} {{pxshow ? 'disappear':''}}">
-    <view wx:for="{{content}}" bindtap="chooseUsage" data-id='{{item.id}}' data-name='{{item.name}}'>
-      {{item.name}}
+    <view class="temp temp3 {{stopen ? 'slidown' : 'slidup'}} {{stshow ? 'disappear':''}}">
+      <view wx:for="{{content}}" bindtap="chooseStyle" data-id='{{item.id}}' data-name='{{item.name}}'>
+        {{item.name}}
+      </view>
     </view>
-  </view>
-  <view class="temp temp3 {{stopen ? 'slidown' : 'slidup'}} {{stshow ? 'disappear':''}}">
-    <view wx:for="{{content}}" bindtap="chooseStyle" data-id='{{item.id}}' data-name='{{item.name}}'>
-      {{item.name}}
-    </view>
-  </view>
-  <view class="fullbg {{isfull ?'fullopacity':''}}" bindtap="hidebg"></view>
-
+    <view class="fullbg {{isfull ?'fullopacity':''}}" bindtap="hidebg"></view>
+  </block>
 
   <view class="weui-search-bar">
 
@@ -82,7 +84,7 @@
 
 
   <!--输入文字 则隐藏-->
-  <view class="other-content">
+  <view class="other-content {{!!tvc ? 'tvc-content' : ''}}">
 
     <!--推荐歌单 >>>>-->
     <scroll-view class="tuijian-lists">

@@ -1,4 +1,27 @@
 /* pages/video/detail.wxss */
+page {
+  background-color: #09172D;
+}
+.summarry {
+  padding: 0 32rpx;
+  font-size: 20px;
+  font-weight: 500;
+}
+.summarry .price {
+  color: #f15348;
+}
+.summarry .name {
+  max-width: 550rpx;
+  color: #fff;
+}
+.summarry .price, .summarry .name {
+  height: 44px;
+  line-height: 44px;
+}
+
+
+
+
 
 video{
   width: 100%;

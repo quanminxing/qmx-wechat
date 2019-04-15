@@ -1,5 +1,7 @@
 //index.js
 const { each } = require('../../utils/util.js');
+const { query } = require('../../common')
+
 var app = getApp()
 Page({
 	data: {
@@ -11,21 +13,21 @@ Page({
 			indicatorActiveColor: 'rgba(255, 255, 255, 1)'
 		},
 		banner: [],
-		category: [{
-			img: '../../images/category1.png',
-			id: '74',
+		channel: [{
+			img_url: '../../images/category1.png',
+			category_id: '74',
 			name: '美妆'
 		},{
-			img: '../../images/category2.png',
-			id: '77',
+			img_url: '../../images/category2.png',
+			category_id: '77',
 			name: '食品'
 		},{
-			img: '../../images/category3.png',
-			id: '76',
+			img_url: '../../images/category3.png',
+			category_id: '76',
 			name: '母婴'
 		},{
 			img: '../../images/category4.png',
-			id: '94',
+			category_id: '94',
 			name: '小家电'
 		}],
 		tvc:  '../../images/tvc.png',
@@ -93,11 +95,11 @@ Page({
       url: '/pages/find/search',
     })
   },
-makephonecall:function(){
-  wx.makePhoneCall({
-    phoneNumber: '17034642312',
-  })
-},
+	makephonecall:function(){
+		wx.makePhoneCall({
+			phoneNumber: '17034642312',
+		})
+	},
   onShow: function () {
     wx.hideLoading()
   },
@@ -132,6 +134,13 @@ makephonecall:function(){
 			fail(err) {
 				console.log(err)
 			}
+		})
+
+		// 频道
+		query('/api/channel').then(res => {
+			// setData channel
+		}).catch(err => {
+
 		})
 
     /*

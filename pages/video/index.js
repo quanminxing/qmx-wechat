@@ -8,6 +8,8 @@ var cityData = require('../../utils/city.js');
 var app = getApp()
 Page({
   data: {
+    tvc: true,
+    tvcTemp: '类目定制视频列表',
     inputShowed: false,
     inputVal: "",
     tabs: [],
@@ -143,6 +145,7 @@ Page({
       }
     });
 
+    // 搜索视频
     wx.request({
       url: app.globalData.domain + '/column/listall',
       header: {
@@ -177,6 +180,7 @@ Page({
         let categoryId = app.globalData.tabBarParam.category_id;
         console.log(categoryId)
         if(categoryId === null || categoryId === undefined) {
+          // 视频搜索过滤
           wx.request({
             url: app.globalData.domain + '/video/listByFilter',
             header: {
@@ -209,6 +213,8 @@ Page({
   
           });
         } else {
+
+          // 临时版本
           const domain = app.globalData.domain;
           
           let categoryName = app.globalData.tabBarParam.category_name;
@@ -263,68 +269,68 @@ Page({
     
   },
 
-onShow() {
-  var that = this;
+// onShow() {
+//   var that = this;
 
-    const app = getApp();
-    console.log(app.globalData)
-    let categoryId = app.globalData.tabBarParam.category_id;
-    console.log(categoryId)
-    if(categoryId === null || categoryId === undefined) {
-    } else {
-      const domain = app.globalData.domain;
+//     const app = getApp();
+//     console.log(app.globalData)
+//     let categoryId = app.globalData.tabBarParam.category_id;
+//     console.log(categoryId)
+//     if(categoryId === null || categoryId === undefined) {
+//     } else {
+//       const domain = app.globalData.domain;
       
-      let categoryName = app.globalData.tabBarParam.category_name;
-      console.log(categoryId)
-      console.log(categoryName)
-      const search = that.data.search;
-      search.page = 1;
-      search.category_id = categoryId;
-      if (categoryId == 0){
-        delete search.category_id
-      }
-      const queryString = '';
-      wx.showLoading({
-        title: '加载中',
-        mask: true
-      });
-      console.log(search)
-      wx.request({
-        url: domain + '/video/listByFilter',
-        data:search,
-        header: {
-          'Content-Type': 'application/json'
-        },
-        success: function (res) {
+//       let categoryName = app.globalData.tabBarParam.category_name;
+//       console.log(categoryId)
+//       console.log(categoryName)
+//       const search = that.data.search;
+//       search.page = 1;
+//       search.category_id = categoryId;
+//       if (categoryId == 0){
+//         delete search.category_id
+//       }
+//       const queryString = '';
+//       wx.showLoading({
+//         title: '加载中',
+//         mask: true
+//       });
+//       console.log(search)
+//       wx.request({
+//         url: domain + '/video/listByFilter',
+//         data:search,
+//         header: {
+//           'Content-Type': 'application/json'
+//         },
+//         success: function (res) {
 
-          res.data.rows = res.data.rows.map((d) => {
-            // 判断用什么播放器播放
-            if (d.url.indexOf('embed') !== -1) {
-              d.url = d.url.match(/vid=([^&]+)/)[1];
-              d.isqq = true;
-            } else {
-              d.isqq = false;
-            }
-            return d
-          });
-					wx.pageScrollTo({
-						scrollTop: 0,
-						duration: 0,
-					})
-          wx.hideLoading();
-          that.setData({
-            videos: res.data.rows,
-            nzopen: false,
-            isfull:false,
-            shownavindex: 0,
-            category_name: categoryName,
-            search
-          });
-          app.globalData.tabBarParam = {}
-        }
-      });
-    }
-},
+//           res.data.rows = res.data.rows.map((d) => {
+//             // 判断用什么播放器播放
+//             if (d.url.indexOf('embed') !== -1) {
+//               d.url = d.url.match(/vid=([^&]+)/)[1];
+//               d.isqq = true;
+//             } else {
+//               d.isqq = false;
+//             }
+//             return d
+//           });
+// 					wx.pageScrollTo({
+// 						scrollTop: 0,
+// 						duration: 0,
+// 					})
+//           wx.hideLoading();
+//           that.setData({
+//             videos: res.data.rows,
+//             nzopen: false,
+//             isfull:false,
+//             shownavindex: 0,
+//             category_name: categoryName,
+//             search
+//           });
+//           app.globalData.tabBarParam = {}
+//         }
+//       });
+//     }
+// },
 
   sendVideoData(e) {
     return false

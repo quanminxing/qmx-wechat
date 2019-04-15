@@ -255,3 +255,17 @@ width:120rpx;
     font-size: 17px;
     color: #888;
 }
+
+/* tvc
+.tvc-temp {
+    position: fixed;
+    top: 82rpx;
+    left: 0;
+    width: 100vw;
+    height: 100rpx;
+    line-height: 100rpx;
+} */
+
+.tvc-content {
+    margin-top: 100rpx;
+}

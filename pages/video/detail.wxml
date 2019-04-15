@@ -4,16 +4,28 @@
 <view class="container video-box">
   <!-- 输入文字 则隐藏 -->
   <view class="other-content">
-    <view class="video-info-box">
+    <view class="summarry">
+      <view class="sumarry-info clear">
+        <view class="price float-r" hover-class="none" hover-stop-propagation="false">
+          ¥ {{video.price}}
+        </view>
+        <view class="name" hover-class="none" hover-stop-propagation="false">
+          {{video.video_name}}
+        </view>
+      </view>
+    </view>
+    <!-- <view class="sep"></view> -->
+
+    <!-- <view class="video-info-box">
       <view class="key-line no-top">
         <text class="video-main-title">{{video.video_name}}</text>
         <text class="video-price">¥{{video.price}}</text>
       </view>
     </view>
     <view class="sep"></view>
-    <view class="video-info-box">
+    <view class="video-info-box"> -->
       <!-- <view class="header">样片详情</view> -->
-      <block wx:for="{{video.demo_pics}}" wx:key="*this">
+      <!-- <block wx:for="{{video.demo_pics}}" wx:key="*this">
         <image mode="widthFix" class="video-img" src="{{item}}"></image>
       </block>
     </view>
@@ -28,22 +40,22 @@
 					</view>
 				</block>
 			</view>
-		</block>
+		</block> -->
     <!-- <view class="video-info-box">
         <view class="header">视频信息</view>
-         <view class="key-line">
+          <view class="key-line">
           <text>平台</text><text>{{video.platform_name || '其他'}}</text>
         </view> 
-         <view class="key-line">
+          <view class="key-line">
           <text>栏目</text><text>{{video.column_name || '其他'}}</text>
         </view> 
         <view class="key-line">
           <text>品类</text><text>{{video.category_name}}</text>
         </view>   
-         <view class="key-line">
+          <view class="key-line">
           <text>视频功能</text><text>{{video.usage_name || '其他'}}</text>
         </view> 
-         <view class="key-line">
+          <view class="key-line">
           <text>视频风格</text><text>{{video.style_name || '其他'}}</text>
         </view> 
     </view> -->

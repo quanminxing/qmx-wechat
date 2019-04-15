@@ -21,8 +21,7 @@
     "pages/account/contact",
     "pages/account/feedback",
     "pages/account/webview",
-    "pages/index/index",
-    "confirm2"
+		"pages/prices/prices"
   ],
   "window": {
     "backgroundTextStyle": "dark",

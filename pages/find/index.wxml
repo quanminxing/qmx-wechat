@@ -16,44 +16,35 @@
       </block>
     </swiper-item>
   </swiper>
-  <!-- <view class="guide">
-          <image src="/images/xgzx.png"></image>
-          <view class="guide-info">
-            <view class="guide-info-list">
-              <text class="guide-alert">重点</text> 
-              <navigator url="/pages/find/business">关于此小程序的业务介绍!</navigator>
-            </view>
-            <view class="guide-info-list">
-              <text class="guide-alert">重点</text> 
-              <navigator url="/pages/find/flow">小程序下单流程</navigator>
-            </view>
-          </view>
-        </view> -->
-  <!-- <view class="sep"></view> -->
-  <!-- <view class="other-content" hidden="{{inputVal.length > 0}}">
 
-    <scroll-view class="tuijian-lists bottom-box">
-      <view class="lists-content">
-
-        <block wx:for="{{reVideos}}" wx:key="*this">
-          <navigator url="/pages/video/multidetail?id={{item.id}}" class="video-content" hover-class="weui-grid_active" data-video="{{item.id}}">
-            <image class="package-image" src="{{item.pic}}">
-            </image>
-          </navigator>
-        </block>
-      </view>
-
-    </scroll-view>
-
-  </view> -->
-  <view class="category">
-    <view class="category-item" wx:for='{{category}}' data-id='{{item.id}}' data-name='{{item.name}}' bindtap='switchTab'>
-      <image class="category-item-img" src="{{item.img}}" mode="aspectFill">
+  <view class="channel list">
+    <navigator class="list-item pos-rel" wx:for='{{channel}}' url='../prices/prices?category_id={{item.category_id}}'>
+      <image class="list-item-img" src="{{item.img_url}}" mode="aspectFill">
       </image>
-    </view>
+      <view class="img-mark">
+        <view class="list-item-msg block-center">
+          <view class="list-item-txt">
+            {{item.name}}
+          </view>
+        </view>
+      </view>
+    </navigator>
   </view>
-  <view class="category-tvc">
-    <navigator class="tvc" url="../video/confirm?category=tvc" hover-class="navigator-hover" open-type="navigate">
+  
+  <!-- <view class="channel list">
+    <view class="list-item" wx:for='{{channel}}' data-id='{{item.id}}' data-name='{{item.name}}' bindtap='switchTab'>
+      <image class="list-item-img" src="{{item.img}}" mode="aspectFill">
+      </image>
+      <view class="list-item-msg">
+        <view class="list-item-txt">
+          {{item.name}}
+        </view>
+      </view>
+    </view>
+  </view> -->
+
+  <view class="tvc">
+    <navigator class="tvc-item" url="../video/confirm?category=tvc" hover-class="navigator-hover" open-type="navigate">
       <image class="tvc-img" src="{{tvc}}"></image>
     </navigator>
   </view>

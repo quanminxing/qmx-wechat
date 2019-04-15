@@ -1,6 +1,8 @@
+@import '../../style/common.wxss';
+
 .banner {
 	height: 400rpx;
-	padding-bottom: 65rpx;
+	padding-bottom: 7rpx;
 }
 .banner-navigator {
 	width: 100%;
@@ -164,32 +166,44 @@ text-align: center;
 }
 
 /* 临时版 */
-.category {
+.channel {
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  padding: 0 30rpx;
+  /* padding: 0 30rpx; */
 }
-.category-item {
-  width: 334rpx;
-  height: 206rpx;
-  padding: 0 0 24rpx 0;
+.channel-item {
+  position: relative;
+  width: 374rpx;
+  height: 374rpx;
+  padding: 1rpx 0;
 }
-.category-item .category-item-img {
+.channel-item .channel-item-img {
   width: 100%;
   height: 100%;
 }
-.category-tvc {
+.channel-item-msg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+
+.tvc {
   height: 160rpx;
   margin-bottom: 80rpx;
-  padding: 41rpx 30rpx 30rpx 30rpx;
+  padding: 1rpx 0;
 }
-.category-tvc .tvc {
+.tvc .tvc-item {
   width: 100%;
   height: 100%;
 }
-.category-tvc .tvc-img {
+.tvc .tvc-img {
   width: 100%;
   height: 100%;
 }

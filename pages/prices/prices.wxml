@@ -1,0 +1,30 @@
+<!--pages/prices/prices.wxml-->
+<view class="page">
+  <view class="col-list">
+    <view class="col-item pos-rel" wx:for='{{pricesList}}' wx:key='{{item.id}}' data-source='{{item}}' >
+      <image class="col-item-img" src="" mode="aspectFill" src='{{item.short_image}}'></image>
+      <view class="img-mark">
+        <view class="col-item-msg block-center">
+          <view class="price">
+            {{item.price}} 元
+          </view>
+          <view class="name">
+            - {{item.name}} -
+          </view>
+        </view>
+      </view>
+      
+    </view>
+  </view>
+
+  <view class="tvc">
+    <view class="tvc-item pos-rel" url="../video/index" bindtap='toTvc' data-source='{{tvc}}'>
+      <image class="tvc-img" src="{{tvc.img}}"></image>
+      <view class="img-mark">
+        <view class="block-center">
+          更多视频定制
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
