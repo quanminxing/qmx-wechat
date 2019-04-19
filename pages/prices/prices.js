@@ -9,25 +9,11 @@ Page({
 	 * 页面的初始数据
 	 */
 	data: {
-		pricesList: [{
-			id: '3',  // 视频id
-			short_image: '../../images/tvc.png',  // 缩略图
-			category_id: '74',  // 类目id
-			classify_id: '2',  // 分类
-			price: '268',
-			name: '功能展示'
-		},{
-			id: '3',  // 视频id
-			short_image: '../../images/tvc.png',  // 缩略图
-			category_id: '74',  // 类目id
-			classify_id: '2',  // 分类
-			price: '268',
-			name: '功能展示'
-		}],
+		pricesList: [],
 		tvc: {
 			type: 'tvc',
-			img: '../../images/tvc.png',
-			classify_id: '',
+			img: "https://file.qmxpower.com/image/20190419122707.png",
+			classify_id: '2',
 			category_id: ''
 		}
 	},
@@ -36,57 +22,44 @@ Page({
  */
 	onLoad: function (options) {
 		console.log(options)
+		wx.setNavigationBarTitle({
+			title: options.category_name
+		})
+		this.setData({
+			'tvc.category_id': options.category_id
+		})
 		let queryData = {
 			_search: true,
 			category_id: options.category_id,
-			classify_id: 2
+			classify_id: 2,
+			sord: 'asc',
+			sidx: 'price'
 		}
+		console.log(queryData)
 		query('/api/video', queryData).then(res => {
+			console.log('价格页该类目下的模板讲解类视频列表')
+			let resData = res.data.data
+			console.log(resData)
+			this.setData({
+				pricesList: resData
+			})
 
-		}).catch(err => [
 
-		])
+		}).catch(err => {
+			console.log(err)
+		})
 	},
 
-	onReady: function () {
-
-	},
-
-	onShow: function () {
-
-	},
-
-	onHide: function () {
-
-	},
-
-	onUnload: function () {
-
-	},
-
-	/**
-	 * 页面相关事件处理函数
-	 */
-	onPullDownRefresh: function () {
-
-	},
-
-	onReachBottom: function () {
-
+	toTvc(e) {
+		console.log(e.currentTarget.dataset)
+		app.globalData.tabBarParam.tvc = this.data.tvc.category_id;
+		wx.switchTab({
+			url: '/pages/video/index',
+		})
 	},
 
 	onShareAppMessage: function () {
 
-	},
-
-	/**
-	 * 其他事件函数
-	 */
-	toTvc(e) {
-		console.log(e)
-		app.globalData.tabBarParam = {
-
-		}
 	},
 	
 })

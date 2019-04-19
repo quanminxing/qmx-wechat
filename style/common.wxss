@@ -37,7 +37,6 @@
 
 .tvc {
   height: 160rpx;
-  margin-bottom: 80rpx;
   padding: 1rpx 0;
 }
 .tvc .tvc-item {
@@ -48,6 +47,9 @@
   width: 100%;
   height: 100%;
 }
+.tvc .img-mark {
+	/* background-color: rgba(0,0,0,0); */
+}
 
 .pos-rel {
   position: relative;
@@ -56,17 +58,21 @@
   position: absolute;
   top: 50%;
   left: 50%;
+	width: 100%;
   transform: translate(-50%, -50%);
+	padding: 30rpx 50rpx;
   text-align: center;
 }
-
+.list-item-txt {
+	padding: 30rpx;
+}
 .img-mark {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0,0,0,.5);
+  background-color: rgba(0,0,0,.24);
 }
 
 .float-r {
@@ -77,4 +83,7 @@
 }
 .clear {
   overflow: hidden;
+}
+image {
+	vertical-align: middle;
 }

@@ -1,3 +1,4 @@
+/* pages/customized/customized.wxss */
 
 .weui-search-bar {
 border-top:none
@@ -240,9 +241,6 @@ width:120rpx;
     display: none;
 }
 
-.other-content{
-  margin-top: 200rpx
-}
 
 .no-video {
     width: 100vw;
@@ -268,4 +266,8 @@ width:120rpx;
 
 .tvc-content {
     margin-top: 0;
+}
+
+.tuijian-lists {
+	margin: 0;
 }

@@ -7,30 +7,14 @@ Page({
 	data: {
 		bannerSetting: {
 			autoplay: true,
-			interval: 3000,
+			interval: 4000,
 			indicatorDot: true,
 			indicatorColor: 'rgba(255, 255, 255, .6)',
 			indicatorActiveColor: 'rgba(255, 255, 255, 1)'
 		},
 		banner: [],
-		channel: [{
-			img_url: '../../images/category1.png',
-			category_id: '74',
-			name: '美妆'
-		},{
-			img_url: '../../images/category2.png',
-			category_id: '77',
-			name: '食品'
-		},{
-			img_url: '../../images/category3.png',
-			category_id: '76',
-			name: '母婴'
-		},{
-			img: '../../images/category4.png',
-			category_id: '94',
-			name: '小家电'
-		}],
-		tvc:  '../../images/tvc.png',
+		channel: [],
+		'tvcImg':  'https://file.qmxpower.com/image/20190419122706.png',
 		inputShowed: false,
 		inputVal: "",
 		videos: [],
@@ -114,9 +98,9 @@ Page({
 				'Content-Type': 'application/json'
 			},
 			success(res) {
-				// console.log(res)
-				if (!!res.data.results && res.data.results.length > 0) {
-					let banner = res.data.results.sort((a, b) => {
+				console.log(res)
+				if (!!res.data.data && res.data.data.length > 0) {
+					let banner = res.data.data.sort((a, b) => {
 						return b.id - a.id;
 					})
 					console.log(banner)
@@ -139,6 +123,13 @@ Page({
 		// 频道
 		query('/api/channel').then(res => {
 			// setData channel
+			console.log('channelData  :4444444444444444')
+			console.log(res)
+
+			let resData = res.data.data
+			this.setData({
+				channel: resData
+			})
 		}).catch(err => {
 
 		})
@@ -189,5 +180,7 @@ Page({
       activeIndex: e.currentTarget.id
     });
   },
+
+	
 
 });

@@ -3,6 +3,6 @@
       "tx-video": "plugin://txvideo/video"
     },
     "navigationBarTitleText": "视频详情",
-    "navigationBarBackgroundColor": "#09172D",
-    "navigationBarTitleColor": "#fff"
+    "navigationBarBackgroundColor": "#101010",
+    "navigationBarTextStyle": "white"
   }

@@ -1,10 +1,9 @@
 <!--index.wxml-->
 <view class="container">
 
-  <!--输入文字 则隐藏-->
+  <!-- banner -->
   <swiper wx:if='{{banner.length > 0}}' class='banner' autoplay='{{bannerSetting.autoplay}}' circular interval='{{bannerSetting.interval}}' indicator-dots='{{bannerSetting.indicatorDot}}' indicator-color='{{bannerSetting.indicatorColor}}' indicator-active-color='{{bannerSetting.indicatorActiveColor}}'>
     <swiper-item wx:for='{{banner}}'>
-
       <navigator wx:if='{{item.type_id !== 3}}' url='{{item.url}}' hover-class='none' class='banner-navigator' open-type='{{item.type_id === 2 ? "switchTab" : "navigate"}}'>
         <image src='{{item.img_url}}' class='banner-img' mode='aspectFill'></image>
       </navigator>
@@ -17,8 +16,10 @@
     </swiper-item>
   </swiper>
 
+
+	<!-- 频道 -->
   <view class="channel list">
-    <navigator class="list-item pos-rel" wx:for='{{channel}}' url='../prices/prices?category_id={{item.category_id}}'>
+    <navigator class="list-item pos-rel" wx:for='{{channel}}' url='{{item.url}}'>
       <image class="list-item-img" src="{{item.img_url}}" mode="aspectFill">
       </image>
       <view class="img-mark">
@@ -44,8 +45,15 @@
   </view> -->
 
   <view class="tvc">
-    <navigator class="tvc-item" url="../video/confirm?category=tvc" hover-class="navigator-hover" open-type="navigate">
-      <image class="tvc-img" src="{{tvc}}"></image>
+    <navigator class="tvc-item pos-rel" url="../video/confirm?category=tvc" hover-class="navigator-hover" open-type="navigate">
+      <image class="tvc-img" src="{{tvcImg}}"></image>
+			<view class="img-mark">
+        <view class="list-item-msg block-center">
+          <view class="list-item-txt">
+            TVC、视频定制服务
+          </view>
+        </view>
+      </view>
     </navigator>
   </view>
 

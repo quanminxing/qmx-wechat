@@ -83,8 +83,16 @@ width:55rpx;
   position:absolute;
 top:calc(50% - 23rpx);
 }
-.video-box{
-  width: 100%
+.video-box {
+	display: flex;
+}
+.video-box navigator{
+  display: flex;
+	align-content: center;
+	justify-content: flex-start;
+}
+.video-lists .video-title {
+	height: 90rpx;
 }
 .video-item{
   width:298rpx;

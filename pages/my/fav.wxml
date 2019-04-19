@@ -27,16 +27,16 @@
           </view>
         </view>
 
-        <navigator url="/pages/video/detail?id={{item.video_id}}" data-video="{{item.video_id}}">
+        <navigator url="/pages/video/detail?video_id={{item.video_id}}" data-video="{{item.video_id}}">
           <view class="video-item">
                     <!--
                     <tx-video wx-if="{{item.isqq == true}}" vid="{{item.url}}" playerid="111"></tx-video>
 
                     <video wx-if="{{item.isqq == false}}" src="{{item.url}}" binderror="videoErrorCallback"></video>-->
-                    <image class="short_image" src="{{item.short_image}}"><text>{{item.time}}</text></image>
+            <image class="short_image" src="{{item.short_image}}"><text>{{item.time}}</text></image>
 
           </view>
-          <view class="video-item">
+          <view class="video-item video-caption">
             <view class="video-title">{{item.name}}</view>
             <view class="view-desc">
                       <text>{{video.usage_name || '其他'}}</text> <text>{{video.style_name || '其他'}}</text>

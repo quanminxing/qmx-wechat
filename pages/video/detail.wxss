@@ -1,27 +1,66 @@
 /* pages/video/detail.wxss */
+@import '../../style/common.wxss';
 page {
-  background-color: #09172D;
+  background-color: #101010;
+  color: #fff;
 }
 .summarry {
-  padding: 0 32rpx;
+  padding: 0 32rpx 22rpx 32rpx;
   font-size: 20px;
   font-weight: 500;
+  color: #fff;
 }
 .summarry .price {
   color: #f15348;
 }
 .summarry .name {
-  max-width: 550rpxz;
-  color: #fff;
+  max-width: 550rpx;
 }
 .summarry .price, .summarry .name {
-  height: 44px;
-  line-height: 44px;
+  height: 28px;
+	font-size: 20px;
+	font-weight: 500;
+  line-height: 28px;
 }
 
+.baseInfo {
+	padding: 48rpx 30rpx;
+  color: #fff;
+}
+.baseInfo-header {
+	font-size: 16px;
+	line-height: 25px;
+}
+.baseInfo-content {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	font-size: 14px;
+}
+.baseInfo-item {
+	width: 300rpx;
+	padding: 16rpx 0;
+}
+.baseInfo-item-left {
+	color: #ccc;
+}
 
-
-
+.detail {
+  color: #fff;
+}
+.detail-header {
+	text-align: center;
+	line-height: 48px;
+}
+.detail .item-img {
+	width: 100%;
+	vertical-align: middle;
+}
+.detail .play-icon {
+	width: 112rpx;
+	height: 112rpx;
+}
 
 video{
   width: 100%;
@@ -47,7 +86,7 @@ video{
   height:44rpx
 }
 .container.video-box{
-  padding:0 0rpx
+  padding: 0;
 }
 
 .key-line text.video-main-title{
@@ -76,7 +115,7 @@ margin-bottom: 13rpx
   color:rgba(241,83,72,1);
 }
 .other-content{
-  
+  margin: 32rpx 0 0 0;
 }
 .video-info-box{
   position: relative;
@@ -116,26 +155,25 @@ width:80%;
   height:110rpx;
   line-height: 110rpx;
   font-size:36rpx;
-font-family:PingFangSC-Medium;
-font-weight:500;
-color:rgba(53,53,53,1);
+	font-family:PingFangSC-Medium;
+	font-weight:500;
+	color:rgba(53,53,53,1);
 }
 
 
 .action-button{
   position: fixed;
   bottom:0;
-  height:98rpx;
+  height:100rpx;
   font-size:32rpx;
   font-family:PingFangSC-Regular;
   font-weight:400;
-  color:rgba(53,53,53,1);
+  color:#fff;
   line-height: 98rpx;
   text-align: center;
   width:100%;
-  border-top:1px solid #EEEEEE;
   z-index: 999;
-  background: white;
+  background: #101010;
   display: flex;
   flex-direction: row;
   justify-content: space-between;

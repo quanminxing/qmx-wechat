@@ -94,7 +94,7 @@ const query = function (url, data, method='GET') {
 			data: data || '',
 			success(res) {
 				console.log(res)
-				if(res.status === 200) {
+				if(res.data.status === 200) {
 					resolve(res)
 				} else {
 					reject(res)

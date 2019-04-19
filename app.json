@@ -21,12 +21,13 @@
     "pages/account/contact",
     "pages/account/feedback",
     "pages/account/webview",
-		"pages/prices/prices"
+		"pages/prices/prices",
+		"pages/customized/customized"
   ],
   "window": {
     "backgroundTextStyle": "dark",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "全民星短视频",
+    "navigationBarTitleText": "宜拍短视频工厂",
     "navigationBarTextStyle": "black",
     "backgroundColor": "#fff"
   },

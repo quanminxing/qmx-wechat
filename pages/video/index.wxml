@@ -4,7 +4,7 @@
     {{tvcTemp}}
   </view> -->
 
-  <block wx:if='{{!tvc}}'>
+  <block>
     <view class="nav">
       <view class="nav-son {{shownavindex == 1? 'active' : ''}}" bindtap="listqy" data-nav="1">
         <view class="content">{{platform_name == '' ? '平台' : platform_name}}</view>
@@ -59,32 +59,33 @@
       </view>
     </view>
     <view class="fullbg {{isfull ?'fullopacity':''}}" bindtap="hidebg"></view>
-  </block>
+  
 
-  <view class="weui-search-bar">
+		<view class="weui-search-bar">
 
-    <view class="weui-search-bar__form">
-      <view class="weui-search-bar__box">
-        <!--搜索icon + input + 叉叉icon -->
-        <icon class="weui-icon-search_in-box" type="search" size="14"></icon>
+			<view class="weui-search-bar__form">
+				<view class="weui-search-bar__box">
+					<!--搜索icon + input + 叉叉icon -->
+					<icon class="weui-icon-search_in-box" type="search" size="14"></icon>
 
-        <input type="text" bindfocus="initKeyword" bindinput="inputTyping" class="weui-search-bar__input" placeholder="搜索" value="{{inputVal}}" focus="{{inputShowed}}" />
-        <view class="weui-icon-clear" wx:if="{{inputVal.length > 0}}" bindtap="clearInput">
-          <icon type="clear" size="14"></icon>
-        </view>
-      </view>
-      <!--focus时 搜索icon-->
-      <label class="weui-search-bar__label" hidden="{{inputShowed}}" bindtap="showInput">
-        <icon class="weui-icon-search" type="search" size="14"></icon>
-        <view class="weui-search-bar__text">搜索</view>
-      </label>
-    </view>
+					<input type="text" bindfocus="initKeyword" bindinput="inputTyping" class="weui-search-bar__input" placeholder="搜索" value="{{inputVal}}" focus="{{inputShowed}}" />
+					<view class="weui-icon-clear" wx:if="{{inputVal.length > 0}}" bindtap="clearInput">
+						<icon type="clear" size="14"></icon>
+					</view>
+				</view>
+				<!--focus时 搜索icon-->
+				<label class="weui-search-bar__label" hidden="{{inputShowed}}" bindtap="showInput">
+					<icon class="weui-icon-search" type="search" size="14"></icon>
+					<view class="weui-search-bar__text">搜索</view>
+				</label>
+			</view>
 
-  </view>
+		</view>
+	</block>
 
 
   <!--输入文字 则隐藏-->
-  <view class="other-content {{!!tvc ? 'tvc-content' : ''}}">
+  <view class="other-content">
 
     <!--推荐歌单 >>>>-->
     <scroll-view class="tuijian-lists">
@@ -92,12 +93,7 @@
       <view class="lists-content">
 
         <block wx:if='{{videos.length > 0}}' wx:for="{{videos}}" wx:key="*this">
-          <navigator url="/pages/video/detail?id={{item.id}}" class="video-content" hover-class="weui-grid_active" bindtap='sendVideoData' data-video="{{item.id}}">
-
-            <!--
-                    <tx-video wx-if="{{item.isqq == true}}" vid="{{item.url}}" playerid="111"></tx-video>
-
-                    <video wx-if="{{item.isqq == false}}" src="{{item.url}}" binderror="videoErrorCallback"></video>-->
+          <navigator url="/pages/video/detail?video_id={{item.id}}" class="video-content" hover-class="weui-grid_active" bindtap='sendVideoData' data-video="{{item.id}}">
             <image mode="widthFix" class="short_image" src="{{item.short_image}}">
               <text>{{item.time}}</text>
             </image>

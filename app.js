@@ -10,8 +10,9 @@ App({
     
     wx.getUserInfo({
       withCredentials: true,
-      success: function (res) {
+      success: res => {
         //此处为获取微信信息后的业务方法
+				this.login();
       },
       fail: function () {
         //获取用户信息失败后。请跳转授权页面
@@ -86,6 +87,7 @@ App({
     const that = this;
     wx.login({
       success: function (e) {
+				console.log(e.code)
         let opts = {
           url: that.globalData.domain + '/api/login',
           data: {
@@ -94,7 +96,9 @@ App({
           method: 'POST',
           header: { 'Content-Type': 'application/x-www-form-urlencoded' },
           success: function (res) {
+						console.log(res)
             that.globalData.openid = res.data.openid;
+						console.log(that)
             typeof cb == "function" && cb(res.data.openid);
           },
           fail: function (res) {
@@ -106,11 +110,9 @@ App({
     });
   },
 
-	// const show
-
   globalData:{
     userInfo:null,
-    tabBarParam: {},
+    tabBarParam: {},  // switchTab 跳转参数
     //domain: 'http://192.168.2.183',
     //domain:'http://localhost:7001'
     domain:'https://admin.qmxpower.com',

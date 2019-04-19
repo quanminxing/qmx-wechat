@@ -289,3 +289,6 @@ position:relative
   width: 100%
 }
 
+image {
+	vertical-align: middle;
+}

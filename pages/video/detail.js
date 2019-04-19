@@ -5,33 +5,25 @@ Page({
    * 页面的初始数据
    */
   data: {
-    video_id:undefined,
-    reVideos:[],
+    video_id: null,
+		baseInfo: [],
     isFav: false,
     more:false,
 		disabled: true
   },
 
-  showmore: function () {
-    this.setData({
-      more: true
-    })
-  },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
   onLoad: function (options) {
-    //wx.setStorageSync('info', this.data.info);
-    // var data = wx.getStorageSync('video');
+    console.log(options)
     wx.showLoading({
       title: '加载中',
       mask: true
     });
-    const video_id = options.id;
+    const video_id = options.video_id;
     const app = getApp();
     const openid = app.globalData.openid;
     const that = this;
+		console.log(app)
+		console.log(openid)
     if (!openid) {
       app.login(function (openid) {
         that.recordLog(openid, video_id);
@@ -40,69 +32,72 @@ Page({
       that.recordLog(openid, video_id);
     }
 
-    const id = options.id;
+    const id = options.video_id;
+		console.log(options)
+		console.log(app)
+		console.log(app.globalData.domain + '/api/video?_search=true&id=' + id)
     wx.request({
-      url: app.globalData.domain + '/video/detail?id=' + id,
-      header: {
-        'Content-Type': 'application/json'
-      },
+      url: app.globalData.domain + '/api/video?_search=true&id=' + id,
       success: function (res) {
         console.log(res)
-        let video = res.data.detail[0];
-        
-        if(video['demo_pic']){
-          video['demo_pics'] = video['demo_pic'].split('|')
-        }else{
-          video['demo_pics'] = []
-        }
+				if(res.data.data.length > 0) {
+					let video = res.data.data[0];
+					wx.setNavigationBarTitle({
+						title: video.name,
+					})
+					console.log('有视频数据')
+					that.data.baseInfo = [{
+						label: '类目',
+						name: video.categroy_name
+					}, {
+						label: '视频比例',
+						name: video.scale_id
+					}, {
+						label: '平台',
+						name: video.platform_name
+					}, {
+						label: '时长',
+						name: video.time
+					}, {
+						label: '栏目',
+						name: video.column_name
+					}]
+					
+					video['demo_pics'] = []
+					if (video['demo_pic']) {
+						// video['demo_pics'] = video['demo_pic'].split('|')
+						video['demo_pic'].split('|').forEach(item => {
+							console.log(item)
+							if(!!item) {
+								let arrayItem = item.split(',')
+								video['demo_pics'].push({
+									img_url: arrayItem[0],
+									video_id: arrayItem[1] || ''
+								})
+							}
+							
+						})
+						console.log(video['demo_pics'])
+					} else {
+						video['demo_pics'] = []
+					}
 
-        if (video.keystring) {
-          video.keystring = video.keystring.split('\n');
-          video.keystring = video.keystring.map((key) => {
-            return key.split('|')
-          });
-        } else {
-          video.keystring = '';
-        }
+					if (video.url && video.url.indexOf('embed') !== -1) {
+						video.url = video.url.match(/vid=([^&]+)/)[1];
+						video.isqq = true;
+					} else {
+						video.isqq = false;
+					}
 
-        if (video.url && video.url.indexOf('embed') !== -1) {
-          video.url = video.url.match(/vid=([^&]+)/)[1];
-          video.isqq = true;
-        } else {
-          video.isqq = false;
-        }
-
-        that.setData({
-          video,
-          video_id,
-					disabled: false
-        });
-        
-        // wx.request({
-        //   url: app.globalData.domain + '/video/listByRecommand?category_id=' + video.category_id,
-        //   header: {
-        //     'Content-Type': 'application/json'
-        //   },
-        //   success: function (res) {
-        //     let videos = [];
-        //     res.data.rows.forEach((d) => {
-        //       if (d.url && d.url.indexOf('embed') !== -1) {
-        //         d.url = d.url.match(/vid=([^&]+)/)[1];
-        //         d.isqq = true;
-        //       } else {
-        //         d.isqq = false;
-        //       }
-        //       videos.push(d);
-        //     });
-        //     that.setData({
-        //       reVideos: videos,
-        //     });
-        //   }
-
-        // });
-
+					that.setData({
+						video,
+						video_id,
+						disabled: false,
+						baseInfo: that.data.baseInfo
+					});
+				}
         wx.hideLoading();
-        wx.setStorageSync('video', video);
+        // wx.setStorageSync('video', video);
       }
     });
     
@@ -110,8 +105,10 @@ Page({
   addFav(){
     const video_id = this.data.video_id;
     const app = getApp();
+		console.log(app)
     const openid = app.globalData.openid;
     const that = this;
+		console.log(openid)
     if (!openid) {
       app.login(function (openid) {
         that.fav(openid, video_id);
@@ -125,6 +122,7 @@ Page({
     const app = getApp();
     const openid = app.globalData.openid;
     const that = this;
+		console.log(openid)
     if (!openid) {
       app.login(function (openid) {
         that.fav(openid, video_id);
@@ -134,9 +132,12 @@ Page({
     }
   },
   fav(openid,video_id){
+
+		console.log(openid)
     const app = getApp();
     const domain = app.globalData.domain;
     const that = this;
+		// console.log(this.data.isFav)
     wx.request({
       url: domain + '/api/fav',
       header: {
@@ -149,8 +150,8 @@ Page({
       },
       method: 'POST',
       success: function (res) {
-        
-        if(!that.data.isFav){
+        console.log(res)
+        if(that.data.isFav){
           wx.showToast({
             title: '收藏成功',
             icon: 'success',
@@ -163,9 +164,9 @@ Page({
             duration: 1000
           });
         }
-        that.setData({
-          isFav:!that.data.isFav
-        });
+				that.setData({
+					isFav: !that.data.isFav
+				});
         console.log('收藏成功！openid:' + openid + ', id:' + video_id);
       }
 
@@ -207,52 +208,17 @@ Page({
     });
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
+	toVideoDetail(e) {
+		console.log(e.currentTarget.dataset.origin)
+		let originData = e.currentTarget.dataset.origin;
+		if (!!originData.video_id && originData.video_id !== 'null') {
+			wx.navigateTo({
+				url: '/pages/video/detail?video_id=' + originData.video_id,
+			})
+		}
+	},
+	onShareAppMessage: function () {
 
-  },
+	},
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
 })

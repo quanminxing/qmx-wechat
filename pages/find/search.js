@@ -130,16 +130,17 @@ Page({
     });
 
     wx.request({
-      url: domain + '/video/searchByKeyword',
+      url: domain + '/api/video',
       data: {
-        keyword: this.data.inputVal.trim()
+				_search: true,
+				name: this.data.inputVal.trim()
       },
       method: 'GET',
       success: function (res) {
         console.log(res.data);
         wx.hideLoading();
         let videos = [];
-        res.data.rows.forEach((d) => {
+        res.data.data.forEach((d) => {
           if (d.url && d.url.indexOf('embed') !== -1) {
             d.url = d.url.match(/vid=([^&]+)/)[1];
             d.isqq = true;
@@ -270,5 +271,9 @@ Page({
       activeIndex: e.currentTarget.id
     });
   },
+
+	onShareAppMessage: function () {
+
+	},
 
 });

@@ -5,7 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+		businessImg: 'https://file.qmxpower.com/image/20190419134506.jpg'
   },
 
   /**

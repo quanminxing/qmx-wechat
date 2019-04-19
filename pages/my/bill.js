@@ -99,4 +99,8 @@ Page({
       bills: bills,
     });
   },
+
+	onShareAppMessage: function () {
+
+	},
 });

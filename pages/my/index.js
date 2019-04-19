@@ -45,5 +45,8 @@ Page({
       title: '我的音乐'
     })
      
-  }
+  },
+	onShareAppMessage: function () {
+
+	},
 })

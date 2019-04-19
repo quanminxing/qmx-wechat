@@ -1,0 +1,39 @@
+<!--index.wxml-->
+<view class="container video-box">
+  
+  <view class="other-content">
+    <scroll-view class="tuijian-lists">
+      <view class="lists-content">
+
+        <block wx:if='{{videos.length > 0}}' wx:for="{{videos}}" wx:key="*this">
+          <navigator url="/pages/video/detail?video_id={{item.id}}" class="video-content" hover-class="weui-grid_active" bindtap='sendVideoData' data-video="{{item.id}}">
+            <image mode="widthFix" class="short_image" src="{{item.short_image}}">
+              <text>{{item.time}}</text>
+            </image>
+
+            <view class="video-title">{{item.name}}</view>
+            <view class="view-desc">
+              <text>{{video.usage_name || '其他'}}</text>
+              <text>{{video.style_name || '其他'}}</text>
+            </view>
+            <view class="video-price">¥{{item.price}}</view>
+          </navigator>
+        </block>
+        <block wx:if='{{videos.length === 0}}'>
+          <view class="no-video">
+            <image class="no-video-icon" src="../../images/video-none.png" mode="widthFix"></image>
+            <view class="no-video-text">
+              目前没有符合筛选的视频！
+            </view>
+          </view>
+        </block>
+        
+
+      </view>
+
+    </scroll-view>
+
+  </view>
+
+
+</view>

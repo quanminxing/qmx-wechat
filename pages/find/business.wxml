@@ -1,6 +1,12 @@
 <!--pages/find/business.wxml-->
 
-<view class="intro-title">小程序的业务介绍</view>
+<view class='container'>
+	<image wx:for='{{businessImgs}}' wx:key='{{index}} + "business"' src='{{item}}' mode='widthFix'></image>
+</view>
+
+
+
+<!-- <view class="intro-title">小程序的业务介绍</view>
 
 <view class="time">时间：2018.11.18</view>
 <view class="box-content">
@@ -17,4 +23,4 @@
   <text class="text-box">
   优秀团队的成员来自于阿里巴巴集团和湖南卫视。
   </text>
-</view>
+</view> -->

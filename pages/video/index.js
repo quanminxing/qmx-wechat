@@ -1,14 +1,10 @@
 //index.js
-//获取应用实例
-// 个人网易云音乐 ID  66919655
-
-
 var cityData = require('../../utils/city.js');
 
 var app = getApp()
 Page({
   data: {
-    tvc: true,
+    tvc: false,
     tvcTemp: '类目定制视频列表',
     inputShowed: false,
     inputVal: "",
@@ -17,7 +13,8 @@ Page({
     sliderOffset: 30,
     sliderLeft: 0,
     videos: [],
-
+		nv: '',
+		qy: '',
     content: [],
     nv: ['衣服', '裤子', '内衣', '服饰', '衣服', '裤子', '内衣', '服饰', '衣服', '裤子', '内衣', '服饰'],
     px: ['默认排序', '离我最近', '价格最低', '价格最高'],
@@ -30,22 +27,21 @@ Page({
     nzshow: false,
     pxshow: false,
     isfull: false,
-    cityleft: cityData.getCity(),
+    cityleft: {},
     citycenter: {},
     cityright: {},
     select1: '',
     select2: '',
     shownavindex: '',
     search:{
-      page: 1,
-      rows: 10,
+			pageNum: 1,
+      pageSize: 20,
+			sidx: 'price',
+			sord: 'asc'
     },
     usage_name:'',
     category_name:'',
     platform_name:''
-  },
-  onShow: function () {
-    wx.hideLoading()
   },
 
   onReachBottom: function(){
@@ -55,16 +51,18 @@ Page({
       mask: true
     });
     let videos = that.data.videos;
-    that.data.search.page+=1;
+		that.data.search.pageNum+=1;
+		that.data.search._search = true;
+		that.data.search.classify_id='1,3';
     wx.request({
-      url: app.globalData.domain + '/video/listByFilter',
+			url: app.globalData.domain + '/api/video',
       header: {
         'Content-Type': 'application/json'
       },
       data: that.data.search,
       success: function (res) {
         let v = [];
-        res.data.rows.forEach((d) => {
+        res.data.data.forEach((d) => {
           // 判断用什么播放器播放
           if (d.url && d.url.indexOf('embed') !== -1) {
             d.url = d.url.match(/vid=([^&]+)/)[1];
@@ -91,8 +89,9 @@ Page({
       url: '/pages/find/search',
     })
   },
-  onLoad: function () {
 
+  onLoad: function () {
+		console.log('onshow3333333333333333333333333')
     var that = this;
 
     const app = getApp();
@@ -102,7 +101,7 @@ Page({
       title: '加载中',
       mask: true
     });
-    wx.request({
+    wx.request({  // 风格
       url: app.globalData.domain + '/style',
       header: {
         'Content-Type': 'application/json'
@@ -133,7 +132,7 @@ Page({
       }
     });
 
-    wx.request({
+    wx.request({  // 平台
       url: app.globalData.domain + '/platform',
       header: {
         'Content-Type': 'application/json'
@@ -146,7 +145,7 @@ Page({
     });
 
     // 搜索视频
-    wx.request({
+    wx.request({ //
       url: app.globalData.domain + '/column/listall',
       header: {
         'Content-Type': 'application/json'
@@ -158,7 +157,7 @@ Page({
       }
     });
 
-    wx.request({
+    wx.request({ // 类目
       url: app.globalData.domain + '/category',
       header: {
         'Content-Type': 'application/json'
@@ -181,15 +180,20 @@ Page({
         console.log(categoryId)
         if(categoryId === null || categoryId === undefined) {
           // 视频搜索过滤
+					that.data.search._search = true;
+					that.data.search.classify_id = '1,3';
+					
+					console.log(that.data.search)
           wx.request({
-            url: app.globalData.domain + '/video/listByFilter',
+            url: app.globalData.domain + '/api/video',
             header: {
               'Content-Type': 'application/json'
             },
             data: that.data.search,
             success: function (res) {
               let videos = [];
-              res.data.rows.forEach((d) => {
+							console.log(res)
+              res.data.data.forEach((d) => {
   
                 let categoryChoose = that.data.tabs.filter((category) => {
                   return category.id === d.category_id
@@ -213,15 +217,14 @@ Page({
   
           });
         } else {
-
-          // 临时版本
           const domain = app.globalData.domain;
           
           let categoryName = app.globalData.tabBarParam.category_name;
           console.log(categoryId)
           console.log(categoryName)
           const search = that.data.search;
-          search.page = 1;
+					search._search = true;
+					search.classify_id = '1,3';
           search.category_id = categoryId;
           if (categoryId == 0){
             delete search.category_id
@@ -233,14 +236,14 @@ Page({
           });
           console.log(search)
           wx.request({
-            url: domain + '/video/listByFilter',
+            url: domain + '/api/video',
             data:search,
             header: {
               'Content-Type': 'application/json'
             },
             success: function (res) {
 
-              res.data.rows = res.data.rows.map((d) => {
+              res.data.data = res.data.data.map((d) => {
                 // 判断用什么播放器播放
                 if (d.url.indexOf('embed') !== -1) {
                   d.url = d.url.match(/vid=([^&]+)/)[1];
@@ -252,7 +255,7 @@ Page({
               });
               wx.hideLoading();
               that.setData({
-                videos: res.data.rows,
+                videos: res.data.data,
                 nzopen: false,
                 isfull:false,
                 shownavindex: 0,
@@ -266,82 +269,7 @@ Page({
         
       }
     });
-    
-  },
-
-// onShow() {
-//   var that = this;
-
-//     const app = getApp();
-//     console.log(app.globalData)
-//     let categoryId = app.globalData.tabBarParam.category_id;
-//     console.log(categoryId)
-//     if(categoryId === null || categoryId === undefined) {
-//     } else {
-//       const domain = app.globalData.domain;
-      
-//       let categoryName = app.globalData.tabBarParam.category_name;
-//       console.log(categoryId)
-//       console.log(categoryName)
-//       const search = that.data.search;
-//       search.page = 1;
-//       search.category_id = categoryId;
-//       if (categoryId == 0){
-//         delete search.category_id
-//       }
-//       const queryString = '';
-//       wx.showLoading({
-//         title: '加载中',
-//         mask: true
-//       });
-//       console.log(search)
-//       wx.request({
-//         url: domain + '/video/listByFilter',
-//         data:search,
-//         header: {
-//           'Content-Type': 'application/json'
-//         },
-//         success: function (res) {
-
-//           res.data.rows = res.data.rows.map((d) => {
-//             // 判断用什么播放器播放
-//             if (d.url.indexOf('embed') !== -1) {
-//               d.url = d.url.match(/vid=([^&]+)/)[1];
-//               d.isqq = true;
-//             } else {
-//               d.isqq = false;
-//             }
-//             return d
-//           });
-// 					wx.pageScrollTo({
-// 						scrollTop: 0,
-// 						duration: 0,
-// 					})
-//           wx.hideLoading();
-//           that.setData({
-//             videos: res.data.rows,
-//             nzopen: false,
-//             isfull:false,
-//             shownavindex: 0,
-//             category_name: categoryName,
-//             search
-//           });
-//           app.globalData.tabBarParam = {}
-//         }
-//       });
-//     }
-// },
-
-  sendVideoData(e) {
-    return false
-    let videoData = this.data.videos.filter((d) => { return d.id === e.currentTarget.dataset.video });
-    wx.setStorageSync('video', videoData);
-    /*
-    wx.setStorageSync('brief', {
-      parameter: this.data.parameter,
-      category: this.data.category,
-      keys: this.data.keys,
-    });*/
+		wx.hideLoading()
   },
 
   chooseCategory:function(e){
@@ -350,7 +278,7 @@ Page({
     let category_id = e.currentTarget.dataset.id;
     let category_name = e.currentTarget.dataset.name;
     const that = this;
-    let url = domain + '/video/listByFilter';
+		let url = domain + '/api/video';
 
     console.log('chooseCategory')
 
@@ -359,7 +287,9 @@ Page({
     }
     
     const search = this.data.search;
-    search.page = 1;
+		search._search = true;
+		search.classify_id = '1,3';
+		search.pageNum = 1;
     search.category_id = category_id;
     if (category_id == 0){
       delete search.category_id
@@ -369,7 +299,7 @@ Page({
       title: '加载中',
       mask: true
     });
-    
+		console.log(search)
     wx.request({
       url,
       data:search,
@@ -378,7 +308,7 @@ Page({
       },
       success: function (res) {
 
-        res.data.rows = res.data.rows.map((d) => {
+        res.data.data = res.data.data.map((d) => {
           // 判断用什么播放器播放
           if (d.url.indexOf('embed') !== -1) {
             d.url = d.url.match(/vid=([^&]+)/)[1];
@@ -390,7 +320,7 @@ Page({
         });
         wx.hideLoading();
         that.setData({
-          videos: res.data.rows,
+          videos: res.data.data,
           nzopen: false,
           isfull:false,
           shownavindex: 0,
@@ -411,9 +341,11 @@ Page({
       usage_name = '功能'
     }
     const that = this;
-    let url = domain + '/video/listByFilter';
+		let url = domain + '/api/video';
     const search = this.data.search;
-    search.page = 1;
+		search._search = true;
+		search.classify_id = '1,3';
+		search.pageNum = 1;
     search.usage_id = usage_id;
     if (usage_id == 0) {
       delete search.usage_id
@@ -430,7 +362,7 @@ Page({
       },
       success: function (res) {
 
-        res.data.rows = res.data.rows.map((d) => {
+        res.data.data = res.data.data.map((d) => {
           // 判断用什么播放器播放
           if (d.url.indexOf('embed') !== -1) {
             d.url = d.url.match(/vid=([^&]+)/)[1];
@@ -442,7 +374,7 @@ Page({
         });
         wx.hideLoading();
         that.setData({
-          videos: res.data.rows,
+          videos: res.data.data,
           pxopen: false,
           isfull: false,
           shownavindex:0,
@@ -459,7 +391,7 @@ Page({
     const domain = app.globalData.domain;
     let style_id = e.currentTarget.dataset.id;
     const that = this;
-    let url = domain + '/video/listByStyle?style_id=' + style_id
+		let url = domain + '/api/video/?_search=true&classify_id=1,3&style_id=' + style_id
     wx.showLoading({
       title: '加载中',
       mask: true
@@ -471,7 +403,7 @@ Page({
       },
       success: function (res) {
 
-        res.data.rows = res.data.rows.map((d) => {
+        res.data.data = res.data.data.map((d) => {
           // 判断用什么播放器播放
           if (d.url.indexOf('embed') !== -1) {
             d.url = d.url.match(/vid=([^&]+)/)[1];
@@ -502,7 +434,7 @@ Page({
     if (category_id == 0) {
       url = domain + '/video/listByHot';
     } else {
-      url = domain + '/video/listByCategory?category_id=' + category_id
+			url = domain + '/api/video?_search=true&classify_id=1,3&category_id=' + category_id
     }
     wx.showLoading({
       title: '加载中',
@@ -515,7 +447,7 @@ Page({
       },
       success: function (res) {
 
-        res.data.rows = res.data.rows.map((d)=>{
+        res.data.data = res.data.data.map((d)=>{
           // 判断用什么播放器播放
           if (d.url.indexOf('embed') !== -1) {
             d.url = d.url.match(/vid=([^&]+)/)[1];
@@ -527,7 +459,7 @@ Page({
         });
         wx.hideLoading();
         that.setData({
-          videos: res.data.rows,
+          videos: res.data.data,
         });
       }
 
@@ -671,7 +603,9 @@ Page({
   },
   selectleft: function (e) {
     const search = this.data.search;
-    search.page = 1;
+		search._search = true;
+		search.classify_id='1,3'
+		search.pageNum = 1;
     let platform_name = e.target.dataset.city;
     const that = this;
 
@@ -686,7 +620,7 @@ Page({
       });
       const app = getApp();
       const domain = app.globalData.domain;
-      let url = domain + '/video/listByFilter'
+			let url = domain + '/api/video'
       wx.request({
         url,
         data: search,
@@ -695,7 +629,7 @@ Page({
         },
         success: function (res) {
 
-          res.data.rows = res.data.rows.map((d) => {
+          res.data.data = res.data.data.map((d) => {
             // 判断用什么播放器播放
             if (d.url.indexOf('embed') !== -1) {
               d.url = d.url.match(/vid=([^&]+)/)[1];
@@ -707,7 +641,7 @@ Page({
           });
           wx.hideLoading();
           that.setData({
-            videos: res.data.rows,
+            videos: res.data.data,
             qyopen: false,
             qyshow: false,
             isfull: false,
@@ -738,10 +672,12 @@ Page({
     let platform_name = e.currentTarget.dataset.name;
     let index = e.currentTarget.dataset.index;
     const search = this.data.search;
-    search.page = 1;
+		search._search = true;
+		search.classify_id='1,3'
+		search.pageNum = 1;
     search.column_id = column_id;
     const that = this;
-    let url = domain + '/video/listByFilter'
+		let url = domain + '/api/video'
     wx.showLoading({
       title: '加载中',
       mask: true
@@ -760,7 +696,7 @@ Page({
       },
       success: function (res) {
 
-        res.data.rows = res.data.rows.map((d) => {
+        res.data.data = res.data.data.map((d) => {
           // 判断用什么播放器播放
           if (d.url.indexOf('embed') !== -1) {
             d.url = d.url.match(/vid=([^&]+)/)[1];
@@ -772,7 +708,7 @@ Page({
         });
         wx.hideLoading();
         that.setData({
-          videos: res.data.rows,
+          videos: res.data.data,
           qyopen: false,
           qyshow: false,
           isfull: false,
@@ -797,7 +733,10 @@ Page({
       isfull: false,
       shownavindex: 0
     })
-  }
+  },
+	onShareAppMessage: function () {
+
+	},
 
 
 });

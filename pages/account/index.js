@@ -76,4 +76,8 @@ Page({
       }
     });
   },
+
+	onShareAppMessage: function () {
+
+	}
 })

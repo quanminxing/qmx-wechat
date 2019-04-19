@@ -140,46 +140,55 @@ submit() {
 // 请求页面数据
 requestData(e, that, openId) {
 	// 样片数据请求
-	wx.request({
-		url: app.globalData.domain + '/video/detail?id=' + e.id,
-		success(res) {
-			const video = res.data.detail[0];
-			if (!!video) {
-				let keystrings = [];
-				if (!!video.keystring) {
-					keystrings = video.keystring.replace(/^\s+|\s+$/g, '')
-					keystrings = keystrings.split(/\n+/).map((item) => {
-						if (!item) return
-						const keystring = item.split('|')
-						const keyItem = {
-							name: keystring[0].trim(),
-							value: keystring[1].trim() || ''
+	console.log(e)
+	if(e.category !== 'tvc') {
+		wx.request({
+			url: app.globalData.domain + '/api/video?_search=true&id=' + e.id,
+			success(res) {
+				console.log(res)
+				if (res.data.data.length > 0) {
+					const video = res.data.data[0];
+					if (!!video) {
+						let keystrings = [];
+						if (!!video.keystring) {
+							keystrings = video.keystring.replace(/^\s+|\s+$/g, '')
+							keystrings = keystrings.split(/\n+/).map((item) => {
+								if (!item) return
+								const keystring = item.split('|')
+								const keyItem = {
+									name: keystring[0].trim(),
+									value: keystring[1].trim() || ''
+								}
+								return keyItem;
+							});
 						}
-						return keyItem;
-					});
-				}
-				that.setData({
-					video: {
-						video_id: video.video_id,
-						name: video.video_name,
-						platform: video.platform_name,
-						platform_id: video.platform_id,
-						column: video.column_name,
-						column_id: video.column_id,
-						category: video.category_name,
-						category_id: video.category_id,
-						keystrings: keystrings,
-						price: video.price.toFixed(2)
+						that.setData({
+							video: {
+								video_id: video.video_id,
+								name: video.name,
+								platform: video.platform_name,
+								platform_id: video.platform_id,
+								column: video.column_name,
+								column_id: video.column_id,
+								category: video.category_name,
+								category_id: video.category_id,
+								keystrings: keystrings,
+								price: video.price.toFixed(2)
+							}
+						})
 					}
-				})
+				}
+
 			}
-		}
-	})
+		})
+	}
+	
 
 	// 用户上一个订单信息录入
 	wx.request({
 		url: app.globalData.domain + '/bill/listByUser?openid=' + openId + '&pageSize=1&pageNum=1',
 		success(res) {
+			console.log(res)
 			let data = res.data.rows[0]
 			briefInfo = data ? data : briefInfo;
 			for (let key in briefInfo) {
@@ -193,6 +202,9 @@ requestData(e, that, openId) {
 				formInfo: that.data.formInfo
 			});
 			briefInfo.comment = '';
+		},
+		fail(err) {
+			console.log(err)
 		}
 	})
 	// 日志
@@ -316,5 +328,8 @@ recordLog(openId, videoId) {
 		}
 
 	});
-}
+},
+	onShareAppMessage: function () {
+
+	},
 })

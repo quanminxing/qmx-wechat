@@ -48,6 +48,7 @@ Page({
         'Content-Type': 'application/json'
       },
       success: function (res) {
+				console.log(res)
         let videos = [];
         res.data.rows.forEach((d) => {
           if (d.url&&d.url.indexOf('embed') !== -1) {
