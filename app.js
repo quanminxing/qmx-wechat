@@ -1,86 +1,229 @@
 //app.js
 App({
+	globalData: {
+		userInfo: null,
+		phone: '17034642312',
+		tabBarParam: {},  // switchTab 跳转参数
+		//domain: 'http://192.168.2.183',
+		//domain:'http://localhost:7001',
+		domain: 'https://admin.qmxpower.com',
+		// domain: 'https://test.qmxpower.com'
+	},
+
+
+	/**
+	 * 全局函数
+	 */
+	// toast 提示
+	showToast(toast, time = 2000) {
+		return new Promise(resolve => {
+			wx.showToast(toast);
+			setTimeout(() => {
+				wx.hideToast();
+				resolve();
+			}, time)
+		})
+	},
+
+	// loading 提示
+	loading(title = '加载中', mark = true) {
+		wx.showLoading({
+			title,
+			mark,
+		})
+	},
+
+	// request 请求
+	query(url, data = null, method = 'GET') {
+		return new Promise((resolve, reject) => {
+			let timer = null;
+			let queryData = {
+				url: this.globalData.domain + url,
+				method,
+				success: res => {
+					clearTimeout(timer)
+					if(!!res.data.status ) {
+						if (res.data.status === 200) {
+							console.log('数据请求成功')
+							resolve(res)
+						} else {
+							console.log('数据请求出错res')
+							reject(res)
+						}
+					} else {
+						console.log('数据请求成功')
+						// reject(res)
+						resolve(res)
+					}
+				},
+				fail: err => {
+					clearTimeout(timer)
+					console.log('数据请求出错err')
+					reject(err)
+				}
+			}
+			if (!!data) {
+				queryData.data = data
+			}
+			if (method === 'POST') {
+				queryData.header = {
+					'content-type': 'application/json'
+				}
+			}
+			let requesTask = wx.request(queryData);
+
+			timer = setTimeout(() => {
+				requesTask.abort();
+				console.log('数据请求网络超时')
+				reject('网络超时');
+			}, 5000);
+		})		
+	},
+
+	// 登录
+	appLogin() {
+		wx.login({
+			success: res => {
+				console.log(res)
+				this.query('/api/login', { js_code: res.code }, 'POST')
+				.then(res => {
+					console.log('login 返回 res 信息')
+					console.log(res)
+					if (res.statusCode === 200) {
+						this.globalData.openid = res.data.openid
+					}
+					if (this.loginCallback) {
+						console.log('login 登陆成功后执行的回调')
+						this.loginCallback(res)
+					}
+					if (this.userInfoCallback) {
+						console.log('获取用户信息成功后执行的回调')
+						this.userInfoCallback(res)
+					}
+
+					console.log('globalData 信息：openid')
+					console.log(this.globalData)
+				})
+				.catch(err => {
+					console.log(err)
+				})
+			}
+		})
+		
+	},
+
+	// 获取用户信息
+	callUserInfo() {
+		const getInfo = () => {
+			wx.getUserInfo({
+				withCredentials: true,
+				success: res => {
+					this.globalData.userInfo = res.userInfo
+					console.log('globalData 信息：userInfo')
+					console.log(this.globalData)
+				},
+				fail: err => {
+					console.log(err)
+				}
+			})
+		}
+		wx.checkSession({
+			success: () => {
+				// 登录有效
+				console.log('登录有效')
+				getInfo();
+			},
+			fail: () => {
+				// 登录失效
+				console.lo('登录失效')
+				this.userInfoCallback = function () {
+					getInfo();
+				}
+			}
+		})	
+	},
+	getUserInfo() {
+		wx.getSetting({
+			success: res => {
+				console.log(res)
+				if (res.authSetting['scope.userInfo']) {
+					// 已授权
+					console.log('已授权')
+					this.callUserInfo();
+				} else {
+					// 未授权
+					console.log('未授权')
+					wx.showModal({
+						title: '授权提示',
+						content: '尚未进行授权，请点击确定进入授权页面进行授权',
+						success: res => {
+							if (res.confirm) {
+								wx.navigateTo({
+									url: '/pages/index/login',
+								})
+							}
+						}
+					})
+				}
+			}
+		})
+	},
+
+	/**
+	 * 生命周期函数
+	 */
   onLaunch: function () {
-    
-    //调用API从本地缓存中获取数据
-      wx.showLoading({
-        title: '加载中',
-        mask: true
-    });
-    
-    wx.getUserInfo({
-      withCredentials: true,
-      success: res => {
-        //此处为获取微信信息后的业务方法
-				this.login();
-      },
-      fail: function () {
-        //获取用户信息失败后。请跳转授权页面
-        wx.showModal({
-          title: '警告',
-          content: '尚未进行授权，请点击确定跳转到授权页面进行授权。',
-          success: function (res) {
-            if (res.confirm) {
-              console.log('用户点击确定')
-              wx.navigateTo({
-                url: '/pages/index/login',
-              })
-            }
-          }
-        })
-      }
-    });
+		// 登录
+		this.appLogin();
 
-    const updateManager = wx.getUpdateManager()
-		console.log(updateManager)
-    updateManager.onUpdateReady(function () {
-      wx.showModal({
-        title: '更有新版本啦！',
-        content: '小程序发布了新功能，是否更新至最新版本?',
-        cancelColor: '#999',
-        confirmColor: '',
-        success: function (res) {
-          if (res.confirm) {
-            // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
-            updateManager.applyUpdate()
-          }
-        }
-      })
-    })
-    updateManager.onUpdateFailed(function () {
-      wx.showToast({
-        title: '更新失败，请关闭微信后重新打开小程序。',
-        icon: 'none',
-        duration: 2500,
-        mask: false
-      })
-    })
+		// 获取用户信息
+		this.getUserInfo();
+
+		// 小程序新版本更新提示
+		const updateManager = wx.getUpdateManager();
+		updateManager.onUpdateReady(function () {
+			wx.showModal({
+				title: '更有新版本啦！',
+				content: '小程序发布了新功能，是否更新至最新版本?',
+				cancelColor: '#999',
+				confirmColor: '',
+				success: function (res) {
+					if (res.confirm) {
+						// 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
+						updateManager.applyUpdate()
+					}
+				}
+			})
+		})
+		updateManager.onUpdateFailed(function () {
+			wx.showToast({
+				title: '更新失败，请关闭微信后重新打开小程序。',
+				icon: 'none',
+				duration: 2500,
+				mask: false
+			})
+		})
   },
+	
+	/**
+	 * app全局监听函数
+	 */
+	// 监听页面不存在
   onPageNotFound(res) {
-    wx.switchTab({
-      url: 'pages/find/index',
-    });
+		let toast = {
+			title: '该页面不存在，即将跳转到首页！',
+			icon: 'none'
+		}
+		this.showtToast(toast, 1500).then(() => {
+			wx.switchTab({
+				url: 'pages/find/index',
+			});
+		})  
   },
-
-  getUserInfo:function(cb){
-    var that = this
-    if(this.globalData.userInfo){
-      typeof cb == "function" && cb(this.globalData.userInfo)
-    }else{
-      //调用登录接口
-      wx.login({
-        success: function () {
-          wx.getUserInfo({
-            success: function (res) {
-              console.log(res);
-              that.globalData.userInfo = res.userInfo
-              typeof cb == "function" && cb(that.globalData.userInfo)
-            }
-          })
-        }
-      });
-    }
-  },
+	// 错误监听
+	onError(err) {
+		console.log(err)
+	},
 
   login(cb){
     
@@ -109,17 +252,4 @@ App({
       }
     });
   },
-
-  globalData:{
-    userInfo:null,
-    tabBarParam: {},  // switchTab 跳转参数
-    //domain: 'http://192.168.2.183',
-    //domain:'http://localhost:7001'
-    domain:'https://admin.qmxpower.com',
-		// domain: 'https://test.qmxpower.com'
-  }
 })
-
-// 删除历史记录
-// 关于我们
-// 修改信息

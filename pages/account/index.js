@@ -14,7 +14,6 @@ Page({
   },
 
   onLoad: function (options) {
-
     const app = getApp();
     const openid = app.globalData.openid;
     const that = this;
@@ -72,7 +71,6 @@ Page({
           userInfo: user
         });
         wx.hideLoading();
-        //wx.setStorageSync('video', video);
       }
     });
   },

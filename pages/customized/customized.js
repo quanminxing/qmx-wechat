@@ -1,257 +1,96 @@
-//index.js
-var cityData = require('../../utils/city.js');
+const app = getApp();
+let _search = {
+	pageNum: 1,
+	pageSize: 20,
+	_search: true,
+	classify_id: '3'   // 定制非TVC类
+}
 
-var app = getApp()
 Page({
+
 	data: {
-		tvcTemp: '类目定制视频列表',
-		inputShowed: false,
-		inputVal: "",
-		tabs: [],
-		activeIndex: 0,
-		sliderOffset: 30,
-		sliderLeft: 0,
-		videos: [],
-		nv: '',
-		qy: '',
-		content: [],
-		nv: ['衣服', '裤子', '内衣', '服饰', '衣服', '裤子', '内衣', '服饰', '衣服', '裤子', '内衣', '服饰'],
-		px: ['默认排序', '离我最近', '价格最低', '价格最高'],
-		qyopen: false,
-		qyshow: false,
-		stopen: false,
-		stshow: false,
-		nzopen: false,
-		pxopen: false,
-		nzshow: false,
-		pxshow: false,
-		isfull: false,
-		cityleft: {},
-		citycenter: {},
-		cityright: {},
-		select1: '',
-		select2: '',
-		shownavindex: '',
-		search: {
-			_search:true,
-			pageNum: 1,
-			pageSize: 20,
-			sidx: 'price',
-			sord: 'asc',
-			classify_id: 3,
-		},
-		usage_name: '',
-		category_name: '',
-		platform_name: ''
+		pageShow: false,
+		pageErr: false,
+		videos: []
+	},
+
+	/**
+	 * 页面处理函数
+	 */
+	queryList() {
+		console.log(_search)
+		return app.query('/api/video', _search).then(res => {
+			let videos = res.data.data;
+			console.log(videos)
+			let videosData = videos.map(item => {
+				return {
+					id: item.id,
+					name: item.name,
+					waterfall_image: item.waterfall_image,
+					price: item.price
+				}
+			})
+			this.data.videos.push(...videosData)
+			this.setData({
+				videos: this.data.videos
+			})
+			return new Promise(resolve => {
+				resolve(videos)
+			})
+		}).catch(err => {
+			return new Promise((resolve, reject) => {
+				reject(err)
+			})
+		})
+	},
+
+	/**
+	 * 页面事件函数
+	 */
+	reload() {
+		console.log('reload')
+		this.queryList().then(video => {
+			this.setData({
+				pageShow: true,
+				pageErr: false,
+			})
+		}).catch(err => {
+			this.setData({
+				pageShow: true,
+				pageErr: true,
+			})
+		})
+	},
+
+	/**
+	 * 生命周期函数
+	 */
+	onLoad: function (e) {
+		console.log(e)
+		_search.category_id = e.category_id;
+		this.queryList().then(video => {
+			this.setData({
+				pageShow: true,
+				pageErr: false,
+			})
+		}).catch(err => {
+			this.setData({
+				pageShow: true,
+				pageErr: true,
+			})
+		})
 	},
 
 	onReachBottom: function () {
-		const that = this;
-		wx.showLoading({
-			title: '加载中',
-			mask: true
-		});
-		this.data.search.pageNum += 1;
-
-		this.queryList(this.data.search)
-
-		/*
-		wx.request({
-			url: app.globalData.domain + '/api/video',
-			header: {
-				'Content-Type': 'application/json'
-			},
-			data: that.data.search,
-			success: function (res) {
-				let v = [];
-				res.data.data.forEach((d) => {
-					// 判断用什么播放器播放
-					if (d.url && d.url.indexOf('embed') !== -1) {
-						d.url = d.url.match(/vid=([^&]+)/)[1];
-						d.isqq = true;
-					} else {
-						d.isqq = false;
-					}
-					v.push(d);
-				});
-				videos = videos.concat(v);
-				wx.hideLoading();
-				that.setData({
-					videos,
-					search: that.data.search
-				});
-				wx.hideLoading()
-			}
-
-		});
-		*/
-	},
-
-	onLoad(e) {
-		this.data.search.category_id = e.category_id;
-		this.queryList(this.data.search)
-	},
-
-	queryList: function(queryData) {
-		wx.request({
-			url: app.globalData.domain + '/api/video',
-			header: {
-				'Content-Type': 'application/json'
-			},
-			data: queryData,
-			success: res => {
-				let videos = this.data.videos;
-				console.log(res)
-				res.data.data.forEach((d) => {
-					if (d.url && d.url.indexOf('embed') !== -1) {
-						d.url = d.url.match(/vid=([^&]+)/)[1];
-						d.isqq = true;
-					} else {
-						d.isqq = false;
-					}
-					videos.push(d);
-				});
-				console.log(videos)
-				wx.hideLoading();
-				this.setData({
-					videos,
-				});
+		_search.pageNum = ++_search.pageNum;
+		this.queryList().then(videos => {
+			if(videos.length === 0) {
+				console.log('没有更多数据了')
 			}
 		})
 	},
 
 	onShareAppMessage: function () {
-
-	},
-
-	/*
-	onShow: function () {
-		console.log('onshow3333333333333333333333333')
-		var that = this;
-
-		const app = getApp();
-		const openid = app.globalData.openid;
-
-		wx.showLoading({
-			title: '加载中',
-			mask: true
-		});
-
-		wx.request({ // 类目
-			url: app.globalData.domain + '/category',
-			header: {
-				'Content-Type': 'application/json'
-			},
-			success: function (res) {
-				let category = res.data.rows.filter((d) => {
-					return d.parent_id === 0
-				});
-
-				category.unshift({
-					id: 0,
-					name: "全部",
-				});
-				that.setData({
-					nv: category,
-				});
-
-				console.log(app.globalData)
-				let categoryId = app.globalData.tabBarParam.category_id;
-				console.log(categoryId)
-				if (categoryId === null || categoryId === undefined) {
-					// 视频搜索过滤
-					that.data.search._search = true;
-					console.log(that.data.search)
-					wx.request({
-						url: app.globalData.domain + '/api/video',
-						header: {
-							'Content-Type': 'application/json'
-						},
-						data: that.data.search,
-						success: function (res) {
-							let videos = [];
-							console.log(res)
-							res.data.data.forEach((d) => {
-
-								let categoryChoose = that.data.tabs.filter((category) => {
-									return category.id === d.category_id
-								});
-
-								d.category_name = categoryChoose[0] ? categoryChoose[0].name : '';
-								// 判断用什么播放器播放
-								if (d.url && d.url.indexOf('embed') !== -1) {
-									d.url = d.url.match(/vid=([^&]+)/)[1];
-									d.isqq = true;
-								} else {
-									d.isqq = false;
-								}
-								videos.push(d);
-							});
-							wx.hideLoading();
-							that.setData({
-								videos,
-							});
-						}
-
-					});
-				} else {
-					const domain = app.globalData.domain;
-
-					let categoryName = app.globalData.tabBarParam.category_name;
-					console.log(categoryId)
-					console.log(categoryName)
-					const search = that.data.search;
-					search._search = true;
-
-					search.pageNum = 1;
-					search.category_id = categoryId;
-					if (categoryId == 0) {
-						delete search.category_id
-					}
-					const queryString = '';
-					wx.showLoading({
-						title: '加载中',
-						mask: true
-					});
-					console.log(search)
-					wx.request({
-						url: domain + '/api/video',
-						data: search,
-						header: {
-							'Content-Type': 'application/json'
-						},
-						success: function (res) {
-
-							res.data.data = res.data.data.map((d) => {
-								// 判断用什么播放器播放
-								if (d.url.indexOf('embed') !== -1) {
-									d.url = d.url.match(/vid=([^&]+)/)[1];
-									d.isqq = true;
-								} else {
-									d.isqq = false;
-								}
-								return d
-							});
-							wx.hideLoading();
-							that.setData({
-								videos: res.data.data,
-								nzopen: false,
-								isfull: false,
-								shownavindex: 0,
-								category_name: categoryName,
-								search
-							});
-							app.globalData.tabBarParam = {}
-						}
-					});
-				}
-
-			}
-		});
-		wx.hideLoading()
-	},
-	*/
-	
-	
-	
-});
+		
+	}
+})

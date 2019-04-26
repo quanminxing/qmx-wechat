@@ -1,0 +1,47 @@
+<!--pages/detail/detail.wxml-->
+<view class='page'>
+	<view class='page-err pos-rel' wx:if='{{pageErr}}' bindtap='reload'>
+		<view class='block-center'>
+			<image class='page-err-icon' src='../../images/reload.png' mode='widthFix'></image>
+			<view class='page-err-text h3'>网络异常，轻触屏幕重新加载</view>
+		</view>
+	</view>
+
+	<view class='page-content' wx:else>
+		<view class='summary'>
+			<view class='summary-video'>
+				<video src='{{video.url}}'></video>
+			</view>
+			<view class='summary-caption clear'>
+				<view class="summary-price float-r" hover-class="none" hover-stop-propagation="false">
+          ¥ {{video.price}}
+        </view>
+        <view class="summary-name" hover-class="none" hover-stop-propagation="false">
+          {{video.name}}
+        </view>
+			</view>
+		</view>
+		<view class='base-info'>
+			<view class='base-info-header'>基本信息</view>
+			<view class='base-info-content'>
+				<view class='base-info-item clear' wx:for='{{baseInfo}}'>
+					<view class='item-right float-r'>{{item.name}}</view>
+					<view class='item-left'>{{item.label}}</view>
+				</view>
+			</view>
+		</view>
+		<view class='detail'>
+			<view class='detail-script'>
+
+			</view>
+			<view class='detail-sample'>
+
+			</view>
+			<view class='detail-tip'>
+
+			</view>
+		</view>
+		<view class='toolbar'></view>
+	</view>
+	
+</view>

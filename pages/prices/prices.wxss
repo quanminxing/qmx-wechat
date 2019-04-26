@@ -1,6 +1,8 @@
 /* pages/prices/prices.wxss */
 @import '../../style/common.wxss';
-
+.page {
+	overflow-x: hidden;
+}
 .col-item .price {
 	font-size: 20px;
 	font-weight: 500;

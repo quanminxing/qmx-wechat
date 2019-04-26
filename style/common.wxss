@@ -1,3 +1,7 @@
+.page {
+	overflow-x: hidden;
+}
+
 .list {
   display: flex;
   align-items: center;
@@ -47,9 +51,6 @@
   width: 100%;
   height: 100%;
 }
-.tvc .img-mark {
-	/* background-color: rgba(0,0,0,0); */
-}
 
 .pos-rel {
   position: relative;
@@ -86,4 +87,40 @@
 }
 image {
 	vertical-align: middle;
+}
+
+.page-err {
+	width: 100vw;
+	height: 100vh;
+	text-align: center;
+}
+.page-err-icon {
+	width: 200rpx;
+	margin: 0 0 46rpx 0;
+}
+
+
+.waterfall {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+	flex-wrap: wrap;
+	padding: 0 24rpx;
+}
+.waterfall .list-item {
+	width: 342rpx;
+	height: auto;
+	background-color: #353535;
+	border-radius: 8rpx;
+	overflow: hidden;
+	margin: 18rpx 0;
+}
+.waterfall .list-item-caption {
+	padding: 16rpx;
+}
+.waterfall .list-item-price {
+	margin: 8rpx 0 0 0;
+	font-size: 12px;
+	line-height: 17px;
+	color: #F15348;
 }

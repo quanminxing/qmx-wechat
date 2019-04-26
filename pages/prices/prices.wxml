@@ -1,7 +1,7 @@
 <!--pages/prices/prices.wxml-->
 <view class="page">
   <view class="col-list">
-    <navigator class="col-item pos-rel" wx:for='{{pricesList}}' wx:key='{{item.id}}' data-video_id='{{item.id}}' url='../video/detail?video_id={{item.id}}'>
+    <navigator class="col-item pos-rel" wx:for='{{pricesList}}' wx:key='{{item.id}}' data-video_id='{{item.id}}' url='../detail/detail?video_id={{item.id}}'>
       <image class="col-item-img" src="" mode="aspectFill" src='{{item.short_image}}'></image>
       <view class="img-mark">
         <view class="col-item-msg block-center">

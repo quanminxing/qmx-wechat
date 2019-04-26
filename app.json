@@ -1,65 +1,69 @@
 {
-  "pages": [
-    "pages/find/index",
-    "pages/find/search",
-    "pages/find/business",
-    "pages/find/flow",
-    "pages/index/login",
-    "pages/my/fav",
-    "pages/my/log",
-    "pages/my/bill",
-    "pages/brief/index",
-    "pages/brief/confirm",
-    "pages/brief/success",
-    "pages/video/index",
-    "pages/video/detail",
-    "pages/video/multidetail",
-    "pages/video/confirm",
-    "pages/account/index",
-    "pages/account/info",
-    "pages/account/setting",
-    "pages/account/contact",
-    "pages/account/feedback",
-    "pages/account/webview",
+	"pages": [
+		"pages/find/index",
+		"pages/videos/videos",
+		"pages/find/search",
+		"pages/find/business",
+		"pages/find/flow",
+		"pages/index/login",
+		"pages/my/fav",
+		"pages/my/log",
+		"pages/my/bill",
+		"pages/brief/index",
+		"pages/brief/confirm",
+		"pages/brief/success",
+		"pages/video/index",
+		"pages/video/detail",
+		"pages/video/multidetail",
+		"pages/video/confirm",
+		"pages/account/index",
+		"pages/account/info",
+		"pages/account/setting",
+		"pages/account/contact",
+		"pages/account/feedback",
+		"pages/account/webview",
 		"pages/prices/prices",
-		"pages/customized/customized"
-  ],
-  "window": {
-    "backgroundTextStyle": "dark",
-    "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "宜拍短视频工厂",
-    "navigationBarTextStyle": "black",
-    "backgroundColor": "#fff"
-  },
-  "tabBar": {
-    "backgroundColor": "#fff",
-    "color": "#888888",
-    "selectedColor": "#888888",
-    "list": [
-      {
-        "iconPath": "./images/home.png",
-        "selectedIconPath": "./images/home_press.png",
-        "pagePath": "pages/find/index",
-        "text": "首页"
-      },
-      {
-        "iconPath": "./images/dsp.png",
-        "selectedIconPath": "./images/dsp_press.png",
-        "pagePath": "pages/video/index",
-        "text": "短视频"
-      },
-      {
-        "iconPath": "./images/wd.png",
-        "selectedIconPath": "./images/wd_press.png",
-        "pagePath": "pages/account/index",
-        "text": "我的"
-      }
-    ]
-  },
-  "plugins": {
-    "txvideo": {
-      "version": "1.2.5",
-      "provider": "wxa75efa648b60994b"
-    }
-  }
+		"pages/customized/customized",
+		"pages/detail/detail"
+	],
+	"window": {
+		"backgroundTextStyle": "light",
+		"navigationBarBackgroundColor": "#101010",
+		"navigationBarTitleText": "宜拍短视频工厂",
+		"navigationBarTextStyle": "white",
+		"backgroundColor": "#101010"
+	},
+	"tabBar": {
+		"backgroundColor": "#101010",
+		"color": "#6B7381",
+		"selectedColor": "#fff",
+		"list": [
+			{
+				"iconPath": "./images/home.png",
+				"selectedIconPath": "./images/home_press.png",
+				"pagePath": "pages/find/index",
+				"text": "首页"
+			},
+			{
+				"iconPath": "./images/dsp.png",
+				"selectedIconPath": "./images/dsp_press.png",
+				"pagePath": "pages/videos/videos",
+				"text": "短视频"
+			},
+			{
+				"iconPath": "./images/wd.png",
+				"selectedIconPath": "./images/wd_press.png",
+				"pagePath": "pages/video/index",
+				"text": "我的"
+			}
+		]
+	},
+	"plugins": {
+		"txvideo": {
+			"version": "1.2.5",
+			"provider": "wxa75efa648b60994b"
+		}
+	},
+	"debug": true,
+	"sitemapLocation": "sitemap.json"
 }

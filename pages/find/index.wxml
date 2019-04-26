@@ -1,5 +1,5 @@
 <!--index.wxml-->
-<view class="container">
+<view class="container  bgc-101010">
 
   <!-- banner -->
   <swiper wx:if='{{banner.length > 0}}' class='banner' autoplay='{{bannerSetting.autoplay}}' circular interval='{{bannerSetting.interval}}' indicator-dots='{{bannerSetting.indicatorDot}}' indicator-color='{{bannerSetting.indicatorColor}}' indicator-active-color='{{bannerSetting.indicatorActiveColor}}'>

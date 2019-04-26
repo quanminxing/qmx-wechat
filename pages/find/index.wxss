@@ -148,7 +148,7 @@ height:400rpx;
   position: fixed;
   bottom: 0;
 width:100%;
-background:white;
+/* background:white; */
 padding:10rpx;
 
 }

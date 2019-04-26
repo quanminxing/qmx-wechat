@@ -13,7 +13,7 @@ Page({
 		tvc: {
 			type: 'tvc',
 			img: "https://file.qmxpower.com/image/20190419122707.png",
-			classify_id: '2',
+			classify_id: '2',  // 标准模板讲解类
 			category_id: ''
 		}
 	},

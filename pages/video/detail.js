@@ -151,7 +151,7 @@ Page({
       method: 'POST',
       success: function (res) {
         console.log(res)
-        if(that.data.isFav){
+        if(!that.data.isFav){
           wx.showToast({
             title: '收藏成功',
             icon: 'success',

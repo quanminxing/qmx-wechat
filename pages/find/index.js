@@ -25,6 +25,7 @@ Page({
 
 	switchTab(e) {
 		console.log(e)
+
 		let categoryId = e.currentTarget.dataset.id;
 		console.log(categoryId)
 		app.globalData.tabBarParam = {
@@ -38,11 +39,10 @@ Page({
 
   onShareAppMessage(res) {
     if (res.from === 'button') {
-      // 来自页面内转发按钮
       console.log(res.target)
     }
     return {
-      title: '全民星短视频',
+      title: '宜拍短视频工厂',
       path: '/pages/find/index'
     }
   },
@@ -70,9 +70,6 @@ Page({
   /**
  * 生命周期函数--监听页面显示
  */
-  onShow: function () {
-    console.log(1111);
-  },
   
   showInput: function () {
     wx.navigateTo({
@@ -86,6 +83,7 @@ Page({
 	},
   onShow: function () {
     wx.hideLoading()
+		
   },
 
   onLoad: function () {
