@@ -1,3 +1,5 @@
 {
-  "navigationBarTitleText": "确认需求"
+  "navigationBarTitleText": "确认需求",
+	"navigationBarBackgroundColor": "#fff",
+	"navigationBarTextStyle": "black"
 }

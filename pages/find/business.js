@@ -6,9 +6,7 @@ Page({
    */
   data: {
 		businessImgs: [
-			'https://file.qmxpower.com/image/20190419181709.jpg',
-			'https://file.qmxpower.com/image/20190419181721.jpg',
-			'https://file.qmxpower.com/image/20190419181731.jpg'
+			'https://file.qmxpower.com/image/20190429180314.jpg'
 		]
   },
 

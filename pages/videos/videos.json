@@ -1,3 +1,6 @@
 {
-  "usingComponents": {}
+ 	"navigationBarBackgroundColor": "#101010",
+	"navigationBarTitleText": "宜拍短视频工厂",
+	"navigationBarTextStyle": "white",
+	"onReachBottomDistance": 100
 }

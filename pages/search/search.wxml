@@ -1,0 +1,34 @@
+<!--pages/search/search.wxml-->
+<import src='../../template/template' />
+
+<view class='page page-white'>
+	<view class='searchbar'>
+		<view class='searchbar-left'>
+			<icon class='searchbar-icon' type='search' size='14'></icon>
+		<input class='seachbar-input' placeholder='搜索' bindinput='showClear' value='{{searchValue}}' bindconfirm='search'></input>
+			<icon class='searchbar-clear' type='clear' size='14' hidden='{{!searchClear}}' bindtap='clearInput'></icon>
+		</view>
+		<view class='searchbar-right'>
+			<text bindtap='search'>搜索</text>
+		</view>
+	</view>
+	<view class='history h4' hidden='{{!showHistory}}'>
+		<view class='history-header'>
+			<view class='history-header-left'>历史搜索</view>
+			<view class='history-header-right' bindtap='clearHistory'>清空历史</view>
+		</view>
+		<view class='history-list'>
+			<view class='history-list-item' wx:for='{{history}}' wx:key='{{item}} + "history"' bindtap='searchHistory' data-value='{{item}}'>{{item}}</view>
+		</view>
+	</view>
+	<view class='results'  hidden='{{showHistory}}'>
+		<block wx:if='{{results.length === 0}}'>
+			<template is='data-empty' data='{{dataEmptyIcon: "../../images/empty-box.png", dataEmptyText: "没有找到相关视频"}}'></template>
+		</block>
+		<view class='results-list' wx:else>
+			<navigator class='results-list-item' wx:for='{{results}}' wx:key='{{item.id}} + "results"' hover-class='none' url='../detail/detail?video_id={{item.id}}&classify_id={{item.classify_id}}'>
+				<template is='media' data='{{img: item.short_image, heading: item.name, price: item.price}}' />
+			</navigator>
+		</view>
+	</view>
+</view>

@@ -1,26 +1,24 @@
 // pages/my/fav.js
+const app = getApp();
+
 Page({
 
   /**
    * 页面的初始数据
    */
-  data: {
+	data: {
+		pageShow: false,
+		pageErr: false,
     edit:false,
     select_all: false,
     middlearr:[],
     videos:[]
   },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
+	reload() {
+		this.getFav(app.globalData.openid)
+	},
 
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
   onReady: function () {
     wx.showLoading({
       title: '加载中',
@@ -61,9 +59,17 @@ Page({
         });
         wx.hideLoading()
         that.setData({
-          videos
+          videos,
+					pageShow: true,
+					pageErr: false,
         });
-      }
+      },
+			fail: () => {
+				that.setData({
+					pageShow: true,
+					pageErr: true
+				})
+			}
     });
   },
 
@@ -85,7 +91,7 @@ Page({
         wx.showToast({
           title: '删除成功',
           icon: 'success',
-          duration: 1000
+          duration: 1500
         });
 
         let arr = that.data.videos;

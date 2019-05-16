@@ -1,5 +1,5 @@
 <!--pages/video/confirm.wxml 下单页 -->
-<view class='page'>
+<view class='container'>
 	<view wx:if='{{tvc}}' class="tvc">
 		<view class="tvc-header">
 			您选择了TVC、视频定制服务，您可以选择以下两种方式与我们联系：
@@ -13,41 +13,79 @@
 		</view>
 	</view>
 
-	<view wx:if='{{!tvc}}' class='header .bd-line'>
-		<view class='h2'>需求信息</view>
+	<view wx:if='{{!tvc}}' class='header'>
+		<view class='h3'>{{video.name}}</view>
+		<!-- <view class='h2'>需求信息</view>
 		<view class='h3'>
 			<view class='float-r'>{{video.name}}</view>
 			<view>样片信息</view>
-		</view>
+		</view> -->
 	</view>
 
 	<view class='content'>
 		<view wx:if='{{!tvc}}' class='detail bd-line'>
-			<view class='detail-item'>
-				<text>平台</text><text class='float-r'>{{video.platform}}</text>
-			</view>
-			<view class='detail-item'>
-				<text>栏目</text><text class='float-r'>{{video.column}}</text>
-			</view>
-			<view class='detail-item'>
-				<text>品类</text><text class='float-r'>{{video.category}}</text>
-			</view>
-			<view class='showmore' wx:if='{{!showMore}}' bindtap='viewMore'>
-				<image class='view-more' src='{{viewMoreIcon}}'></image>
-				<text>查看更多</text>
-			</view>
-			<view class='detail-more'  wx:if='{{showMore}}'>
-				<view class='detail-item' wx:for="{{video.keystrings}}" wx:key="*this">
-					<view>{{item.name}}</view><view>{{item.value}}</view>
-				</view>
+			<view class='detail-item clear h4' wx:for='{{baseInfo}}' wx:key='{{item.name}} + indexx'>
+			
+				<view class='detail-item-left'>{{item.label}}</view>
+				<view class='detail-item-right'>{{item.name}}</view>
 			</view>
 		</view>
 
 		<view class='brief'>
-			<view class='brief-item' wx:for='{{formInfo}}' wx:key='*this'>
+			<view class='brief-item' wx:for='{{formInfo}}' wx:key='*this' bindtap='{{item.type === "picker" ? "showWorkerPicker" : ""}}'>
 				<view class='brief-required'>{{item.necessity ? '*' : ''}}</view>
 				<view class='brief-tag brief-info'>{{item.label}}</view>
-					<input class='brief-input brief-info' type='{{item.type}}' placeholder-class='brief-input-placehoder' placeholder='{{item.placeholder}}' data-variables='{{item}}' value='{{item.value}}' focus='{{item.focus}}' cursor-spacing='{{cursorSpacing}}' bindinput='formInput' cursor='{{cursor}}'></input>
+					<input class='brief-input brief-info {{item.type === "picker" ? "brief-picker" : ""}}' type='{{item.type}}' placeholder-class='brief-input-placehoder' placeholder='{{item.placeholder}}' data-variables='{{item}}' value='{{item.value}}' focus='{{item.focus}}' cursor-spacing='{{cursorSpacing}}' bindinput='formInput' cursor='{{cursor}}' disabled='{{item.type === "picker"}}'></input>
+					<view class='brief-picker-arrow' wx:if='{{item.type === "picker"}}'>
+						<image class='arrow-icon' src='../../images/arrow-right.png' mode='widthFix'></image>
+					</view>
+			</view>
+		</view>
+	</view>
+
+	<view class='worker-picker' hidden='{{!workerPicker}}' bindtap='hideWorkerPicker' data-close='{{true}}'>
+		<view class='worker-picker-container pos-rel'>
+			<view class='worker-picker-close' data-close='{{true}}'>
+				<image class='close-icon' src='../../images/close.png' mode='widthFix' data-close='{{true}}'></image>
+			</view>
+			<view class='worker-picker-header'>
+				<view class='worker-picker-title h3'>请选择你的推荐人</view>
+				<view class='worker-picker-searchbar'>
+					<icon class='searchbar-icon' type='search' size='14'></icon>
+					<input class='searchbar-input h3' type='text' placeholder='请输入你想要搜索的推荐人' bindinput='searchWorker'></input>
+				</view>
+			</view>
+			<view class='worker-picker-content'>
+				<view class='worker-picker-empty h3' wx:if='{{workers.length === 0}}'>没有对应的推荐人</view>
+				<block wx:else>
+					<!-- 所有推荐人 -->
+					<scroll-view wx:if='{{!workerPickerSearch}}' class='worker-picker-list h3' scroll-y>
+						<view wx:for='{{workers}}' wx:key='*this' class='worker-picker-item {{briefInfo.work_id == item.id ? "worker-picker-selected" : ""}}' data-id='{{item.id}}' data-name='{{item.cname}}' bindtap='pickWorker'>
+							<view class='list-left'>
+								<text>{{item.id}}</text>
+								<text style='padding: 0 30rpx;'>{{item.cname}}</text>
+							</view>
+							<view class='list-right' wx:if='{{briefInfo.work_id == item.id}}'>
+								<image class='selected-icon' src='../../images/correct.png' mode='widthFix'></image>
+							</view>
+						</view>
+					</scroll-view>
+					<!-- 搜索的推荐人 -->
+					<block wx:else>
+						<view class='worker-picker-empty h3' hidden='{{workerSearch.length !== 0}}'>没有对应的推荐人</view>
+						<scroll-view hidden='{{workerSearch.length === 0}}' class='worker-picker-list h3' scroll-y>
+							<view wx:for='{{workerSearch}}' wx:key='*this' class='worker-picker-item {{briefInfo.work_id == item.id ? "worker-picker-selected" : ""}}' data-id='{{item.id}}' data-name='{{item.cname}}' bindtap='pickWorker'>
+								<view class='list-left'>
+									<text>{{item.id}}</text>
+									<text style='padding: 0 30rpx;'>{{item.cname}}</text>
+								</view>
+								<view class='list-right' wx:if='{{briefInfo.work_id == item.id}}'>
+									<image class='selected-icon' src='../../images/correct.png' mode='widthFix'></image>
+								</view>
+							</view>
+						</scroll-view>
+					</block>
+				</block>
 			</view>
 		</view>
 	</view>

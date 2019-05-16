@@ -24,9 +24,23 @@
 			"current": -1,
 			"list": []
 		},
-		"miniprogram": {
+		"plugin": {
 			"current": -1,
 			"list": []
+		},
+		"game": {
+			"list": []
+		},
+		"miniprogram": {
+			"current": 0,
+			"list": [
+				{
+					"id": -1,
+					"name": "订单",
+					"pathName": "pages/orders/orders",
+					"scene": null
+				}
+			]
 		}
 	}
 }

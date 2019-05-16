@@ -1,26 +1,24 @@
 // pages/my/log.js
+const app = getApp();
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
+		pageShow:false,
+		pageErr: false,
     edit: false,
     select_all: false,
     middlearr: [],
     videos: []
   },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
+	reload() {
+		this.getLog(app.globalData.openid)
+	},
 
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
   onReady: function () {
     const that = this;
     const app = getApp();
@@ -62,31 +60,45 @@ Page({
         });
         wx.hideLoading();
         that.setData({
-          videos
+          videos,
+					pageShow: true,
+					pageErr: false,
         });
-      }
+      },
+			fail: () => {
+				that.setData({
+					pageShow: true,
+					pageErr: true,
+				})
+			}
     });
   },
 
   deleteLog(openid) {
+		console.log(openid)
     const that = this;
     const app = getApp();
     const domain = app.globalData.domain;
+		let queryData = {
+			openid: openid,
+			ids: (that.data.middlearr.map((d) => { return d.id })).join(',')
+		}
+		console.log(queryData)
     console.log(that.data.middlearr);
+		console.log((that.data.middlearr.map((d) => { return d.id })).join(','))
     wx.request({
-      url: domain + '/api/log/deleteLog?openid=' + openid,
+			url: domain + '/api/log/deleteLog',
       header: {
-        'Content-Type': 'application/json'
+        'content-type': 'application/json'
       },
-      data: {
-        ids: (that.data.middlearr.map((d) => { return d.video_id })).join(',')
-      },
+      data: queryData,
       method: 'POST',
       success: function (res) {
+				console.log(res)
         wx.showToast({
           title: '删除成功',
           icon: 'success',
-          duration: 1000
+          duration: 1500
         });
 
         let arr = that.data.videos;

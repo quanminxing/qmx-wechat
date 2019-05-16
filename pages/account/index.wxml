@@ -2,9 +2,11 @@
 
 <!--index.wxml-->
 <view class="container">
-  <view bindtap="bindViewTap" class="userinfo">
-    <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
-    <text class="userinfo-nickname">{{userInfo.name}}</text>
+  <view class="userinfo">
+    <!-- <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image> -->
+		<open-data type='userAvatarUrl' class="userinfo-avatar"></open-data>
+		<open-data type='userNickName' class="userinfo-nickname"></open-data>
+    <!-- <text class="userinfo-nickname">{{userInfo.name}}</text> -->
     <text class="userinfo-title">普通会员</text>
     <text class="userinfo-auth">{{userInfo.company}}</text>
   </view>
@@ -20,7 +22,7 @@
   </view>
   <view class="sep"></view>
   <view class="weui-cells weui-cells_after-title">
-    <navigator url="/pages/my/bill" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+    <navigator url="/pages/orders/orders" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
       <image class="weui-grid__icon" src="/images/wddd.png" />
 
       <view class="weui-cell__bd">我的订单</view>

@@ -7,29 +7,29 @@ Page({
       title: '加载中',
       mask: true
     });
-    wx.request({
-      url: app.globalData.domain + '/video/listByRecommand',
-      header: {
-        'Content-Type': 'application/json'
-      },
-      success: function (res) {
-        let videos = [];
-        res.data.rows.forEach((d) => {
-          if (d.url && d.url.indexOf('embed') !== -1) {
-            d.url = d.url.match(/vid=([^&]+)/)[1];
-            d.isqq = true;
-          } else {
-            d.isqq = false;
-          }
-          videos.push(d);
-        });
-        wx.hideLoading();
-        that.setData({
-          reVideos: videos,
-        });
-      }
+    // wx.request({
+    //   url: app.globalData.domain + '/video/listByRecommand',
+    //   header: {
+    //     'Content-Type': 'application/json'
+    //   },
+    //   success: function (res) {
+    //     let videos = [];
+    //     res.data.rows.forEach((d) => {
+    //       if (d.url && d.url.indexOf('embed') !== -1) {
+    //         d.url = d.url.match(/vid=([^&]+)/)[1];
+    //         d.isqq = true;
+    //       } else {
+    //         d.isqq = false;
+    //       }
+    //       videos.push(d);
+    //     });
+    //     wx.hideLoading();
+    //     that.setData({
+    //       reVideos: videos,
+    //     });
+    //   }
 
-    });
+    // });
   },
   /**
  * 生命周期函数--监听页面显示

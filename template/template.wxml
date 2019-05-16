@@ -1,0 +1,52 @@
+<template name='template'>
+ 
+</template>
+
+<!-- 
+	page-err: 页面（请求）出错
+-->
+<template name='page-err'>
+	<view class='page-err pos-rel' bindtap='reload'>
+		<view class='center-block'>
+			<image class='page-err-icon' src='{{pageErrIcon ? pageErrIcon : "/images/reload.png"}}' mode='widthFix'></image>
+			<view class='page-err-text h3'>{{pageErrText ? pageErrText : "网络异常，轻触屏幕重新加载"}}</view>
+		</view>
+	</view>
+</template>
+
+<!-- 
+	data-empty: 数据缺省
+-->
+<template name='data-empty'>
+	<view class='data-empty'>
+		<image class='data-empty-icon' src='{{dataEmptyIcon ? dataEmptyIcon : "/images/list-empty.png"}}' mode='widthFix'></image>
+		<view class='data-empyt-text h3'>{{dataEmptyText ? dataEmptyText : "目前没有符合筛选的视频！"}}</view>
+	</view>
+</template>
+
+<!-- 
+	media 布局
+-->
+<template name='media'>
+	<view class='media'>
+		<image class='media-img' src='{{img}}'></image>
+		<view class='media-body'>
+			<view class='media-heading h3'>{{heading}}</view>
+			<view class='media-content' wx:if='{{content}}'>{{content}}</view>
+			<view class='media-price price'>￥{{price}}</view>
+		</view>
+	</view>
+</template>
+
+<!--
+	thumb 布局
+-->
+<template name='thumb'>
+	<view class='thumb'>
+		<image class='thumb-img' mode='widthFix' src='{{img}}'></image>
+		<view class='thumb-caption'>
+			<view class='thumb-heading'>{{heading}}</view>
+			<view class='thumb-price price'>{{price}}</view>
+		</view>
+	</view>
+</template>

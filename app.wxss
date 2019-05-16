@@ -1,5 +1,108 @@
 /**app.wxss**/
 @import 'style/weui.wxss';
+/* image */
+image {
+	width: 32rpx;
+	height: auto;
+	vertical-align: middle;
+}
+
+/* page: black 和 white */
+page {
+	overflow-x: hidden;
+	font-family: PingFangSC-Regular, sans-serif;
+}
+.page {
+	min-height: 100vh;
+	overflow-x: hidden;
+	background-color: #101010;
+	color: #fff;
+}
+.page-black {
+	background-color: #101010;
+	color: #fff;
+}
+.page-white {
+	color: #353535;
+	background-color: #fff;
+}
+
+/* 居中 */
+.center-block {
+	position: absolute;
+  top: 50%;
+  left: 50%;
+	width: 100%;
+  transform: translate(-50%, -50%);
+	padding: 30rpx 50rpx;
+  text-align: center;
+}
+.center-text {
+	text-align: center;
+}
+.center-flex {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.flex-between {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+/* h2~h4 */
+.h2 {
+	font-size: 18px;
+	font-weight: 500;
+	line-height: 25px;
+	padding: 8rpx 0 0 0;
+}
+.h3 {
+	font-size: 16px;
+	line-height: 23px;
+	font-weight: 500;
+}
+.h4 {
+	font-size: 14px;
+	line-height: 20px;
+}
+.h5 {
+	font-size: 12px;
+	line-height: 17px;
+}
+.line1 {
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+}
+.line2 {
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+	overflow: hidden;
+}
+
+/* price */
+.price {
+	color: #F05442;
+	font-size: 12px;
+}
+
+/* position： 定位 */
+.pos-rel {
+	position: relative;
+}
+
+.mark {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+}
+
+/* ************************************ */
 
 .container {
 	overflow-x: hidden;
@@ -199,13 +302,13 @@ left: 0;
   height:146rpx;
 }
 .video-lists navigator{
-  margin-bottom:10rpx;
+  margin-bottom: 20rpx;
 }
 
 image.short_image{
   width:335rpx;
-height:188rpx;
-position:relative
+	height:188rpx;
+	position: relative;
 }
 .short_image text{
   color:white;
@@ -236,16 +339,7 @@ image {
 }
 
 /* Iris */
-page {
-	background-color: #101010;
-	overflow-x: hidden;
-}
-.page {
-	min-height: 100vh;
-	overflow-x: hidden;
-	font-family: PingFangSC-Regular, sans-serif;
-	color: #fff;
-}
+
 .toolbar {
 	position: fixed;
 	bottom: 0;
@@ -265,26 +359,15 @@ page {
 	color: #fff;
 }
 
-.h2 {
-	font-size: 18px;
-	font-weight: 500;
-	line-height: 25px;
-	padding: 8rpx 0 0 0;
-}
-.h3 {
-	font-size: 16px;
-	line-height: 23px;
-	font-weight: 500;
-}
-.h4 {
-	font-size: 14px;
-	line-height: 20px;
-}
+
 .bgc-101010 {
 	background-color: #101010;
 }
 .color-fff {
 	color: #fff;
+}
+.price-color {
+	color: #F15348;
 }
 
 /* 分割线 */

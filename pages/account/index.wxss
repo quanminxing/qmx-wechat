@@ -18,11 +18,13 @@ font-weight:300;
 color:rgba(53,53,53,1);
 margin-bottom:47rpx
 }
+
 .userinfo-avatar {
   width: 128rpx;
   height: 128rpx;
   margin: 20rpx;
   border-radius: 50%;
+	overflow: hidden;
 }
 
 .userinfo-nickname {

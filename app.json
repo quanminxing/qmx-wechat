@@ -24,14 +24,17 @@
 		"pages/account/webview",
 		"pages/prices/prices",
 		"pages/customized/customized",
-		"pages/detail/detail"
+		"pages/detail/detail",
+		"pages/search/search",
+		"pages/fav/fav",
+		"pages/track/track",
+		"pages/orders/orders"
 	],
 	"window": {
 		"backgroundTextStyle": "light",
-		"navigationBarBackgroundColor": "#101010",
+		"navigationBarBackgroundColor": "#fff",
 		"navigationBarTitleText": "宜拍短视频工厂",
-		"navigationBarTextStyle": "white",
-		"backgroundColor": "#101010"
+		"navigationBarTextStyle": "black"
 	},
 	"tabBar": {
 		"backgroundColor": "#101010",
@@ -53,7 +56,7 @@
 			{
 				"iconPath": "./images/wd.png",
 				"selectedIconPath": "./images/wd_press.png",
-				"pagePath": "pages/video/index",
+				"pagePath": "pages/account/index",
 				"text": "我的"
 			}
 		]

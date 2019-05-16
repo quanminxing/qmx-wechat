@@ -8,16 +8,21 @@ let briefInfo = {
 	phone: '',
 	email: '',
 	business: '',
-	comment: ''
+	comment: '',
+	work_id: '',
+	worker_name: ''
 };
+let workerTip = false;
 
 Page({
 data: {
+	submitDisabled: false,
 	tvc: false,
 	viewMoreIcon: '../../images/more_icon.png',
 	cursor: -1,
 	cursorSpacing: 80,
 	showMore: false,
+	baseInfo: [],
 	video: {
 		video_id: null,
 		name: '',
@@ -35,19 +40,36 @@ data: {
 		{ type: 'number', label: '手机号', name: 'phone', value: '', placeholder: '将用于联系您以确认视频需求', necessity: true, validityType: 'phone', validityMsg: '请输入正确的手机号', focus: false },
 		{ type: 'text', label: '邮箱', name: 'email', value: '', placeholder: '视频将以邮件的方式发送至邮箱', necessity: true, validityType: 'email', validityMsg: '请输入正确的邮箱', focus: false },
 		{ type: 'text', label: '公司名称', name: 'business', value: '', placeholder: '请输入您的公司名称', necessity: true, validityType: '', validityMsg: '请输入您的公司名称', focus: false },
+		{ type: 'picker', label: '推荐人', name: 'worker_name', value: '', placeholder: '请选择推荐人', necessity: false, focus: false },
 		{ type: 'text', label: '留言', name: 'comment', value: '', placeholder: '请留下您的留言', necessity: false, focus: false},
 	],
+	briefInfo: {
+		name: '',
+		phone: '',
+		email: '',
+		business: '',
+		comment: '',
+		work_id: '',
+		worker_name: ''
+	},
 	isFav: false,
+	workers: [],
+	workerPicker: false,
+	workerPickerSearch: false,
+	workerSearch: []
 },
+
 
 onLoad(e) {
 	console.log(e)
+	workerTip = false;
 	openId = app.globalData.openid;
 	domain = app.globalData.domain;
 	wx.hideLoading();
 	const that = this;
+
+	console.log(openId)
 	if (!openId) {
-		console.log(openId)
 		app.login(function (openId) {
 			if(e.category === 'tvc') {
 				that.setData({
@@ -74,44 +96,110 @@ onLoad(e) {
 	}
 },
 
-onHide() {
-	briefInfo.comment = '';
-	this.setData({
-		'formInfo[4].value': ''
-	})
-},
+// 清空留言
+	onHide() {
+		this.data.briefInfo.comment = '';
+		this.setData({
+			'formInfo[5].value': ''
+		})
+	},
 
-phoneCall(e) {
-	console.log(e)
-	let phoneNum = e.currentTarget.dataset.phonenum;
-	console.log(phoneNum)
-	wx.makePhoneCall({
-		phoneNumber: phoneNum
-	});
-},
-
-/** start bind 事件函数 */
-focus(e) {
-	each(this.data.formInfo, (item) => {
-		if(item.name === e.target.dataset.variables.name) {
-			item.focus = true
+	phoneCall(e) {
+		console.log(e)
+		let phoneNum = e.currentTarget.dataset.phonenum;
+		console.log(phoneNum)
+		wx.makePhoneCall({
+			phoneNumber: phoneNum
+		});
+	},
+	ifEmpty(value, label = '其他') {
+		if (!!value && value !== 'null') {
+			return value
 		} else {
-			item.focus = false;
+			return label
 		}
-	}, this)
+	},
+	suitType(ids, info) {
+		if (!ids) return
+
+		let names = ids.split(',').map(id => {
+			let name = ''
+			info.forEach(item => {
+				if (item.id == id) {
+					name = item.name
+				}
+			})
+			return name;
+		})
+		return names.join('、')
+	},
+
+// 推荐人picker显示
+showWorkerPicker() {
 	this.setData({
-		formInfo: this.data.formInfo
+		workerPicker: true
 	})
 },
-viewMore() {
-	this.setData({
-		showMore: true
-	})
+// 推荐人picker隐藏
+hideWorkerPicker(e) {
+	console.log(e)
+	if(e.target.dataset.close) {
+		this.setData({
+			workerPicker: false
+		})
+	}
 },
+
+// 选择推荐人
+pickWorker(e) {
+	let dataset = e.currentTarget.dataset;
+	if(!!dataset.id) {
+		this.data.briefInfo.work_id = dataset.id;
+		this.data.briefInfo.worker_name = dataset.name
+		this.setData({
+			briefInfo: this.data.briefInfo,
+			workerPicker: false,
+			'formInfo[4].value': dataset.name
+		})
+	}
+	
+},
+
+// 搜索推荐人
+	searchWorker(e) {
+		console.log(e.detail.value)
+		let searchValue = e.detail.value;
+
+		if (searchValue.trim().length > 0 && !this.data.workerPickerSearch) {
+			this.setData({
+				workerPickerSearch: true
+			})
+		}
+		if (searchValue.trim().length === 0 && this.data.workerPickerSearch) {
+			this.setData({
+				workerPickerSearch: false
+			})
+		}
+		if (searchValue.trim().length > 0) {
+			this.data.workerSearch = [];
+			this.data.workers.forEach(item => {
+				if (item.cname.search(searchValue) >= 0) {
+					this.data.workerSearch.push(item)
+				}
+			})
+			this.setData({
+				workerSearch: this.data.workerSearch
+			})
+		}
+		
+	},
+
+
+// 表单输入事件
 formInput(e) {
 	let value = e.detail.value;
 	let name = e.target.dataset.variables.name;
-	briefInfo[name] = value;
+	this.data.briefInfo[name] = value;
 	each(this.data.formInfo, (item, index) => {
 		let dataKey = `formInfo[${index}].value`;
 		if (!!item.name && item.name === name) {
@@ -122,7 +210,11 @@ formInput(e) {
 		}
 	}, this)
 },
+
+// 表单提交和验证
 submit() {
+	console.log('提交')
+	if (this.data.submitDisabled) return
 	const formInfo = this.data.formInfo;
 	let validLength = 0;
 	each(formInfo, (item, index) => {
@@ -132,81 +224,181 @@ submit() {
 		++validLength;
 	}, this)
 	if (validLength === formInfo.length) {
-		this.submitBrief(openId);
+		if (workerTip || this.data.briefInfo.work_id) {
+			this.data.submitDisabled = true
+			this.submitBrief(openId);
+		} else {
+			wx.showModal({
+				title: '提示',
+				content: '你还没有填写推荐人，是否去填写推荐人?',
+				cancelText: '直接下单',
+				cancelColor: '#999',
+				confirmText: '去填写',
+				confirmColor: '#2596FF',
+				success: res => {
+					workerTip = true;
+
+					if(res.confirm) {
+						this.setData({
+							workerPicker: true
+						})
+					}
+					if(res.cancel) {
+						this.data.submitDisabled = true
+						this.submitBrief(openId);
+					}
+				}
+			})
+		}
 	}
 },
-/** end bind 事件函数 */
 
-// 请求页面数据
+
+// 请求视频和用户信息数据
 requestData(e, that, openId) {
 	// 样片数据请求
 	console.log(e)
+	console.log(openId)
 	if(e.category !== 'tvc') {
-		wx.request({
-			url: app.globalData.domain + '/api/video?_search=true&id=' + e.id,
-			success(res) {
-				console.log(res)
-				if (res.data.data.length > 0) {
-					const video = res.data.data[0];
-					if (!!video) {
-						let keystrings = [];
-						if (!!video.keystring) {
-							keystrings = video.keystring.replace(/^\s+|\s+$/g, '')
-							keystrings = keystrings.split(/\n+/).map((item) => {
-								if (!item) return
-								const keystring = item.split('|')
-								const keyItem = {
-									name: keystring[0].trim(),
-									value: keystring[1].trim() || ''
-								}
-								return keyItem;
-							});
-						}
-						that.setData({
-							video: {
-								video_id: video.video_id,
-								name: video.name,
-								platform: video.platform_name,
-								platform_id: video.platform_id,
-								column: video.column_name,
-								column_id: video.column_id,
-								category: video.category_name,
-								category_id: video.category_id,
-								keystrings: keystrings,
-								price: video.price.toFixed(2)
-							}
-						})
-					}
+		let baseInfo = [];
+		let video = {}
+		let queryData = {
+			_search: true,
+			pageNum: 1,
+			pageSize: 20,
+			id: e.id,
+			classify_id: e.classify_id
+		}
+		console.log(queryData)
+		let videoInfo = app.query('/api/video', queryData)
+		if(e.classify_id == 2) {
+			let platforms = app.query('/platform');
+			let category = app.query('/category');
+			Promise.all([videoInfo, platforms, category]).then(infos => {
+				console.log('讲解、infos')
+				console.log(infos)
+				let videoInfo = infos[0].data.data[0]
+				video = {
+					name: videoInfo.name,
+					price: videoInfo.price,
+					id: videoInfo.id,
+					platform_id: videoInfo.platform_id,
+					category_id: videoInfo.category_id,
+					column_id: videoInfo.column_id
 				}
+				baseInfo = [
+					{
+						label: '适用平台',
+						name: videoInfo.platform.split(',').join('、') || '其他'
+						// name: this.suitType(videoInfo.platform, infos[1].data.rows) || '其他'
+					},
+					{
+						label: '适用品类',
+						name: videoInfo.category.split(',').join('、') || '其他'
+						// name: this.suitType(videoInfo.category, infos[2].data.rows) || '其他'
+					},
+					{
+						label: '时长',
+						name: videoInfo.time || ''
+					}
+				]
 
-			}
-		})
+				this.setData({
+					video,
+					baseInfo,
+				})
+
+			}).catch(err => {
+				console.log('讲解、err')
+				console.log(err)
+				this.setData({
+					pageShow: true,
+					pageErr: true,
+				})
+			})
+		} else {
+			videoInfo.then(res => {
+				console.log(res)
+				let videoInfo = res.data.data[0]
+				video = {
+					id: videoInfo.id,
+					price: videoInfo.price,
+					name: videoInfo.name,
+					platform_id: videoInfo.platform_id,
+					category_id: videoInfo.category_id,
+					column_id: videoInfo.column_id
+				}
+				baseInfo = [
+					{
+						label: '模特',
+						name: videoInfo.is_model ? '有' : '无'
+					},
+					{
+						label: '场景',
+						name: this.ifEmpty(videoInfo.sence)
+					},
+					{
+						label: '时长',
+						name: videoInfo.time || ''
+					},
+					{
+						label: '功能',
+						name: this.ifEmpty(videoInfo.usage_name)
+					}
+				];
+
+				this.setData({
+					video,
+					baseInfo
+				})
+			}).catch(err => {
+				console.log('非讲解、err')
+				console.log(err)
+				this.setData({
+					pageShow: true,
+					pageErr: true,
+				})
+			})
+
+		}
 	}
-	
 
 	// 用户上一个订单信息录入
 	wx.request({
-		url: app.globalData.domain + '/bill/listByUser?openid=' + openId + '&pageSize=1&pageNum=1',
+		url: app.globalData.domain + '/api/bill/listByUser?user_id=' + openId + '&pageSize=1&pageNum=1',
 		success(res) {
+			console.log('用户信息8888888888888888888')
 			console.log(res)
-			let data = res.data.rows[0]
-			briefInfo = data ? data : briefInfo;
-			for (let key in briefInfo) {
+			let data = res.data.data[0]
+			that.data.briefInfo = data ? data : that.data.briefInfo;
+			that.data.briefInfo.comment = '';
+			for (let key in that.data.briefInfo) {
 				that.data.formInfo.forEach((item) => {
 					if (key !== 'comment' && key === item.name) {
-						item.value = briefInfo[key]
+						item.value = that.data.briefInfo[key]
 					}
 				})
 			}
 			that.setData({
-				formInfo: that.data.formInfo
+				formInfo: that.data.formInfo,
+				briefInfo: that.data.briefInfo
 			});
-			briefInfo.comment = '';
 		},
 		fail(err) {
 			console.log(err)
 		}
 	})
+
+	// 获取推荐人
+	app.query('/api/info/worker').then(res => {
+		console.log('推荐人000000000000000000')
+		console.log(res)
+		this.data.workers = res.data.data;
+		this.setData({
+			workers: res.data.data
+		})
+	})
+
 	// 日志
 	that.recordLog(openId, '302')
 },
@@ -266,32 +458,38 @@ validateForm(item) {
 
 // 表单提交
 submitBrief(openId) {
-	console.log(`提交${briefInfo.name}`)
+	
+	console.log(`提交${this.data.briefInfo.name}`)
 	console.log(this.data.formInfo)
 	let data = {
 		openid: app.globalData.openid,
 		oper: 'add',
-		name: briefInfo.name,
-		business: briefInfo.business,
-		phone: briefInfo.phone,
-		comment: briefInfo.comment,
-		email: briefInfo.email,
-		category_id: this.data.video.category_id || null,
-		price: this.data.video.price || null,
-		platform_id: this.data.video.platform_id || null,
-		column_id: this.data.video.column_id || null,
-		video_id: this.data.video.video_id || null
+		name: this.data.briefInfo.name,
+		business: this.data.briefInfo.business,
+		phone: this.data.briefInfo.phone,
+		comment: this.data.briefInfo.comment,
+		email: this.data.briefInfo.email,
+		work_id: this.data.briefInfo.work_id,
+		worker_name: this.data.briefInfo.worker_name,
+		category_id: this.data.video.category_id || '其他',
+		price: this.data.video.price || '',
+		platform_id: this.data.video.platform_id || '其他',
+		column_id: this.data.video.column_id || '其他',
+		video_id: this.data.video.id || ''
 	}
 	console.log(data)
 	wx.request({
-		url: domain + '/bill',
+		url: domain + '/api/bill',
 		method: 'POST',
 		header: { 'Content-Type': 'application/x-www-form-urlencoded' },
 		data: data,
-		success: function (res) {
+		success: res => {
+			console.log(res)
+			this.data.submitDisabled = false
 			wx.navigateTo({
 				url: '/pages/brief/success'
 			});
+			
 		},
 		fail: function (err) {
 			wx.showToast({

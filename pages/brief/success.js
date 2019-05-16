@@ -66,7 +66,7 @@ Page({
 
   onConfirm(){
     wx.navigateTo({
-      url: '/pages/my/bill',
+      url: '/pages/orders/orders',
     });
   },
 

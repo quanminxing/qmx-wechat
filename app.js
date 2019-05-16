@@ -29,7 +29,7 @@ App({
 	loading(title = '加载中', mark = true) {
 		wx.showLoading({
 			title,
-			mark,
+			mark: true,
 		})
 	},
 
@@ -45,20 +45,23 @@ App({
 					if(!!res.data.status ) {
 						if (res.data.status === 200) {
 							console.log('数据请求成功')
+							console.log(res)
 							resolve(res)
 						} else {
 							console.log('数据请求出错res')
+							console.log(res)
 							reject(res)
 						}
 					} else {
 						console.log('数据请求成功')
-						// reject(res)
+						console.log(res)
 						resolve(res)
 					}
 				},
 				fail: err => {
 					clearTimeout(timer)
 					console.log('数据请求出错err')
+					console.log(err)
 					reject(err)
 				}
 			}
@@ -109,7 +112,6 @@ App({
 				})
 			}
 		})
-		
 	},
 
 	// 获取用户信息
@@ -208,6 +210,7 @@ App({
 	/**
 	 * app全局监听函数
 	 */
+
 	// 监听页面不存在
   onPageNotFound(res) {
 		let toast = {

@@ -10,7 +10,7 @@
 	<view class='page-content' wx:else>
 		<view class='videos waterfall'>
 			<view class='list-left'>
-				<navigator class='list-item' wx:for='{{videos}}' wx:for-item='video' wx:key='{{video.waterfall_image + index}}' wx:if='{{index % 2 === 0}}' hover-class='none' url='../video/detail?video_id={{video.id}}'>
+				<navigator class='list-item' wx:for='{{videos}}' wx:for-item='video' wx:key='{{video.waterfall_image + index}}' wx:if='{{index % 2 === 0}}' hover-class='none' url='../detail/detail?video_id={{video.id}}&classify_id={{video.classify_id}}'>
 					<image class='list-item-img' src='{{video.waterfall_image}}' mode='widthFix'></image>
 					<view class='list-item-caption'>
 						<view class='list-item-title h4'>{{video.name}}</view>
@@ -19,7 +19,7 @@
 				</navigator>
 			</view>
 			<view class='list-right'>
-				<navigator class='list-item' wx:for='{{videos}}' wx:for-item='video' wx:key='{{video.waterfall_image + index}}' wx:if='{{index % 2 !== 0}}' hover-class='none' url='../video/detail?video_id={{video.id}}'>
+				<navigator class='list-item' wx:for='{{videos}}' wx:for-item='video' wx:key='{{video.waterfall_image + index}}' wx:if='{{index % 2 !== 0}}' hover-class='none' url='../detail/detail?video_id={{video.id}}&classify_id={{video.classify_id}}'>
 					<image class='list-item-img' src='{{video.waterfall_image}}' mode='widthFix'></image>
 					<view class='list-item-caption'>
 						<view class='list-item-title h4'>{{video.name}}</view>

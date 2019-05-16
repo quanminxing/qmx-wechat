@@ -1,5 +1,5 @@
   {
-    "usingComponents": {
-      "tx-video": "plugin://txvideo/video"
-    }
+    "navigationBarBackgroundColor": "#101010",
+		"navigationBarTitleText": "宜拍短视频工厂",
+		"navigationBarTextStyle": "white"
   }

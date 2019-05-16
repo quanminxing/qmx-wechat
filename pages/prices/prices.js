@@ -38,6 +38,7 @@ Page({
 		console.log(queryData)
 		query('/api/video', queryData).then(res => {
 			console.log('价格页该类目下的模板讲解类视频列表')
+			console.log(res)
 			let resData = res.data.data
 			console.log(resData)
 			this.setData({

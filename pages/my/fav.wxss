@@ -1,5 +1,5 @@
 /* pages/my/fav.wxss */
-
+@import '../../template/template.wxss';
 
 .image{
   margin:101rpx auto 59rpx auto;
@@ -81,22 +81,23 @@ width:55rpx;
 
 .checkbox-box .lefts{
   position:absolute;
-top:calc(50% - 23rpx);
+	top:calc(50% - 23rpx);
 }
 .video-box {
 	display: flex;
 }
 .video-box navigator{
   display: flex;
-	align-content: center;
+	align-items: center;
 	justify-content: flex-start;
 }
-.video-lists .video-title {
-	height: 90rpx;
+.video-lists .video-title, .video-lists .video-price {
+	height: auto;
+	padding: 10rpx 0;
 }
 .video-item{
   width:298rpx;
-  margin-right:10rpx
+  margin-right: 20rpx
 }
 .video-lists {
 	margin-bottom: 100rpx;

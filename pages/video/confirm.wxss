@@ -1,29 +1,44 @@
 /* pages/video/confirm.wxss */
-
+page {
+	background-color: #fff;
+	color: #353535;
+}
 .header {
 	padding: 0 30rpx;
 }
 
 .header .h3 {
-	color: #666;
-	line-height: 40px;
+	padding: 22rpx 0;
+	border-bottom: 1px solid #eee;
+	font-weight: 500;
 }
 .header .h3 text {
 	padding: 0;
 }
 
 .detail {
-	padding: 0 30rpx;
+	padding: 16rpx 30rpx;
 	background-color: #fff;
 	font-size: 16px;
-	color: #666;
+	color: #999;
 }
 .detail-item {
 	display: flex;
-	align-items: center;
-	justify-content:space-between;
-	line-height: 43px;
-	border-bottom: 1px solid #eee;
+	align-items: flex-start;
+	justify-content: flex-start;
+	padding: 12rpx  0;
+	/* border-bottom: 1px solid #eee; */
+	font-weight: 500;
+}
+.detail-item-left {
+	width: 100px;
+	flex-shrink: 0;
+}
+.detail-item-right {
+	flex-grow:1;
+	max-width:480rpx;
+	line-height: 23px;
+	color: #353535;
 }
  .detail .showmore {
 	 display: flex;
@@ -59,6 +74,7 @@
 	font-size: 16px;
 }
 .brief-required {
+	flex-shrink: 0;
 	width: 10px;
 	color: #f15348;
 }
@@ -72,6 +88,78 @@
 .brief-input-placehoder {
 	font-size: 13px;
 	color: #999;
+}
+.brief-picker {
+	max-width: 450rpx;
+}
+.brief-picker-arrow {
+	padding: 0 10rpx;
+	color: #999;
+}
+.brief-picker-arrow .arrow-icon {
+	width: 16px;
+}
+
+.worker-picker {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	z-index: 999;
+	width: 100vw;
+	height: 100vh;
+	box-sizing: border-box;
+	background-color: rgba(0, 0, 0, .3);
+}
+.worker-picker-close {
+	position: absolute;
+	top: 0;
+	right: 0;
+	padding: 18rpx 30rpx;
+}
+.worker-picker-close .close-icon {
+	width: 16px;
+}
+.worker-picker-container {
+	margin: 18vh 0 0 0;
+	height: 82vh;
+	padding: 24rpx;
+	background-color: #fff;
+}
+.worker-picker-title {
+	text-align: center;
+}
+.worker-picker-searchbar {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	padding: 44rpx 0 24rpx 0;
+	border-bottom: 2rpx solid #D8D8D8;
+}
+.worker-picker-searchbar .searchbar-input {
+	flex-grow: 1;
+	padding: 0 14rpx;
+}
+.worker-picker-empty {
+	margin: 38rpx 0 0 0;
+	text-align: center;
+	color: #999;
+}
+.worker-picker-list {
+	width: 100%;
+	height: 64vh;
+}
+.worker-picker-item {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	line-height: 120rpx;
+	border-bottom: 2rpx solid #eee;
+}
+.worker-picker-list .list-right .selected-icon {
+	width: 32rpx;
+}
+.worker-picker-selected {
+	color: #F15348;
 }
 
 .toolbar {

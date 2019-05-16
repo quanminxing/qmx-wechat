@@ -1,0 +1,58 @@
+<!--pages/orders/orders.wxml-->
+<import src='../../template/template' />
+<view class='page page-white' hidden='{{!pageShow}}'>
+	<block wx:if='{{pageErr}}'>
+		<template is='page-err' />
+	</block>
+	
+	<view wx:else class='orders'>
+		<swiper class='orders-nav' display-multiple-items='4' next-margin='24rpx'>
+			<swiper-item wx:for='{{nav}}' wx:key='*this' bindtap='selectNav' data-trade_status='{{item.trade_status}}'>
+				<view class='orders-nav-item h3 {{item.trade_status === queryData.trade_status ? "orders-nav-selected" : ""}}'>{{item.label}}</view>
+			</swiper-item>
+		</swiper>
+		<view class='orders-content'>
+			<block wx:if='{{orders.length > 0}}'>
+				<view class='orders-item h5' wx:for='{{orders}}' wx:key='*this'>
+					<view class='orders-item-header flex-between'>
+						<view class='header-left'>订单编号：<text>{{item.id}}</text></view>
+						<view class='header-right'>订单价格：<text>￥{{item.price}}</text></view>
+					</view>
+					<navigator class='orders-item-content flex-between' hover-class='none' url='../detail/detail?video_id={{item.video_id}}&classify_id={{item.classify_id}}'>
+						<view class='orders-item-media media'>
+							<image class='orders-item-img' mode='aspectFill' src='{{item.short_image}}'></image>
+							<view class='orders-item-media-body'>
+								<view class='orders-item-name line2'>{{item.video_name}}</view>
+								<view class='orders-item-info'>
+									<view class='info-left'>
+										<view>模特：{{item.is_model}}</view>
+										<view>场景：{{item.sence}}</view>
+									</view>
+									<view class='info-right'>
+										<view>时长：{{item.video_time}}</view>
+										<view>功能：{{item.usage_name}}</view>
+									</view>
+								</view>
+							</view>
+						</view>
+						<view class='orders-item-status {{item.trade_status === "交易成功" ? "order-successful" : ""}} h4'>{{item.trade_status === "待寄送" || item.trade_status === "待确认" ? item.trade_status + "样品" : item.trade_status}}</view>
+					</navigator>
+					<view class='orders-item-footer'>
+						<view wx:if='{{item.trade_status === "待付款" || item.trade_status === "未付款"}}' class='paying flex-between'>
+							<view class='paying-left paying-price'>￥{{item.price}}</view>
+							<view class='paying-right order-btn paying-btn' bindtap='toPay' data-bill_id='{{item.id}}'>去付款</view>
+						</view>
+						<view wx:if='{{item.trade_status === "待寄"}}' class='sending'>
+							<view class='sending-address order-btn sending-btn'>查看寄送地址</view>
+						</view>
+					</view>
+				</view>
+			</block>
+
+			<block wx:else>
+				<template is='data-empty' data='{{dataEmptyIcon: "/images/empty-bill.png", dataEmptyText: "目前还没有相关订单"}}' />
+			</block>
+		</view>
+	</view>
+
+</view>

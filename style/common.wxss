@@ -110,10 +110,14 @@ image {
 .waterfall .list-item {
 	width: 342rpx;
 	height: auto;
-	background-color: #353535;
+	background-color: #101010;
 	border-radius: 8rpx;
 	overflow: hidden;
 	margin: 18rpx 0;
+	box-shadow: 0 0 12rpx rgba(255, 255, 255, .2);
+}
+.waterfall .list-item-img {
+	height: 200rpx;
 }
 .waterfall .list-item-caption {
 	padding: 16rpx;
@@ -123,4 +127,53 @@ image {
 	font-size: 12px;
 	line-height: 17px;
 	color: #F15348;
+}
+
+.base-info {
+	padding: 0 26rpx;
+}
+.base-info-header {
+	padding: 8rpx 0;
+}
+.base-info-content.no-classify {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-wrap: wrap;
+}
+.base-info-item {
+	margin: 16rpx 0;
+}
+.base-info-content.no-classify .base-info-item {
+	width: 280rpx;
+}
+.base-info-item .item-right {
+	max-width: 460rpx;
+	color: #fff;
+}
+.base-info .item-left {
+	color: #999;
+}
+
+.media {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	flex-wrap: wrap;
+	margin: 30rpx 0;
+}
+.media-img {
+	width: 320rpx;
+	height: 180rpx;
+}
+.media-body {
+	max-width: 350rpx;
+	padding: 0 0 0 20rpx;
+}
+.media-heading, .media-content {
+	padding: 10rpx 0;
+}
+.price {
+	color: #F05442;
+	font-size: 12px;
 }

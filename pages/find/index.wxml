@@ -3,7 +3,7 @@
 
   <!-- banner -->
   <swiper wx:if='{{banner.length > 0}}' class='banner' autoplay='{{bannerSetting.autoplay}}' circular interval='{{bannerSetting.interval}}' indicator-dots='{{bannerSetting.indicatorDot}}' indicator-color='{{bannerSetting.indicatorColor}}' indicator-active-color='{{bannerSetting.indicatorActiveColor}}'>
-    <swiper-item wx:for='{{banner}}'>
+    <swiper-item wx:for='{{banner}}' wx:key='{{item.url}} + "banner"'>
       <navigator wx:if='{{item.type_id !== 3}}' url='{{item.url}}' hover-class='none' class='banner-navigator' open-type='{{item.type_id === 2 ? "switchTab" : "navigate"}}'>
         <image src='{{item.img_url}}' class='banner-img' mode='aspectFill'></image>
       </navigator>

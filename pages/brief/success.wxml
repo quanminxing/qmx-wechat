@@ -1,6 +1,6 @@
 <!--pages/brief/success.wxml-->
 
-<image src="/images/daicon_complete.png"></image>
+<image src="/images/order-success.png"></image>
 
  <view class="title2">操作成功</view>
  <view class="title3">相关工作人员会尽快与您取得联系</view>

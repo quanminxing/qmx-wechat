@@ -81,7 +81,8 @@ Page({
 					id: item.id,
 					name: item.name,
 					waterfall_image: item.waterfall_image,
-					price: item.price
+					price: item.price,
+					classify_id: item.classify_id
 				}
 			})
 			this.data.videos.push(...videosData)
@@ -94,6 +95,15 @@ Page({
 		}).catch(err => {
 
 		})
+	},
+
+	// 限制字数
+	limit4(name) {
+		if(name.length >= 5) {
+			return name.slice(0, 3) + '...'
+		} else {
+			return name
+		}
 	},
 
 	/**
@@ -110,11 +120,11 @@ Page({
 			let itemize = this.data.itemize[dataset.itemize];
 			let itemizeSub = itemize.sub[dataset.itemizesub];
 
-			itemize.label = itemizeSub.label === '全部' ? itemizeSub.alias : itemizeSub.label
-			itemizeSub.selected = true
+			itemize.label = itemizeSub.label === '全部' ? itemizeSub.alias : this.limit4(itemizeSub.label)
 			itemize.sub.forEach(item => {
 				item.selected = false;
 			})
+			itemizeSub.selected = true
 			
 			if (itemize.name === 'sort') {
 				_search.sidx = itemizeSub.sidx;
@@ -122,14 +132,13 @@ Page({
 			} else {
 				_search[itemize.name] = itemizeSub[itemize.name]
 			}
+
 			_search.pageNum = 1;
 			this.data.videos = []
 			this.queryList().then(() => {
 				wx.pageScrollTo({
 					scrollTop: 0,
-					duration: 0,
-					success: () => {
-					}
+					duration: 0
 				})
 			})
 		}
@@ -154,10 +163,55 @@ Page({
 		})
 	},
 
+	selectCategory(category_id) {
+		this.data.itemize.forEach((itemize, itemizeIndex) => {
+			itemize.show = false;
+			if (itemizeIndex === 0) {
+				itemize.label = '排序'
+			} else if (itemizeIndex === 2) {
+				itemize.label = '功能'
+			}
+			itemize.sub.forEach(itemizeSub => {
+				if (itemizeIndex === 1 && itemizeSub.category_id == category_id) {
+					itemize.label = this.limit4(itemizeSub.label);
+					itemizeSub.selected = true
+				}
+				itemizeSub.selected = false;
+			})
+		})
+		console.log(this.data.itemize)
+		this.setData({
+			itemize: this.data.itemize
+		})
+		_search = {
+			pageNum: 1,
+			pageSize: 20,
+			_search: true,
+			classify_id: '1,3',
+			category_id,
+		}
+		
+		this.data.videos = []
+		this.queryList().then(res => {
+			wx.pageScrollTo({
+				scrollTop: 0,
+				duration: 0
+			})
+			app.globalData.tabBarParam = {}
+		})
+	},
+
 	/**
 	 * 生命周期函数
 	 */
 	onLoad: function () {
+		console.log('load88888888888888888888888')
+		app.loading();
+		let selectName = null;
+		let selectCategory = app.globalData.tabBarParam.sample;
+		if (!!selectCategory) {
+			_search.category_id = selectCategory.category_id
+		}
 		let category = app.query('/category');
 		let usage = app.query('/usage');
 		let videos = app.query('/api/video', _search);
@@ -169,12 +223,23 @@ Page({
 			let videos = datas[2].data.data;
 
 			let categorySub = category.map(item => {
-				return {
-					label: item.name,
-					category_id: item.id,
-					selected: false
+				if (!!selectCategory && selectCategory.category_id == item.id) {
+					selectName = this.limit4(item.name);
+					return {
+						label: item.name,
+						category_id: item.id,
+						selected: true
+					}
+				} else {
+					return {
+						label: item.name,
+						category_id: item.id,
+						selected: false
+					}
 				}
+				
 			})
+			
 			categorySub.unshift({
 				label: '全部',
 				category_id: '',
@@ -199,23 +264,38 @@ Page({
 					id: item.id,
 					name: item.name,
 					waterfall_image: item.waterfall_image,
-					price: item.price
+					price: item.price,
+					classify_id: item.classify_id
 				}
 			})
 			this.setData({
 				pageShow: true,
 				pageErr: false,
+				'itemize[1].label': selectName || '品类',
 				'itemize[1].sub': categorySub,
 				'itemize[2].sub': usageSub,
 				videos: videosData
 			})
+			if(!!selectCategory) {
+				app.globalData.tabBarParam = {}
+			}
+			wx.hideLoading()
+
 		}).catch(err => {
 			console.log(err)
 			this.setData({
 				pageShow: true,
 				pageErr: true,
 			})
+			wx.hideLoading()
 		})
+	},
+
+	onShow(e) {
+		let category = app.globalData.tabBarParam.sample
+		if (!!category) {
+			this.selectCategory(category.category_id)
+		}
 	},
 
 	onPullDownRefresh: function () {
@@ -223,8 +303,10 @@ Page({
 	},
 
 	onReachBottom: function () {
+		app.loading()
 		_search.pageNum = ++_search.pageNum;
 		this.queryList().then(videos => {
+			wx.hideLoading()
 			if(videos.length === 0) {
 				console.log('没有更多了哦')
 			}
