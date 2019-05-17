@@ -116,6 +116,13 @@ Page({
 		})
 	},
 
+	// 待寄送 样品  和  待确认  样片
+	handleText(text) {
+		if(text === '待寄送') return '待寄送样品'
+		if(text === '待确认') return '待确认样片'
+		 return text
+	},
+
 	// 订单数据请求
 	queryOrders() {
 		app.loading();
@@ -130,7 +137,7 @@ Page({
 						id: item.id,
 						order_id: item.order_id,
 						video_id: item.video_id,
-						trade_status: item.trade_status,
+						trade_status: this.handleText(item.trade_status),
 						price: item.price,
 						video_name: item.video_name,
 						category_id: item.category_id || 0,
