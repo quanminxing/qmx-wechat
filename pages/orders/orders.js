@@ -7,6 +7,7 @@ Page({
 	 * 页面的初始数据
 	 */
 	data: {
+		onload: true,
 		pay: true,  // 快速重复点击付款限制
 		click: true,  // 快速重复点击订单nav限制
 		pageShow: false,
@@ -141,8 +142,10 @@ Page({
 						short_image: item.short_image,
 					}
 				})
+				console.log(data)
 				console.log(this.data.orders)
 				this.data.orders.push(...data)
+				console.log(this.data.orders)
 				this.setData({
 					orders: this.data.orders,
 					queryData: this.data.queryData
@@ -167,6 +170,7 @@ Page({
 
 	// 请求出错重载
 	reload() {
+		console.log('重载')
 		this.queryOrders().then(() => {
 			this.setData({
 				pageShow: true,
@@ -184,6 +188,7 @@ Page({
 	 * 生命周期函数
 	 */
 	onLoad: function (e) {
+		this.data.onload = false;
 		console.log(e)
 		if (!!e.trade_status) {
 			
@@ -195,14 +200,50 @@ Page({
 			this.data.queryData.trade_status = ''
 		}
 
+		// this.data.queryData.pageNum = 1;
+		// this.data.orders = [];
+
+		// const queryData = () => {
+		// 	this.data.queryData.user_id = app.globalData.openid;
+		// 	console.log('请求订单列表 onload ')
+		// 	this.queryOrders().then(() => {
+				
+		// 		this.setData({
+		// 			pageShow: true,
+		// 			pageErr: false,
+		// 		})
+		// 	}).catch(() => {
+		// 		this.setData({
+		// 			pageShow: true,
+		// 			pageErr: true,
+		// 		})
+		// 	});
+		// }
+		// console.log(queryData)
+
+		// console.log(app.globalData)
+		// if(!app.globalData.openid) {
+		// 	console.log('99999999')
+		// 	app.loginCallback = () => {
+		// 		queryData();
+		// 	}
+		// } else {
+		// 	console.log('88888888888888')
+		// 	queryData();
+		// }
+		
+	},
+
+	onShow: function() {
 		this.data.queryData.pageNum = 1;
 		this.data.orders = [];
+		// this.queryOrders();
 
 		const queryData = () => {
 			this.data.queryData.user_id = app.globalData.openid;
-			console.log('请求订单列表')
+			console.log('请求订单列表 onload ')
 			this.queryOrders().then(() => {
-				
+
 				this.setData({
 					pageShow: true,
 					pageErr: false,
@@ -214,8 +255,10 @@ Page({
 				})
 			});
 		}
+		console.log(queryData)
+
 		console.log(app.globalData)
-		if(!app.globalData.openid) {
+		if (!app.globalData.openid) {
 			console.log('99999999')
 			app.loginCallback = () => {
 				queryData();
@@ -227,14 +270,9 @@ Page({
 		
 	},
 
-	onShow: function() {
-		this.data.queryData.pageNum = 1;
-		this.data.orders = [];
-		this.queryOrders();
-	},
-
 	onReachBottom: function () {
 		++this.data.queryData.pageNum;
+		console.log('分页')
 		this.queryOrders().then();
 	},
 
