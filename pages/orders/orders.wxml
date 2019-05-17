@@ -35,7 +35,7 @@
 								</view>
 							</view>
 						</view>
-						<view class='orders-item-status {{item.trade_status === "交易成功" ? "order-successful" : ""}} h4'>{{item.trade_status === "待寄送" || item.trade_status === "待确认" ? item.trade_status + "样品" : item.trade_status}}</view>
+						<view class='orders-item-status {{item.trade_status === "交易成功" ? "order-successful" : ""}} h4'>{{item.trade_status === "待寄送" || item.trade_status === "待确认" ? item.trade_status + "样片" : item.trade_status}}</view>
 					</navigator>
 					<view class='orders-item-footer'>
 						<view wx:if='{{item.trade_status === "待付款" || item.trade_status === "未付款"}}' class='paying flex-between'>

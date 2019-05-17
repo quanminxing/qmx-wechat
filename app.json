@@ -51,7 +51,7 @@
 				"iconPath": "./images/dsp.png",
 				"selectedIconPath": "./images/dsp_press.png",
 				"pagePath": "pages/videos/videos",
-				"text": "短视频"
+				"text": "样片库"
 			},
 			{
 				"iconPath": "./images/wd.png",

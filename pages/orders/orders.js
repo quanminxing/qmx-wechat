@@ -7,7 +7,8 @@ Page({
 	 * 页面的初始数据
 	 */
 	data: {
-		click: true,
+		pay: true,  // 快速重复点击付款限制
+		click: true,  // 快速重复点击订单nav限制
 		pageShow: false,
 		pageErr: false,
 		queryData: {
@@ -70,6 +71,10 @@ Page({
 
 	// 点击去付款
 	toPay(e) {
+		console.log('点击支付')
+		if(!this.data.pay) return
+		console.log('可以支付')
+		this.data.pay = false
 		let payData = {
 			openid: app.globalData.openid,
 			bill_id: e.currentTarget.dataset.bill_id
@@ -95,14 +100,18 @@ Page({
 				signType: data.signType,
 				paySign: data.paySign,
 				success: res => {
+					this.data.pay = true
 					console.log(res)
 					console.log('支付成功')
 				},
 				fail: err => {
+					this.data.pay = true
 					console.log(err)
 					console.log('支付失败')
 				}
 			})
+		}).catch(err => {
+			this.data.pay = true
 		})
 	},
 
