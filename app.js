@@ -29,12 +29,12 @@ App({
 	loading(title = '加载中', mark = true) {
 		wx.showLoading({
 			title,
-			mark: true,
+			mark,
 		})
 	},
 
 	// request 请求
-	query(url, data = null, method = 'GET') {
+	query(url, data = null, method = 'GET', responseType) {
 		return new Promise((resolve, reject) => {
 			let timer = null;
 			let queryData = {
@@ -72,6 +72,9 @@ App({
 				queryData.header = {
 					'content-type': 'application/json'
 				}
+			}
+			if (!!responseType) {
+				queryData.responseType = responseType
 			}
 			let requesTask = wx.request(queryData);
 

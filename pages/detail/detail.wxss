@@ -71,26 +71,107 @@
 .toolbar-item {
 	height: 100rpx;
 }
-.toolbar .fav {
-	width: 150rpx;
+.toolbar .fav, .toolbar .share {
+	width: 136rpx;
 	text-align: center;
 }
 .toolbar .fav-icon {
-	width: 22px;
+	width: 16px;
 }
-.toolbar .fav-text {
+.toolbar .share-icon {
+	width: 16px;
+}
+.toolbar .toolbar-item-text {
 	font-size: 10px;
 	line-height: 14px;
 }
 .toolbar .place-order {
-	width: 600rpx;
+	width: 478rpx;
 	padding: 0;
 	background: linear-gradient(90deg,rgba(249,141,119,1) 0%,rgba(240,84,66,1) 100%);
 	color: #fff;
 	text-align: center;
 	line-height: 100rpx;
 }
-
 image {
 	width: 100%;
+}
+
+.modal-mark {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	z-index: -1;
+	background-color: rgba(0, 0, 0, .7);
+}
+.modal-share {
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	width: 100vw;
+	z-index: 99;
+	color: #353535;
+}
+.modal-share-content {
+	border-bottom: 12rpx solid #eee;
+	background-color: #fff;
+}
+.modal-share-item {
+	height: 52px;
+	border-bottom: 2rpx solid #eee;
+	line-height: 52px;
+}
+button.modal-share-item {
+	padding: 0;
+	border-radius: 0;
+	background-color: #fff;
+	text-align: left;
+	color: #353535;
+}
+.modal-share-item .item-icon {
+	width: 22px;
+	padding: 0 24rpx;
+}
+.modal-share-item .item-text {
+	vertical-align: middle;
+}
+.modal-share-footer .share-cancel {
+	height: 52px;
+	background-color: #fff;
+	line-height: 52px;
+	text-align: center;
+}
+
+.no-scroll {
+	height: 100vh;
+}
+.modal-poster {
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	width: 100vw;
+	height: 100vh;
+	z-index: 99;
+	overflow: hidden;
+}
+.modal-poster-content {
+	width: auto;
+	padding: 0;
+	overflow: hidden;
+}
+.poster {
+	width: 622rpx;
+	height: 690rpx;
+}
+.modal-poster .save-btn {
+	width: 150px;
+	height: 44px;
+	margin-top: 80rpx;
+	padding: 0;
+	border-radius: 22px;
+	line-height: 44px;
+	background-color: #fff;
+	color: #2596FF;
 }

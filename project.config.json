@@ -10,7 +10,7 @@
 		"autoAudits": false
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.6.6",
+	"libVersion": "2.7.0",
 	"appid": "wx52c4f518bbba52b5",
 	"projectname": "qmx-wechat",
 	"simulatorType": "wechat",
@@ -32,13 +32,28 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 0,
+			"current": 2,
 			"list": [
 				{
 					"id": -1,
 					"name": "订单",
 					"pathName": "pages/orders/orders",
+					"query": "",
 					"scene": null
+				},
+				{
+					"id": 1,
+					"name": "详情页",
+					"pathName": "pages/detail/detail",
+					"query": "video_id=513&classify_id=3",
+					"scene": null
+				},
+				{
+					"id": 2,
+					"name": "详情页-海报",
+					"pathName": "pages/detail/detail",
+					"query": "scene=video_id:513,classify_id:3",
+					"scene": 1012
 				}
 			]
 		}

@@ -1,5 +1,5 @@
 <!--pages/detail/detail.wxml-->
-<view class='page' hidden='{{!pageShow}}'>
+<view class='page {{isScroll ? "" : "no-scroll"}}' hidden='{{!pageShow}}'>
 	<view class='page-err pos-rel' wx:if='{{pageErr}}' bindtap='reload'>
 		<view class='block-center'>
 			<image class='page-err-icon' src='../../images/reload.png' mode='widthFix'></image>
@@ -82,12 +82,45 @@
 		</view>
 		<view class='toolbar-bottom'></view>
 		<view class='toolbar bgc-101010'>
+			<view class='share toolbar-item' bindtap='showShare'>
+				<image class='share-icon' src='/images/share-icon.png' mode='widthFix'></image>
+				<view class='share-text toolbar-item-text'>分享</view>
+			</view>
 			<view class='fav toolbar-item' bindtap='toggleFav'>
-				<image class='fav-icon' src='{{isFav ? "../../images/fav-press.png" : "../../images/fav.png"}}' mode='widthFix'></image>
-				<view class='fav-text'>收藏</view>
+				<image class='fav-icon' src='{{isFav ? "/images/fav-press.png" : "/images/fav.png"}}' mode='widthFix'></image>
+				<view class='fav-text toolbar-item-text'>{{isFav ? "已" : ""}}收藏</view>
 			</view>
 			<navigator class='place-order toolbar-item h2' bindtap='paceOrder' url="/pages/video/confirm?id={{video.id}}&classify_id={{video.classify_id}}">立即下单</navigator>
 		</view>
+
+		<!-- 分享modal -->
+		<view class='modal-share' hidden='{{!showShare}}'>
+			<view class='modal-share-mark modal-mark' bindtap='hideshare'></view>
+			<view class='modal-share-content'>
+				<button class='modal-share-item' open-type='share'>
+					<image class='item-icon' src='/images/wechat.png' mode='widthFix'></image>
+					<text class='item-text h2'>转发给好友或群聊</text>
+				</button>
+				<view class='modal-share-item' bindtap='creatPoster'>
+					<image class='item-icon' src='/images/friends.png' mode='widthFix'></image>
+					<text class='item-text h2'>生成朋友圈海报</text>
+				</view>
+			</view>
+			<view class='modal-share-footer'>
+				<view class='share-cancel h2' bindtap='hideshare'>取消</view>
+			</view>
+		</view>
+
+		<!-- 海报poster -->
+		<view class='modal-poster' wx:if='{{showPoster}}'>
+			<view class='modal-poster-mark modal-mark' bindtap='hidePoster'></view>
+			<view class='modal-poster-content center-block' hidden='{{!posterSuccess}}'>
+				<canvas class='poster' canvas-id='friends-poster'></canvas>
+				<button class='save-btn h2' bindtap='saveposter'>立即保存</button>
+			</view>
+		</view>
 	</view>
+
+	<!-- <view class=''></view> -->
 	
 </view>
