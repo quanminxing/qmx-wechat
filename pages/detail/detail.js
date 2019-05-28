@@ -163,10 +163,13 @@ Page({
 			time: video.time
 		}
 
+		console.log('二维码video信息')
+		console.log(video)
+
 		let getCode = new Promise((resolve, reject) => {
 			app.query('/api/share/getacode', { scene: `video_id:${video.id},classify_id:${video.classify_id}`, width: 1280, page: 'pages/detail/detail' }, 'POST', 'arraybuffer').then(res => {
 				console.log(res)
-				const filePath = wx.env.USER_DATA_PATH + '/qrcode.jpg'
+				const filePath = `${wx.env.USER_DATA_PATH}/qrcode${new Date().getTime()}.jpg`
 				const fsm = wx.getFileSystemManager();
 				console.log(filePath)
 				fsm.writeFile({

@@ -6,8 +6,8 @@ App({
 		tabBarParam: {},  // switchTab 跳转参数
 		//domain: 'http://192.168.2.183',
 		//domain:'http://localhost:7001',
-		domain: 'https://admin.qmxpower.com',
-		// domain: 'https://test.qmxpower.com'
+		// domain: 'https://admin.qmxpower.com',
+		domain: 'https://test.qmxpower.com'
 	},
 
 
@@ -48,14 +48,19 @@ App({
 							console.log(res)
 							resolve(res)
 						} else {
-							console.log('数据请求出错res')
+							
 							console.log(res)
 							reject(res)
 						}
 					} else {
-						console.log('数据请求成功')
-						console.log(res)
-						resolve(res)
+						if (res.statusCode === 200) {
+							console.log('数据请求成功')
+							resolve(res)
+						} else {
+							console.log('数据请求出错res')
+							reject(res)
+						}
+						
 					}
 				},
 				fail: err => {
@@ -140,7 +145,7 @@ App({
 			},
 			fail: () => {
 				// 登录失效
-				console.lo('登录失效')
+				console.log('登录失效')
 				this.userInfoCallback = function () {
 					getInfo();
 				}

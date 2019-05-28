@@ -18,7 +18,7 @@
 						<view class='header-left'>订单编号：<text>{{item.id}}</text></view>
 						<view class='header-right'>订单价格：<text>￥{{item.price}}</text></view>
 					</view>
-					<navigator class='orders-item-content flex-between' hover-class='none' url='../detail/detail?video_id={{item.video_id}}&classify_id={{item.classify_id}}'>
+					<navigator class='orders-item-content flex-between' hover-class='none' url='../order_detail/order_detail?order_id={{item.id}}'>
 						<view class='orders-item-media media'>
 							<image class='orders-item-img' mode='aspectFill' src='{{item.short_image}}'></image>
 							<view class='orders-item-media-body'>
@@ -35,16 +35,18 @@
 								</view>
 							</view>
 						</view>
-						<view class='orders-item-status {{item.trade_status === "交易成功" ? "order-successful" : ""}} h4'>{{item.trade_status}}</view>
+						<view class='orders-item-status {{item.sale_status === "交易成功" ? "order-successful" : ""}} h4'>{{item.sale_status}}</view>
 					</navigator>
 					<view class='orders-item-footer'>
-						<view wx:if='{{item.trade_status === "待付款" || item.trade_status === "未付款"}}' class='paying flex-between'>
-							<view class='paying-left paying-price'>￥{{item.price}}</view>
-							<view class='paying-right order-btn paying-btn' bindtap='toPay' data-bill_id='{{item.id}}'>去付款</view>
+						<view wx:if='{{item.trade_status === "待付款"}}' class='paying flex-between'>
+							<view wx:if='{{item.sale_status === "待支付定金"}}' class='paying-left paying-price'>定金：￥{{item.earnest_price}}</view>
+							<view wx:if='{{item.sale_status === "待支付尾款"}}' class='paying-left paying-price'>尾款：￥{{item.price - earnest_price}}</view>
+							<view wx:if='{{item.sale_status === "待支付全款"}}' class='paying-left paying-price'>全款：￥{{item.price}}</view>
+							<view class='paying-right order-btn paying-btn' bindtap='toPay' data-bill_id='{{item.id}}' data-settle='{{item.sale_status}}'>去付款</view>
 						</view>
-						<view wx:if='{{item.trade_status === "待寄"}}' class='sending'>
-							<view class='sending-address order-btn sending-btn'>查看寄送地址</view>
-						</view>
+						<navigator wx:if='{{item.trade_status === "待寄送"}}' class='sending' hover-class='none' url='../order_detail/order_detail?order_id={{item.id}}'>
+							<view class='sending-address order-btn sending-btn'>查看样品寄送地址</view>
+						</navigator>
 					</view>
 				</view>
 			</block>

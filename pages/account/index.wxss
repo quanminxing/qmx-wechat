@@ -1,125 +1,78 @@
 /**index.wxss**/
-.userinfo {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.arrow-right {
+	flex-shrink: 0;
+	width: 32rpx;
 }
-.userinfo-title{
-  font-size:22rpx;
-font-family:PingFangSC-Light;
-font-weight:300;
-color:rgba(153,153,153,1);
-margin-bottom:10rpx
-}
-.userinfo-auth{
-  font-size:26rpx;
-font-family:PingFangSC-Light;
-font-weight:300;
-color:rgba(53,53,53,1);
-margin-bottom:47rpx
+.page-padding {
+	padding: 0 24rpx;
 }
 
-.userinfo-avatar {
-  width: 128rpx;
-  height: 128rpx;
-  margin: 20rpx;
-  border-radius: 50%;
+.userinfo {
+	margin: 64rpx 0 86rpx 0;
+}
+.userinfo .media {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+}
+.userinfo .media-img {
+	width: 126rpx;
+	height: 126rpx;
+	margin: 0 20rpx;
+	border-radius: 50%;
 	overflow: hidden;
 }
-
-.userinfo-nickname {
-  font-size:28rpx;
-font-family:PingFangSC-Regular;
-font-weight:400;
-color:rgba(53,53,53,1);
+.userinfo .media-heading {
+	margin: 0 0 20rpx 0;
+	font-size: 20px;
+	font-weight: 500;
+	line-height: 28px;
 }
 
-.usermotto {
-  margin-top: 200px;
+.order-content {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin: 46rpx 0;
 }
-.flex-item{
-  width: 100rpx;
-  height: 100rpx;
-  background-color: red; 
+.order-item {
+	text-align: center;
 }
-
-
-
-.listen-content .item{
-  display: flex;
-  padding: 10px;
-  align-items: center;
-  
+.order-all-label {
+	vertical-align: middle;
 }
-.bg-img{
-  width: 60rpx;
-  height:80rpx;
-  background-size: cover;
-  background-repeat: no-repeat;
+.order-item .pos-rel {
+	display: inline-block;
 }
-
-.count{
-  color: #888888;
+.order-content .thumb-img {
+	width: 56rpx;
 }
-.listen-content .bg-img{
-  width: 50px;
-  height: 50px;
+.order-content .thumb-text {
+	padding: 16rpx 0 0 0;
+	color: #ddd;
 }
-.header{
-  padding-left: 15px;
-  background-color: #eeeff0;
+.order-content .order-flag {
+	position: absolute;
+	top: -9px;
+	right: -9px;
+	width: 18px;
+	height: 18px;
+	line-height: 18px;
+	background-color: #F15348;
+	border-radius: 50%;
+	color: #ddd;
 }
-.listen-content .weui-cell:first-child{
-
+.account {
+	padding: 0 24rpx 28rpx 24rpx;
+	margin: 0 0 28rpx 0;
+	border-bottom: 20rpx solid #1b1b1b;
 }
-.weui-cells::before {
-border-top:none;
+.account-item, .service-item {
+	padding: 10rpx 0;
 }
-
-.weui-grids {
-  border-left:0px;
-  border-bottom: 0px
-}
-.weui-grid-span2:last-child
-{
-border-right: 0px;
-
-}
-  
-
-.weui-grid-span2{
-  text-align: center;
-  height:78rpx;
-  line-height: 78rpx;
-  padding:0;
-  font-size:28rpx;
-  font-family:PingFangSC-Regular;
-  font-weight:400;
-  color:rgba(53,53,53,1);
-  border-bottom: 0px
-}
-
-.weui-grid-span2 .weui-grid__icon{
-  width:36rpx;
-  height:36rpx;
-  margin-right:20rpx;
-}
-.weui-grid__icon{
-  width:60rpx;
-  height:80rpx;
-}
-
-.weui-grid-span2 .weui-grid__icon, .weui-grid-span2 .weui-grid__label{
- display: inline-block;
- vertical-align: middle;
-}
-.weui-grid-span2 .weui-grid__label{
- display: inline-block
-}
-
-.weui-grid__label {
-margin-top: 0;
-font-size: inherit;
-height:78rpx;
-line-height:78rpx;
+.service-item button {
+	padding: 0;
+	background-color: transparent;
+	border-radius: 0;
+	color: #fff;
 }

@@ -68,6 +68,10 @@ Page({
 		this.data.queryData.pageNum = 1;
 		this.data.orders = [];
 		this.queryOrders();
+		wx.pageScrollTo({
+			scrollTop: 0,
+			duration: 0
+		})
 	},
 
 	// 点击去付款
@@ -78,7 +82,8 @@ Page({
 		this.data.pay = false
 		let payData = {
 			openid: app.globalData.openid,
-			bill_id: e.currentTarget.dataset.bill_id
+			bill_id: e.currentTarget.dataset.bill_id,
+			settle: e.currentTarget.dataset.settle.slice(-2)
 		}
 		console.log('支付请求信息payData')
 		console.log(payData)
@@ -116,13 +121,6 @@ Page({
 		})
 	},
 
-	// 待寄送 样品  和  待确认  样片
-	handleText(text) {
-		if(text === '待寄送') return '待寄送样品'
-		if(text === '待确认') return '待确认样片'
-		 return text
-	},
-
 	// 订单数据请求
 	queryOrders() {
 		app.loading();
@@ -137,8 +135,10 @@ Page({
 						id: item.id,
 						order_id: item.order_id,
 						video_id: item.video_id,
-						trade_status: this.handleText(item.trade_status),
+						sale_status: item.sale_status,
+						trade_status: item.trade_status,
 						price: item.price,
+						earnest_price: item.earnest_price,
 						video_name: item.video_name,
 						category_id: item.category_id || 0,
 						classify_id: item.classify_id || 0,
@@ -206,38 +206,6 @@ Page({
 			this.data.queryData._search = false;
 			this.data.queryData.trade_status = ''
 		}
-
-		// this.data.queryData.pageNum = 1;
-		// this.data.orders = [];
-
-		// const queryData = () => {
-		// 	this.data.queryData.user_id = app.globalData.openid;
-		// 	console.log('请求订单列表 onload ')
-		// 	this.queryOrders().then(() => {
-				
-		// 		this.setData({
-		// 			pageShow: true,
-		// 			pageErr: false,
-		// 		})
-		// 	}).catch(() => {
-		// 		this.setData({
-		// 			pageShow: true,
-		// 			pageErr: true,
-		// 		})
-		// 	});
-		// }
-		// console.log(queryData)
-
-		// console.log(app.globalData)
-		// if(!app.globalData.openid) {
-		// 	console.log('99999999')
-		// 	app.loginCallback = () => {
-		// 		queryData();
-		// 	}
-		// } else {
-		// 	console.log('88888888888888')
-		// 	queryData();
-		// }
 		
 	},
 

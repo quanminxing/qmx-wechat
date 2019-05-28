@@ -5,6 +5,10 @@
 	background-color: #eee;
 }
 .orders-nav {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
 	height: 44px;
 	padding: 0 0 0 24rpx;
 	background-color: #fff;
@@ -20,7 +24,8 @@
 }
 
 .orders-content {
-	padding: 2rpx 24rpx;
+	margin-top: calc(44px + 24rpx);
+	padding: 0 24rpx;
 }
 .orders-item {
 	margin: 24rpx 0;
@@ -41,7 +46,6 @@
 .orders-item-media {
 	flex-grow: 1;
 	align-items: flex-start;
-	/* max-width: 480rpx; */
 	margin: 0;
 }
 .orders-item-img {

@@ -1,0 +1,161 @@
+/* pages/order_detail/orders_detail.wxss */
+@import '../../template/template';
+
+.page {
+	min-height: 100vh;
+	background-color: #eee;
+}
+.detail-header {
+	position: absolute;
+	top: 0;
+	left: 0;
+	/* z-index: -1; */
+	width: 100vw;
+	height: 188rpx;
+	background: linear-gradient(90deg,rgba(249,141,119,1) 0%,rgba(240,84,66,1) 100%);
+}
+.detail-header .heading {
+	padding: 46rpx 24rpx 0 24rpx;
+	font-size: 20px;
+	font-weight: 500;
+	line-height: 28px;
+	color: #fff;
+}
+
+.detail-content {
+	position: relative;
+	z-index: 1;
+	margin: 148rpx 0 0 0;
+	padding: 0 24rpx;
+}
+.detail-item {
+	margin: 24rpx 0;
+	padding: 16rpx 24rpx;
+	background-color: #fff;
+	border-radius: 8rpx;
+}
+.detail-item-heading {
+	margin: 16rpx 0;
+}
+.detail-sub-item {
+	margin: 16rpx 0;
+}
+.flex-lr {
+	display: flex;
+}
+.flex-l {
+	flex-shrink: 0;
+	width: 100px;
+	color: #999;
+}
+.flex-r {
+	flex-shrink: 0;
+	max-width: calc(654rpx - 100px);
+	color: #353535;
+}
+
+.send-item {
+	display: flex;
+}
+.send-icon {
+	flex-shrink: 0;
+	width: 20px;
+	margin: 0 24rpx 0 0;
+}
+.send-text {
+	flex-shrink: 0;
+	max-width: 600rpx;
+	color: #666;
+}
+
+.reserve {
+	position: relative;
+}
+.reserve .modify {
+	position: absolute;
+	top: 20rpx;
+	right: 32rpx;
+}
+.reserve .modify-icon {
+	width: 16px;
+	margin:  0 10rpx 0 0;
+}
+.reserve .modify-text {
+	color: #666;
+}
+
+.video-media {
+	flex-grow: 1;
+	align-items: flex-start;
+	margin: 0;
+}
+.video-img {
+	flex-shrink: 0;
+	width: 140rpx;
+	height: 140rpx;
+}
+.video-media-body {
+	flex-grow: 1;
+	padding:0 0 0 20rpx;
+}
+.video-info {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	color: #999;
+}
+.video-info .info-left, .video-info .info-right {
+	flex-grow: 1;
+}
+
+.order-tip {
+	padding: 0 0 0 32rpx;
+	color: #F15348;
+}
+
+.tip .flow-img {
+	width: 100%;
+	height: 124rpx;
+}
+.tip .script-header {
+	padding: 36rpx 0 24rpx 0;
+}
+ .tip .regard-header {
+	 padding: 48rpx 0 16rpx 0;
+ }
+.tip .regard-item {
+	padding: 16rpx 0;
+}
+
+.detail-footer {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	z-index: 9;
+	width: 100vw;
+	height: 50px;
+}
+.detail-footer .paying {
+	height: 100%;
+	padding: 0 24rpx;
+	background-color: #fff;
+}
+.detail-footer .paying-left {
+	color: #666;
+}
+.detail-footer .paying-price {
+	color: #F15348;
+	font-size: 20px;
+}
+.detail-footer .paying-btn {
+	width: 77px;
+	height: 30px;
+	background-color: #F4756D;
+	border-radius: 15px;
+	line-height: 30px;
+	color: #fff;
+	text-align: center;
+}
+.footer-height {
+	mpadding-bottom: 50px;
+}

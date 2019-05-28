@@ -1,73 +1,119 @@
 //index.js
-//获取应用实例
-var app = getApp()
+
+let app = getApp()
+const { each } = require('../../utils/util.js')
+
 Page({
   data: {
-    motto: 'Hello World',
-    userInfo: {}
+    order: [
+			{
+				trade_status: '待付款',
+				icon: '/images/paying.png',
+				text: '待付款',
+				url: '../orders/orders?trade_status=待付款',
+				flag: '9+'
+			},
+			{
+				trade_status: '待确认',
+				icon: '/images/confirming.png',
+				text: '待确认',
+				url: '../orders/orders?trade_status=待确认',
+				flag: '9'
+			},
+			{
+				trade_status: '待寄送',
+				icon: '/images/sending.png',
+				text: '待寄送',
+				url: '../orders/orders?trade_status=待寄送',
+				flag: '5'
+			},
+			{
+				trade_status: '进行中',
+				icon: '/images/onging.png',
+				text: '进行中',
+				url: '../orders/orders?trade_status=进行中',
+				flag: '3'
+			},
+			{
+				trade_status: '交易成功',
+				icon: '/images/finished.png',
+				text: '已完成',
+				url: '../orders/orders?trade_status=交易成功',
+				flag: ''
+			},
+			{
+				trade_status: '退款中,退款完成,交易关闭',
+				icon: '/images/after-sale.png',
+				text: '售后/退款',
+				url: '../orders/orders?trade_status=退款中,退款完成,交易关闭',
+				flag: ''
+			}
+		],
+		account: [
+			{
+				text: '我的足迹',
+				url: '/pages/my/log'
+			},
+			{
+				text: '我的收藏',
+				url: '/pages/my/fav'
+			}
+		],
+		service: [
+			{
+				text: '意见反馈',
+				openType: 'contact',
+				url: ''
+			},
+			{
+				text: '联系我们',
+				openType: '',
+				url: '/pages/account/contact'
+			},
+			{
+				text: '关于我们',
+				openType: '',
+				url: '/pages/find/business'
+			}
+		]
   },
-  //事件处理函数
 
-  onLoad: function (options) {
-    const app = getApp();
-    const openid = app.globalData.openid;
-    const that = this;
-    app.getUserInfo(function (userInfo) {
-      if (!openid) {
-        app.login(function (openid) {
-          that.getUser(openid);
-        });
-      } else {
-        that.getUser(openid);
-      }
-    }),
-      wx.setNavigationBarTitle({
-        title: '个人中心'
-      })
+	getOrderFlag(num) {
+		if(num <= 0) return '';
+		if(num > 9) return '9+';
 
-  },
+		return num;
+	},
 
-  getUser(openid) {
-    const app = getApp();
-    const that = this;
-    const userInfo = app.globalData.userInfo;
-    console.log(app.globalData);
-    wx.showLoading({
-      title: '加载中',
-      mask: true
-    });
-    wx.request({
-      url: app.globalData.domain + '/api/user?openid=' + openid,
-      header: {
-        'Content-Type': 'application/json'
-      },
-      success: function (res) {
-        console.log(userInfo);
-        let user = {};
-        let exist = res.data.rows;
-        if (!exist) {
-          user.name = userInfo.nickName;
-          user.phone = '';
-          user.company = '';
-        } else {
-          user = exist;
-          if (!user.name) {
-            user.name = userInfo.nickName;
-          }
-          if (!user.company) {
-            user.company = ''
-          }
-          if (!user.phone) {
-            user.phone = ''
-          }
-        }
-        user.avatarUrl = userInfo.avatarUrl;
-        that.setData({
-          userInfo: user
-        });
-        wx.hideLoading();
-      }
-    });
+  onLoad: function (e) {
+		app.query('/api/bill/count', {}, 'POST').then(res => {
+			console.log('成功')
+			let resData = res.data.data;
+			let order = this.data.order;
+
+			let afterSale = 0;
+
+			order.forEach(item => {
+				each(resData, function(data) {
+					if (data.trade_status === item.trade_status) {
+						item.flag = this.getOrderFlag(data.count)
+
+						return false;
+					} else if (data.trade_status === '退款中' || data.trade_status === '退款完成' || data.trade_status === '交易关闭') {
+						afterSale += data.count;
+					}
+				}, this)
+			})
+
+			order[5].flag = afterSale;
+
+			this.setData({
+				order,
+			})
+		}).catch(err => {
+			console.log('出错')
+		})
+
   },
 
 	onShareAppMessage: function () {

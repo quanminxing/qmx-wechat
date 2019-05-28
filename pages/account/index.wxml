@@ -1,57 +1,53 @@
 <!--index.wxml-->
+<view class='page h3'>
+	<navigator class='userinfo flex-between page-padding' hover-class='none' url='../account/info'>
+		<view class='media'>
+			<open-data type='userAvatarUrl' class="media-img"></open-data>
+			<view class='media-body'>
+				<open-data type='userNickName' class="media-heading"></open-data>
+				<view class='media-content h4'>全民星网络科技发展有限公司</view>
+			</view>
+		</view>
+		<image class='arrow-right' src='/images/arrow-right.png' mode='widthFix'></image>
+	</navigator>
 
-<!--index.wxml-->
-<view class="container">
-  <view class="userinfo">
-    <!-- <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image> -->
-		<open-data type='userAvatarUrl' class="userinfo-avatar"></open-data>
-		<open-data type='userNickName' class="userinfo-nickname"></open-data>
-    <!-- <text class="userinfo-nickname">{{userInfo.name}}</text> -->
-    <text class="userinfo-title">普通会员</text>
-    <text class="userinfo-auth">{{userInfo.company}}</text>
-  </view>
-  <view class="weui-grids">
-    <navigator class="weui-grid-span2" hover-class="weui-grid_active" url="/pages/my/fav">
-      <image class="weui-grid__icon" src="/images/fm.png" />
-      <view class="weui-grid__label">我的收藏</view>
-    </navigator>
-    <navigator class="weui-grid-span2" hover-class="weui-grid_active" url="/pages/my/log">
-      <image class="weui-grid__icon" src="/images/step.png" />
-      <view class="weui-grid__label">我的足迹</view>
-    </navigator>
-  </view>
-  <view class="sep"></view>
-  <view class="weui-cells weui-cells_after-title">
-    <navigator url="/pages/orders/orders" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-      <image class="weui-grid__icon" src="/images/wddd.png" />
+	<view class='order page-padding'>
+		<view class='order-header flex-between'>
+			<view class='order-heading'>我的订单</view>
+			<navigator class='order-all' hover-class='none' url='../orders/orders'>
+				<text class='order-all-label'>全部订单</text>
+				<image class='arrow-right' src='/images/arrow-right.png' mode='widthFix'></image>
+			</navigator>
+		</view>
+		<view class='order-content'>
+			<navigator wx:for='{{order}}' wx:key='*this' class='order-item thumb' hover-class='none' url='{{item.url}}'>
+				<view class='pos-rel'>
+					<image class='thumb-img' mode='widthFix' src='{{item.icon}}'></image>
+					<view class='order-flag h5' wx:if='{{item.flag}}'>{{item.flag}}</view>
+				</view>
+				<view class='thumb-text h5'>{{item.text}}</view>
+				
+			</navigator>
+		</view>
+	</view>
 
-      <view class="weui-cell__bd">我的订单</view>
-      <view class="weui-cell__ft weui-cell__ft_in-access"></view>
-    </navigator>
-    <navigator url="/pages/account/webview" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-      <image class="weui-grid__icon" src="/images/gywm.png" />
-      <view class="weui-cell__bd">关于我们</view>
-      <view class="weui-cell__ft weui-cell__ft_in-access"></view>
-    </navigator>
-    <navigator url="/pages/account/feedback" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-      <image class="weui-grid__icon" src="/images/yjfk.png" />
-      <view class="weui-cell__bd">意见反馈</view>
-      <view class="weui-cell__ft weui-cell__ft_in-access"></view>
-    </navigator>
-    <navigator url="/pages/account/contact" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-      <image class="weui-grid__icon" src="/images/lxwm.png" />
-      <view class="weui-cell__bd">联系我们</view>
-      <view class="weui-cell__ft weui-cell__ft_in-access"></view>
-    </navigator>
-  </view>
-  <view class="sep"></view>
+	<view class='account page-padding'>
+		<navigator class='service-item flex-between' wx:for='{{account}}' wx:key='*this' hover-class='none' url='{{item.url}}'>
+			<view class='account-text'>{{item.text}}</view>
+			<image class='arrow-right' src='/images/arrow-right.png' mode='widthFix'></image>
+		</navigator>
+	</view>
 
-  <view class="weui-cells weui-cells_after-title info-setup">
-    <navigator url="/pages/account/info" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-      <image class="weui-grid__icon" src="/images/sz.png" />
-      <view class="weui-cell__bd">设置</view>
-      <view class="weui-cell__ft weui-cell__ft_in-access"></view>
-    </navigator>
-  </view>
-
+	<view class='service page-padding'>
+		<view class='service-item' wx:for='{{service}}' wx:key='*this'>
+			<button class='flex-between h3' wx:if='{{item.openType}}' open-type='contact'>
+				<view class='service-text'>{{item.text}}</view>
+				<image class='arrow-right' src='/images/arrow-right.png' mode='widthFix'></image>
+			</button>
+			<navigator wx:else hover-class='none' url='{{item.url}}' class='flex-between'>
+				<view class='service-text'>{{item.text}}</view>
+				<image class='arrow-right' src='/images/arrow-right.png' mode='widthFix'></image>
+			</navigator>
+		</view>
+	</view>
 </view>

@@ -19,7 +19,7 @@
 
 	<!-- 频道 -->
   <view class="channel list">
-    <navigator class="list-item pos-rel" wx:for='{{channel}}' url='{{item.url}}'>
+    <navigator class="list-item pos-rel" wx:for='{{channel}}' wx:key='*this' url='{{item.url}}'>
       <image class="list-item-img" src="{{item.img_url}}" mode="aspectFill">
       </image>
       <view class="img-mark">

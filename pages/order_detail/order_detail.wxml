@@ -1,0 +1,118 @@
+<!--pages/order_detail/orders_detail.wxml-->
+<import src='../../template/template' />
+
+<view class='page page-white' hidden='{{!pageShow}}'>
+	<block wx:if='{{pageErr}}'>
+		<template is='page-err' />
+	</block>
+
+	<view wx:else class='detail'>
+		
+		<view class='detail-header'>
+			<view class='heading'>{{sale_status}}</view>
+		</view>
+		<view class='detail-content {{order.trade_status === "待付款" ? "footer-height" : ""}}'>
+			<view class='send detail-item' wx:if='{{sale_status === "待寄送样品"}}'>
+				<view class='send-heading detail-item-heading'>样品寄送地址</view>
+				<view class='send-content detail-item-content'>
+					<view class='send-itemb detail-sub-item flex-lr h4' wx:for='{{send}}' wx:key='*this'>
+						<image class='send-icon' src='{{item.icon}}' mode='widthFix'></image>
+						<view class='send-text h4'>{{item.value}}</view>
+					</view>
+				</view>
+			</view>
+
+			<view class='reserve detail-item'>
+				<view class='detail-item-heading'>预留信息</view>
+				<view class='detail-item-content'>
+					<view class='reserve-item detail-sub-item flex-lr h4' wx:for='{{reserve}}' wx:key='*this'>
+						<view class='flex-l'>{{item.label}}</view>
+						<view class='flex-r'>{{item.value}}</view>
+					</view>
+				</view>
+				<view class='modify' hover-class='none' bindtap='modifyReserve'>
+					<image class='modify-icon' mode='widthFix' src='/images/pencil.png'></image>
+					<text class='modify-text h4'>修改</text>
+				</view>
+			</view>
+
+			<view class='video detail-item'>
+				<view class='detail-item-heading'>参考客片</view>
+				<view class='detail-item-content'>
+					<view class='video-media media'>
+							<image class='video-img' mode='aspectFill' src='{{video.short_image}}'></image>
+							<view class='video-media-body'>
+								<view class='video-name line2'>{{video.video_name}}</view>
+								<view class='video-info'>
+									<view class='info-left'>
+										<view>模特：{{video.is_model}}</view>
+										<view>场景：{{video.sence}}</view>
+									</view>
+									<view class='info-right'>
+										<view>时长：{{video.video_time}}</view>
+										<view>功能：{{video.usage_name}}</view>
+									</view>
+								</view>
+							</view>
+						</view>
+				</view>
+			</view>
+
+			<view class='order detail-item'>
+				<view class='detail-item-heading'>订单信息</view>
+				<view class='detail-item-content'>
+					<view class='order-item detail-sub-item flex-lr h4' wx:for='{{order}}' wx:key='*this' wx:if='{{!!item.value}}'>
+						<view class='flex-l'>{{item.label}}</view>
+						<view class='flex-r'>
+							{{item.value}}
+							<text class='order-tip' wx:if='{{item.tip}}'>{{item.tip}}</text>
+						</view>
+					</view>
+				</view>
+			</view>
+
+			<view class='refund detail-item'>
+				<view class='detail-item-heading'>退款信息</view>
+				<view class='detail-item-content'>
+					<view class='order-item detail-sub-item flex-lr h4' wx:for='{{refund}}' wx:key='*this'>
+						<view class='flex-l'>{{item.label}}</view>
+						<view class='flex-r'>{{item.value}}</view>
+					</view>
+				</view>
+			</view>
+
+			<view class='send detail-item' wx:if='{{sale_status !== "待寄送样品"}}'>
+				<view class='send-heading detail-item-heading'>样品寄送地址</view>
+				<view class='send-content detail-item-content'>
+					<view class='send-itemb detail-sub-item flex-lr h4' wx:for='{{send}}' wx:key='*this'>
+						<image class='send-icon' src='{{item.icon}}' mode='widthFix'></image>
+						<view class='send-text h4'>{{item.value}}</view>
+					</view>
+				</view>
+			</view>
+
+			<view class='tip detail-item'>
+				<view class='tip-flow'>
+					<view class='detail-item-heading'>服务流程</view>
+					<view class='flow-contetn'>
+						<image class='flow-img' src='https://file.qmxpower.com/image/20190429180335.png' mode='widthFix'></image>
+					</view>
+				</view>
+				<view class='tip-regard'  wx:if='{{regard.length > 0}}'>
+					<view class='detail-item-heading h3'>短视频制作注意事项</view>
+					<view class='regard-content h4'>
+						<view class='regard-item detail-sub-item' wx:for='{{regard}}' wx:key='*this' wx:if='{{!!item}}'>{{item}}</view>
+					</view>
+				</view>
+			</view>
+		</view>
+		<view class='detail-footer'>
+			<view wx:if='{{order.trade_status === "待付款"}}' class='paying flex-between'>
+				<view wx:if='{{order.sale_status === "待支付定金"}}' class='paying-left h4'>定金：￥<text class='paying-price'>{{order.earnest_price}}</text></view>
+				<view wx:if='{{order.sale_status === "待支付尾款"}}' class='paying-left h4'>尾款：￥<text class='paying-price'>{{order.price - earnest_price}}</text></view>
+				<view wx:if='{{order.sale_status === "待支付全款"}}' class='paying-left h4'>全款：￥<text class='paying-price'>{{order.price}}</text></view>
+				<view class='paying-right paying-btn' bindtap='toPay' data-bill_id='{{order.id}}' data-settle='{{order.sale_status}}'>去付款</view>
+			</view>
+		</view>
+	</view>
+</view>

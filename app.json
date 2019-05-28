@@ -28,7 +28,9 @@
 		"pages/search/search",
 		"pages/fav/fav",
 		"pages/track/track",
-		"pages/orders/orders"
+		"pages/orders/orders",
+		"pages/order_detail/order_detail",
+		"pages/reserve_modify/reserve_modify"
 	],
 	"window": {
 		"backgroundTextStyle": "light",
@@ -60,12 +62,6 @@
 				"text": "我的"
 			}
 		]
-	},
-	"plugins": {
-		"txvideo": {
-			"version": "1.2.5",
-			"provider": "wxa75efa648b60994b"
-		}
 	},
 	"debug": true,
 	"sitemapLocation": "sitemap.json"

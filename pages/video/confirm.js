@@ -166,34 +166,33 @@ pickWorker(e) {
 },
 
 // 搜索推荐人
-	searchWorker(e) {
-		console.log(e.detail.value)
-		let searchValue = e.detail.value;
+searchWorker(e) {
+	console.log(e.detail.value)
+	let searchValue = e.detail.value;
 
-		if (searchValue.trim().length > 0 && !this.data.workerPickerSearch) {
-			this.setData({
-				workerPickerSearch: true
-			})
-		}
-		if (searchValue.trim().length === 0 && this.data.workerPickerSearch) {
-			this.setData({
-				workerPickerSearch: false
-			})
-		}
-		if (searchValue.trim().length > 0) {
-			this.data.workerSearch = [];
-			this.data.workers.forEach(item => {
-				if (item.cname.search(searchValue) >= 0) {
-					this.data.workerSearch.push(item)
-				}
-			})
-			this.setData({
-				workerSearch: this.data.workerSearch
-			})
-		}
-		
-	},
-
+	if (searchValue.trim().length > 0 && !this.data.workerPickerSearch) {
+		this.setData({
+			workerPickerSearch: true
+		})
+	}
+	if (searchValue.trim().length === 0 && this.data.workerPickerSearch) {
+		this.setData({
+			workerPickerSearch: false
+		})
+	}
+	if (searchValue.trim().length > 0) {
+		this.data.workerSearch = [];
+		this.data.workers.forEach(item => {
+			if (item.cname.search(searchValue) >= 0) {
+				this.data.workerSearch.push(item)
+			}
+		})
+		this.setData({
+			workerSearch: this.data.workerSearch
+		})
+	}
+	
+},
 
 // 表单输入事件
 formInput(e) {
@@ -211,7 +210,7 @@ formInput(e) {
 	}, this)
 },
 
-// 表单提交和验证
+// 表单提交前验证
 submit() {
 	console.log('提交')
 	if (this.data.submitDisabled) return

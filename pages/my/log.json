@@ -1,5 +1,1 @@
-  {
-    "usingComponents": {
-      "tx-video": "plugin://txvideo/video"
-    }
-  }
+  {}

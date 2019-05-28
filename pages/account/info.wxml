@@ -17,14 +17,4 @@
             </navigator>
         </view>
  <view class="sep"></view>
- <!--
- <view class="listen-content">
-        <view class="weui-cells weui-cells_after-title">
-            <navigator url="/pages/index/login" class="weui-cell logout" hover-class="weui-cell_active">
-            <view>退出登录</view>
-            </navigator>
-        </view>
- <view class="sep"></view>
- -->
- 
 </view>

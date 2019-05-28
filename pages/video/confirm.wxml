@@ -15,11 +15,6 @@
 
 	<view wx:if='{{!tvc}}' class='header'>
 		<view class='h3'>{{video.name}}</view>
-		<!-- <view class='h2'>需求信息</view>
-		<view class='h3'>
-			<view class='float-r'>{{video.name}}</view>
-			<view>样片信息</view>
-		</view> -->
 	</view>
 
 	<view class='content'>

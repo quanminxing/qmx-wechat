@@ -38,6 +38,7 @@
 .detail-tip .script-img {
 	width: 100vw;
 }
+
 .detail-sample {
 	padding: 26rpx 0 0 0;
 }
