@@ -13,7 +13,7 @@
 			<view class='value'>
 				<input class='h3 value-input' type='{{item.type ? item.type : "text"}}' value='{{item.value}}' placeholder='{{item.placeholder}}' placeholder-class='placeholder' data-source='{{item}}' bindinput='formInput'></input>
 			</view>
-			<image class='clear' src='/images/clear.png' mode='widthFix' bindtap='clear' data-index='{{item.index}}'></image>
+			<image class='clear' src='/images/clear.png' mode='widthFix' bindtap='clear' data-index='{{item.index}}' hidden='{{!item.value}}'></image>
 		</view>
 	</view>
 

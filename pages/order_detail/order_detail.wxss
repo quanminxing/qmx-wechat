@@ -9,7 +9,6 @@
 	position: absolute;
 	top: 0;
 	left: 0;
-	/* z-index: -1; */
 	width: 100vw;
 	height: 188rpx;
 	background: linear-gradient(90deg,rgba(249,141,119,1) 0%,rgba(240,84,66,1) 100%);
@@ -86,7 +85,7 @@
 
 .video-media {
 	flex-grow: 1;
-	align-items: flex-start;
+	/* align-items: flex-start; */
 	margin: 0;
 }
 .video-img {
@@ -102,6 +101,7 @@
 	display: flex;
 	justify-content: flex-start;
 	align-items: center;
+	margin: 10rpx 0 0 0;
 	color: #999;
 }
 .video-info .info-left, .video-info .info-right {
@@ -117,14 +117,12 @@
 	width: 100%;
 	height: 124rpx;
 }
-.tip .script-header {
-	padding: 36rpx 0 24rpx 0;
-}
- .tip .regard-header {
-	 padding: 48rpx 0 16rpx 0;
+ .tip-regard {
+	 margin: 32rpx 0 0 0;
  }
 .tip .regard-item {
-	padding: 16rpx 0;
+	margin: 16rpx 0;
+	color: #666;
 }
 
 .detail-footer {

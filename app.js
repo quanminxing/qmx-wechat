@@ -6,8 +6,8 @@ App({
 		tabBarParam: {},  // switchTab 跳转参数
 		//domain: 'http://192.168.2.183',
 		//domain:'http://localhost:7001',
-		// domain: 'https://admin.qmxpower.com',
-		domain: 'https://test.qmxpower.com'
+		domain: 'https://admin.qmxpower.com',
+		// domain: 'https://test.qmxpower.com'
 	},
 
 
@@ -22,7 +22,7 @@ App({
 				wx.hideToast();
 				resolve();
 			}, time)
-		})
+		})  
 	},
 
 	// loading 提示

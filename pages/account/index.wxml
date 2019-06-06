@@ -5,7 +5,7 @@
 			<open-data type='userAvatarUrl' class="media-img"></open-data>
 			<view class='media-body'>
 				<open-data type='userNickName' class="media-heading"></open-data>
-				<view class='media-content h4'>全民星网络科技发展有限公司</view>
+				<view class='media-content h4' wx:if='{{user.company}}'>{{user.company}}</view>
 			</view>
 		</view>
 		<image class='arrow-right' src='/images/arrow-right.png' mode='widthFix'></image>
@@ -13,9 +13,9 @@
 
 	<view class='order page-padding'>
 		<view class='order-header flex-between'>
-			<view class='order-heading'>我的订单</view>
+			<view class='order-heading h3'>我的订单</view>
 			<navigator class='order-all' hover-class='none' url='../orders/orders'>
-				<text class='order-all-label'>全部订单</text>
+				<text class='order-all-label h4'>全部订单</text>
 				<image class='arrow-right' src='/images/arrow-right.png' mode='widthFix'></image>
 			</navigator>
 		</view>
@@ -23,7 +23,7 @@
 			<navigator wx:for='{{order}}' wx:key='*this' class='order-item thumb' hover-class='none' url='{{item.url}}'>
 				<view class='pos-rel'>
 					<image class='thumb-img' mode='widthFix' src='{{item.icon}}'></image>
-					<view class='order-flag h5' wx:if='{{item.flag}}'>{{item.flag}}</view>
+					<view class='order-flag h5 {{item.flag === "9+" ? "order-flag9" : ""}}' wx:if='{{item.showFlag && item.flag}}'>{{item.flag}}</view>
 				</view>
 				<view class='thumb-text h5'>{{item.text}}</view>
 				

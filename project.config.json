@@ -11,7 +11,7 @@
 		"checkInvalidKey": true
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.7.0",
+	"libVersion": "2.7.1",
 	"appid": "wx52c4f518bbba52b5",
 	"projectname": "qmx-wechat",
 	"simulatorType": "wechat",

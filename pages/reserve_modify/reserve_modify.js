@@ -26,7 +26,11 @@ Page({
 		let source = e.target.dataset.source;
 		let name = source.name;
 		let index = source.index;
-		this.data.reserve[index].value = value
+		let reserve = `reserve[${index}].value`
+		// this.data.reserve[index].value = value
+		this.setData({
+			[reserve]: value
+		})
 	},
 
 	// 清除表单输入
@@ -117,9 +121,14 @@ Page({
 		console.log(queryData)
 		app.query('/api/bill/buyerInfo', queryData, 'POST').then(res => {
 			console.log('修改成功')
-			wx.redirectTo({
-				url: '/pages/order_detail/order_detail',
+			app.showToast({
+				title: '修改成功'
+			}, 1000).then(() => {
+				wx.navigateBack({
+					delta: 1
+				})
 			})
+			
 		}).catch(err => {
 			console.log('修改失败')
 			wx.redirectTo({
@@ -134,9 +143,11 @@ Page({
 	onLoad: function () {
 		let reserveInfo = app.globalData.reserve;
 		let reserve = this.data.reserve;
+		this.data.id = reserveInfo.id;
 		console.log(reserve)
+
 		reserve.forEach(item => {
-			each(reserveInfo, function(reserveItem) {
+			each(reserveInfo.data, function(reserveItem) {
 				if (item.name === reserveItem.key) {
 					item.value = reserveItem.value
 					return false;
@@ -148,10 +159,4 @@ Page({
 		})
 	},
 
-	/**
-	 * 用户点击右上角分享
-	 */
-	onShareAppMessage: function () {
-
-	}
 })
