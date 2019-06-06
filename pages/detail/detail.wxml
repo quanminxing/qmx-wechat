@@ -103,7 +103,7 @@
 				</button>
 				<view class='modal-share-item' bindtap='creatPoster'>
 					<image class='item-icon' src='/images/friends.png' mode='widthFix'></image>
-					<text class='item-text h2'>生成朋友圈海报</text>
+					<text class='item-text h2'>生成海报</text>
 				</view>
 			</view>
 			<view class='modal-share-footer'>

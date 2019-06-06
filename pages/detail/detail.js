@@ -298,7 +298,7 @@ Page({
 						console.log(res)
 						this.hidePoster();
 						app.showToast({
-							title: '海报已经保存到相册，快去分享吧',
+							title: '海报已经保存到相册',
 							icon: 'none',
 							mask: true
 						}, 2000)
