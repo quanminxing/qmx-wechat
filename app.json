@@ -30,7 +30,10 @@
 		"pages/track/track",
 		"pages/orders/orders",
 		"pages/order_detail/order_detail",
-		"pages/reserve_modify/reserve_modify"
+		"pages/reserve_modify/reserve_modify",
+		"pages/upload_payment/upload_payment",
+		"pages/order_verify/order_verify",
+		"pages/requirement/requirement"
 	],
 	"window": {
 		"backgroundTextStyle": "light",
@@ -64,5 +67,8 @@
 		]
 	},
 	"debug": true,
-	"sitemapLocation": "sitemap.json"
+	"sitemapLocation": "sitemap.json",
+	"networkTimeout": {
+		"request": 10000
+	}
 }

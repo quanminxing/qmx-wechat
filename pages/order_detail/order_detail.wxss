@@ -66,6 +66,9 @@
 	max-width: 600rpx;
 	color: #666;
 }
+.send-footer .requirement-no {
+	padding: 24rpx 0;
+}
 
 .reserve {
 	position: relative;
@@ -81,6 +84,21 @@
 }
 .reserve .modify-text {
 	color: #666;
+}
+
+.requirement-item {
+	word-break: break-all;
+}
+.requirement-no {
+	padding: 62rpx 0 94rpx 0;
+	text-align: center;
+	color: #F4756D;
+}
+.requirement-no .to-requirement {
+	display: inline-block;
+	color: #F15348;
+	text-decoration: underline;
+	font-weight: 600;
 }
 
 .video-media {
@@ -125,16 +143,20 @@
 	color: #666;
 }
 
+.service-phone {
+	background-color: transparent;
+	text-align: center;
+}
+
 .detail-footer {
 	position: fixed;
 	bottom: 0;
 	left: 0;
 	z-index: 9;
 	width: 100vw;
-	height: 50px;
 }
 .detail-footer .paying {
-	height: 100%;
+	height: 50px;
 	padding: 0 24rpx;
 	background-color: #fff;
 }
@@ -154,6 +176,147 @@
 	color: #fff;
 	text-align: center;
 }
+.detail-footer .paying-verify-btn {
+	background-color: #fff;
+	border: 1px solid #F4756D;
+	color: #F15348;
+}
 .footer-height {
-	mpadding-bottom: 50px;
+	padding-bottom: 50px;
+}
+.detail-footer .verify-tip {
+	height: 25px;
+	background-color: #F4756D;
+	color: #fff;
+	font-size: 12px;
+	line-height: 25px;
+	text-align: center;
+}
+
+.payment-ways {
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 999;
+	width: 100vw;
+	height: 100vh;
+	background-color: rgba(0, 0, 0, .5);
+}
+.payment-ways-inner {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100vw;
+	background-color: #fff;
+}
+.payment-ways-item {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 28rpx 24rpx;
+	border-bottom: 1px solid #eee;
+}
+.payment-ways-item .select-icon {
+	flex-shrink: 0;
+	width: 22px;
+	margin: 0 0 0 50rpx;
+}
+.payment-ways-item .way {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+}
+.payment-ways-item .way-icon {
+	flex-shrink: 0;
+	width: 20px;
+	padding: 0 22rpx 0 0;
+}
+.payment-ways-voucher .way-icon {
+	align-self: flex-start;
+}
+.payment-ways-item .way-info-tip {
+	font-size: 12px;
+	line-height: 17px;
+	color: #666;	
+}
+.payment-ways-confirm {
+	height: 50px;
+	border-top: 5px solid #eee;
+	line-height: 50px;
+	text-align: center;
+}
+
+.navbar .transition {
+	transition: 200ms linear;
+}
+.navbar-mark {
+	position: fixed;
+	bottom: 208rpx;
+	right: 72rpx;
+	width: 0;
+	height: 0;
+	z-index: 9;
+	background-color: rgba(0, 0, 0, 0);
+}
+.navbar-mark-unfold {
+	bottom: 0;
+	right: 0;
+	width: 100vw;
+	height: 100vh;
+	background-color: rgba(0, 0, 0, .5);
+}
+.navbar-tab {
+	position: fixed;
+	z-index: 99;
+	border-radius: 50%;
+	background-color: #fff;
+	box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, .16);
+	text-align: center;
+	overflow: hidden;
+}
+.navbar .tab-bg {
+	background-color: #ddd;
+}
+.navbar .tab {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	bottom: 160rpx;
+	right: 24rpx;
+	width: 96rpx;
+	height: 96rpx;
+}
+.navbar .tab-icon {
+	width: 44rpx;
+}
+.navbar .nav-item {
+	display: flex;
+	justify-content: center;
+	align-content: center;
+	flex-wrap: wrap;
+	bottom: 208rpx;
+	right: 24rpx;
+	width: 96rpx;
+	height: 96rpx;
+	transform: scale(0);
+}
+.navbar .nav-item-unfold {
+	transform: scale(1);
+}
+.navbar .nav-item0 {
+	bottom: 520rpx;
+}
+.navbar .nav-item1 {
+	bottom: 400rpx;
+}
+.navbar .nav-item2 {
+	bottom: 280rpx;
+}
+.navbar .nav-item-icon {
+	width: 42rpx;
+}
+.navbar .nav-item-label {
+	width: 100%;
+	font-size: 18rpx;
+	color: 666;
 }

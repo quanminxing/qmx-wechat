@@ -1,0 +1,25 @@
+<!--pages/order_verify/order_verify.wxml-->
+<import src='../../template/template' />
+
+<view class='page page-white'>
+	<view class='verify-info'>
+		<view class='verify-info-result'>
+			<view class='result-text h3'>{{verify.verify === '待审核' ? '审核中' : verify.verify}}</view>
+			<view class='result-tip h4' wx:if='{{verify.verify === "待审核"}}'>汇款正在审核中，请耐心等待</view>
+			<view class='result-tip h4' wx:if='{{verify.verify === "审核未通过"}}'>未通过原因：{{verify.verify_info}}</view>
+		</view>
+		<view class='verify-info-price h4'>
+			<text>{{verify.type}}：</text>
+			<text>￥{{verify.price}}</text>
+		</view>
+	</view>
+	<view class='voucher'>
+		<template is='graph' data='{{img: verify.voucher}}' />
+	</view>
+	<view class='example {{verify.verify === "审核未通过" ? "re-upload-height" : ""}}'>
+		<template is='payreceipt' />
+	</view>
+	<navigator wx:if='{{verify.verify === "审核未通过"}}' class='re-upload' hover-class='none' url='../upload_payment/upload_payment?order_id={{verify.order_id}}&type={{verify.type}}&price={{verify.price}}'>
+		<text>重新上传</text>
+	</navigator>
+</view>

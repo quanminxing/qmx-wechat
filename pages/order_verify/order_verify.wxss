@@ -1,0 +1,41 @@
+/* pages/order_verify/order_verify.wxss */
+@import '../../template/template';
+
+.verify-info-result {
+	padding: 14rpx 24rpx;
+	background-color: #FDF4F4;
+	/* line-height: 27px; */
+	color: #F15348;
+}
+.verify-info-result .result-text {
+	font-weight: 600;
+	padding: 8rpx 0;
+}
+.verify-info-result .result-tip {
+	padding: 8rpx 0;
+	color: #F4756D;
+}
+.verify-info-price {
+	padding: 24rpx 24rpx 16rpx 24rpx;
+}
+.voucher {
+	padding: 0 24rpx 40rpx 24rpx;
+}
+.example {
+	padding: 0 0 24rpx 0;
+}
+
+.re-upload {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100vw;
+	height: 50px;
+	background-color: #F4756D;
+	line-height: 50px;
+	text-align: center;
+	color: #fff;
+}
+.re-upload-height {
+	padding: 0 0 62px 0;
+}

@@ -9,6 +9,28 @@ Page({
 	data: {
 		pageShow: false,
 		pageErr: false,
+		sideNav: {
+			fold: true,
+			nav: [
+				{
+					icon: '../../images/home_press-black.png',
+					label: '首页',
+					classname: 'nav-item1',
+					url: '/pages/find/index'
+				},
+				{
+					icon: '../../images/dsp_press-black.png',
+					label: '样片库',
+					classname: 'nav-item2',
+					url: '/pages/videos/videos'
+				}, {
+					icon: '../../images/wd_press-black.png',
+					label: '我的',
+					classname: 'nav-item3',
+					url: '/pages/account/index'
+				}
+			]
+		},
 		detail: {
 			id: null,
 			sale_status: '',
@@ -61,6 +83,22 @@ Page({
 				value: ''
 			}
 		],
+		requirement: [
+			{
+				key: 'product_name',
+				label: '宝贝名称',
+				value: ''
+			}, {
+				key: 'product_url',
+				label: '宝贝链接',
+				value: ''
+			}, {
+				key: 'product_scale',
+				label: '视频比例',
+				value: ''
+			}
+		],
+		showRequirement: true,
 		video: {
 			short_image: '',
 			video_name: '',
@@ -141,6 +179,21 @@ Page({
 		],
 		regard: [],
 		pay: true,  // 控制重复点击付款
+		latestPayment: {},
+		payment: {},
+		paymentWay: false
+	},
+
+	// 子导航
+	sideNavToggle() {
+		this.setData({
+			'sideNav.fold': !this.data.sideNav.fold
+		})
+	},
+	sideNavHide() {
+		this.setData({
+			'sideNav.fold': true
+		})
 	},
 
 	// 修改预留信息
@@ -154,51 +207,102 @@ Page({
 		})
 	},
 
-	// 点击去付款
-	toPay(e) {
-		console.log('点击支付')
-		if (!this.data.pay) return
-		console.log('可以支付')
-		this.data.pay = false
-		let payData = {
-			openid: app.globalData.openid,
-			bill_id: e.currentTarget.dataset.bill_id,
-			pay_type: e.currentTarget.dataset.settle.slice(-2)
-		}
-		console.log('支付请求信息payData')
-		console.log(payData)
-		app.query('/api/pay/prepay', payData, 'POST').then(res => {
-			console.log('支付返回res')
-			console.log(res)
-			let data = res.data.data;
-			wx.requestPayment({
-				timeStamp: data.timeStamp + '',
-				nonceStr: data.nonceStr,
-				package: data.package,
-				signType: data.signType,
-				paySign: data.paySign,
-				success: res => {
-					this.data.pay = true
-					console.log(res)
-					console.log('支付成功')
-				},
-				fail: err => {
-					this.data.pay = true
-					console.log(err)
-					console.log('支付失败')
-				}
-			})
-		}).catch(err => {
-			console.log(err)
-			console.log('支付失败')
-			this.data.pay = true
+	// 点击去付款，显示付款方式
+	showPaymentWays(e) {
+		let paymentInfo = e.currentTarget.dataset
+		this.setData({
+			payment: {
+				order_id: paymentInfo.order_id,
+				sale_status: paymentInfo.sale_status,
+				pay_type: paymentInfo.pay_type,
+				pay_price: paymentInfo.pay_price
+			},
+			paymentWay: true
 		})
 	},
+	hidePaymentWays() {
+		this.setData({
+			paymentWay: false
+		})
+	},
+
+	// 选定支付方式并支付
+	toPay(e) {
+		const payment = {
+			wechat: () => {  // 微信支付
+				let payData = {
+					openid: app.globalData.openid,
+					bill_id: this.data.payment.order_id,
+					pay_type: this.data.payment.sale_status.slice(-2)
+				}
+				console.log('支付请求信息payData')
+				console.log(payData)
+				app.query('/api/pay/prepay', payData, 'POST').then(res => {
+					console.log('支付返回res')
+					console.log(res)
+					let data = res.data.data;
+					let payData = {
+						timeStamp: data.timeStamp + '',
+						nonceStr: data.nonceStr,
+						package: data.package,
+						signType: data.signType,
+						paySign: data.paySign,
+					}
+					console.log(payData)
+					wx.requestPayment({
+						timeStamp: data.timeStamp + '',
+						nonceStr: data.nonceStr,
+						package: data.package,
+						signType: data.signType,
+						paySign: data.paySign,
+						success: res => {
+							console.log(res)
+							console.log('支付成功')
+						},
+						fail: err => {
+							console.log(err)
+							console.log('支付失败')
+						}
+					})
+				}).catch(err => {
+				})
+			},
+			voucher: () => {  // 对公付款
+				let payment = this.data.payment;
+				console.log(payment)
+				wx.navigateTo({
+					url: `../upload_payment/upload_payment?order_id=${payment.order_id}&type=${payment.pay_type}&price=${payment.pay_price}`
+				})
+			}
+		}
+		let paymentWay = e.currentTarget.dataset.payment_way;
+		if (!!paymentWay) {
+			payment[paymentWay]()
+			this.hidePaymentWays()
+		}
+	},
+
 
 	getPrice(price) {
 		let p = price * 1;
 		if (!!p) return '￥' + p.toFixed(2)
 		return ''
+	},
+
+	// 视频比例label提示
+	getScaleLabel(scale) {
+		const scaleLabel = {
+			'16:9': '(横版)',
+			'16：9': '(横版)',
+			'3:4': '(竖版)',
+			'3：4': '(竖版)',
+			'1:1': '(方形)', 
+			'1：1': '(方形)',
+			'9:16': '(竖版)',
+			'9：16': '(竖版)'
+		}
+
+		return scaleLabel[scale]
 	},
 
 	// 获取订单数据
@@ -209,46 +313,57 @@ Page({
 				let details = res.data.data;
 				let send = this.data.send;
 				let reserve = this.data.reserve;
+				let requirement = this.data.requirement;
 				let order = this.data.order;
 				let refund = this.data.refund;
 				let video = this.data.video;
 				console.log(details)
+
 				send.forEach(item => {
-					item.value = details[item.key] || item.value
+					if (item.key === 'address') return
+					item.value = details[item.key] || ''
 				})
 
 				reserve.forEach(item => {
-					item.value = details[item.key] || item.value
+					item.value = details[item.key] || ''
+					
 				})
 
-				order.forEach(item => {
-					item.value = item.key.search(/price/) > -1 ? this.getPrice(details[item.key]) : details[item.key];
-					if(details.pay_info) {
-						let payInfo = details.pay_info;
+				requirement.forEach(item => {
+					item.value = details[item.key] || '';
+					if (item.key === 'product_scale' && !!item.value) {
+						item.value += this.getScaleLabel(item.value)
+					}
+				})
+
+				if (details.settle_status === '全款') {
+					order[3].tip = '未支付'
+				} else {
+					order[4].tip = '未支付'
+					order[5].tip = '未支付'
+				}
+				order.forEach((item, index) => {
+					let payInfo = details.pay_info;
+
+					item.value = item.key.search(/price/) > -1 ? this.getPrice(details[item.key]) : (details[item.key] || '');
+					
+					if (index >= 7 && payInfo.length > 0) {
 						payInfo.forEach(payItem => {
-							if(item.key === payItem.type) {
-								item.value = formatTime(new Date(payItem.end_time))
+							if (!!payItem.end_time && payItem.type === item.key) {
+								item.value = payItem.end_time;
+								if (payItem.type === '全款') {
+									order[3].tip = ''
+								} else if (payItem.type === '定金') {
+									order[4].tip = ''
+								} else if (payItem.type === '尾款') {
+									order[5].tip = ''
+								}
 							}
 						})
 					}
 				})
-				let pay_status = details.pay_status;
-				order[3].tip = ''
-				order[4].tip = ''
-				order[5].tip = ''
-				if (details.settle_status === '定金+尾款') {
-					order[5].value = this.getPrice(details.price - details.earnest_price);
-					if (pay_status === '待付款' || pay_status === '未付款') {
-						order[4].tip = '未支付'
-						order[5].tip = '未支付'
-					} else if (pay_status === '已支付定金') {
-						order[5].tip = '未支付'
-					}
-				} else {
-					if (pay_status === '待付款' || pay_status === '未付款') {
-						order[3].tip = '未支付'
-					}
-				} 
+				let tail_price = ((details.price - details.earnest_price) * 1).toFixed(2) || ''
+				order[5].value = details.settle_status === '定金+尾款' ? '￥' +tail_price : '';
 
 				refund.forEach(item => {
 					if (item.key.search(/price/) > -1) {
@@ -258,14 +373,14 @@ Page({
 					}
 				})
 
-				let payInfo = details.pay_info
-				payInfo.forEach(item => {
-					if (item.pay_type === '定金') {
-						order[8].value = item.pay_time || ''
-					} else if (item.pay_type === '尾款') {
-						order[9].value = item.pay_time || ''
-					}
-				})
+				let latestPaymentInfo = details.pay_info[0] || {}
+				let latestPayment = {
+					pay_id: latestPaymentInfo.id || '',
+					order_id: details.id || '',
+					sale_status: details.sale_status || '',
+					pay_type: latestPaymentInfo.type || '',
+					pay_verify: latestPaymentInfo.verify || ''
+				}
 
 				for (let key in video) {
 					video[key] = details[key]
@@ -279,13 +394,16 @@ Page({
 						settle_status: details.settle_status,
 						price: details.price,
 						earnest_price: details.earnest_price || '',
-						tail_price: ((details.price - details.earnest_price) * 1).toFixed(2) || ''
+						tail_price,
 					},
 					send,
 					reserve,
+					requirement,
+					showRequirement: (details.sale_status === '待沟通' || details.sale_status === '需求沟通中' || details.sale_status === '待支付定金' || details.sale_status === '已支付定金' || details.sale_status === '待支付全款' || details.sale_status === '已支付全款' || details.sale_status === '待寄送样品') ? true : false,
 					order,
 					refund,
 					video,
+					latestPayment
 				})
 
 				resolve();

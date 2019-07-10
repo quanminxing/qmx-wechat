@@ -1,5 +1,6 @@
 /* pages/detail/detail.wxss */
 @import '../../style/common.wxss';
+@import '../../template/template.wxss';
 
 .summary-video video {
 	width: 100vw;

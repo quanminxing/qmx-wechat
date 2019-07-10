@@ -65,7 +65,13 @@ Page({
 				}]
 			}
 		],
-		videos: []
+		videos: [],
+		waterfallImgs: [],
+		waterfallDatas: [[], []],
+		colWidth: 171,
+		colsHeight: [0, 0],
+		waterfallShow: false,
+		imgLoadIndex: -1
 	},
 
 	/**
@@ -86,8 +92,10 @@ Page({
 				}
 			})
 			this.data.videos.push(...videosData)
+			this.data.waterfallImgs.push(...this.getWaterfallImgs(videos))
 			this.setData({
-				videos: this.data.videos
+				videos: this.data.videos,
+				waterfallImgs: this.data.waterfallImgs
 			})
 			return new Promise(resolve => {
 				resolve(videos)
@@ -95,6 +103,32 @@ Page({
 		}).catch(err => {
 
 		})
+	},
+
+
+	getWaterfallImgs(datas) {
+		let waterfallImgs = datas.map(item => {
+			return {
+				imgUrl: item.waterfall_image,
+				heading: item.name,
+				content: '样片价格：￥' + item.price,
+				linkUrl: `../detail/detail?video_id=${item.id}&classify_id=${item.classify_id}`
+			}
+		})
+
+		return waterfallImgs
+	},
+
+	waterfallImgLoad(e) {
+		console.log('9999999999999999999999999999')
+		console.log(e.currentTarget.dataset.index)
+		let dataset = e.currentTarget.dataset;
+		
+		let index = ++this.data.imgLoadIndex;
+		app.drawWaterfall(this.data.colWidth, this.data.colsHeight, e.detail, dataset.datas, index, this.data.waterfallImgs.length, this.data.waterfallDatas, this)
+	
+		// let index = ++this.data.imgLoadIndex;
+		// app.drawWaterfall(this.data.colWidth, this.data.colsHeight, e.detail, dataset.datas, index, this.data.waterfallImgs.length, this.data.waterfallDatas, this)
 	},
 
 	// 限制字数
@@ -135,6 +169,10 @@ Page({
 
 			_search.pageNum = 1;
 			this.data.videos = []
+			this.data.waterfallImgs = [];
+			this.data.colsHeight = [0, 0]
+			this.data.waterfallDatas = [[], []]
+			this.data.imgLoadIndex = -1;
 			this.queryList().then(() => {
 				wx.pageScrollTo({
 					scrollTop: 0,
@@ -191,7 +229,11 @@ Page({
 			category_id,
 		}
 		
-		this.data.videos = []
+		this.data.videos = [];
+		this.data.waterfallImgs = [];
+		this.data.colsHeight = [0, 0]
+		this.data.waterfallDatas = [[], []]
+		this.data.imgLoadIndex = -1
 		this.queryList().then(res => {
 			wx.pageScrollTo({
 				scrollTop: 0,
@@ -205,7 +247,6 @@ Page({
 	 * 生命周期函数
 	 */
 	onLoad: function () {
-		console.log('load88888888888888888888888')
 		app.loading();
 		let selectName = null;
 		let selectCategory = app.globalData.tabBarParam.sample;
@@ -268,18 +309,20 @@ Page({
 					classify_id: item.classify_id
 				}
 			})
+			
 			this.setData({
 				pageShow: true,
 				pageErr: false,
 				'itemize[1].label': selectName || '品类',
 				'itemize[1].sub': categorySub,
 				'itemize[2].sub': usageSub,
-				videos: videosData
+				videos: videosData,
+				waterfallImgs: this.getWaterfallImgs(videos)
 			})
 			if(!!selectCategory) {
 				app.globalData.tabBarParam = {}
 			}
-			wx.hideLoading()
+			
 
 		}).catch(err => {
 			console.log(err)

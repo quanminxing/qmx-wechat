@@ -3,24 +3,3 @@
 <view class='container'>
 	<image wx:for='{{businessImgs}}' wx:key='{{index}} + "business"' src='{{item}}' mode='widthFix'></image>
 </view>
-
-
-
-<!-- <view class="intro-title">小程序的业务介绍</view>
-
-<view class="time">时间：2018.11.18</view>
-<view class="box-content">
-  <text class="text-box">
-杭州全民星网络科技发展有限公司以短视频内容为主要载体，为电商平台及商家打通流量与交易转化的生态链路，淘系流量获取已超10亿。
-  </text>
-  <text class="text-box">
-全民星以短视频内容为核心的生态体系：全案整合营销、明星入淘、头图短视频、海外博主带货网红营销、PGC直播轻综艺、音乐、超模街拍、淘宝达人、品牌TVC、IP栏目。
-  </text>
-  <text class="text-box">
-  全民星与阿里巴巴、天下网商、淘宝天下、湖南卫视、浙江卫视、米未传媒、芒果TV、有赞、豆瓣、Pando等公司建立了在招商、内容创作、内容分发、艺人明星、海外红人等方面的深度合作关系，集合了人气明星、国际超模、海外红人等众多资源，并实现与淘系流量玩法的无缝衔接，通过底层内容完善整个内容生态流量与交易链路的打通。
-  
-  </text>
-  <text class="text-box">
-  优秀团队的成员来自于阿里巴巴集团和湖南卫视。
-  </text>
-</view> -->

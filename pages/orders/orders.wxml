@@ -1,6 +1,6 @@
 <!--pages/orders/orders.wxml-->
 <import src='../../template/template' />
-<view class='page page-white' hidden='{{!pageShow}}'>
+<view class='page page-white' hidden='{{!pageShow}}' bindtap='test'>
 	<block wx:if='{{pageErr}}'>
 		<template is='page-err' />
 	</block>
@@ -38,15 +38,39 @@
 						<view class='orders-item-status {{item.sale_status === "交易成功" ? "order-successful" : ""}} h4'>{{item.sale_status}}</view>
 					</navigator>
 					<view class='orders-item-footer'>
+						<navigator class='requirement-btn order-btn float-r' wx:if='{{item.showRequirement && !item.product_name && (item.sale_status === "待沟通" || item.sale_status === "需求沟通中" || item.sale_status === "已支付定金" || item.sale_status === "已支付全款")}}' hover-class='none' url='../requirement/requirement?order_id={{item.id}}'>填写需求简表</navigator>
 						<view wx:if='{{item.sale_status === "待支付定金" || item.sale_status === "待支付尾款" || item.sale_status === "待支付全款"}}' class='paying flex-between'>
-							<view wx:if='{{item.sale_status === "待支付定金"}}' class='paying-left paying-price'>定金：￥{{item.earnest_price}}</view>
-							<view wx:if='{{item.sale_status === "待支付尾款"}}' class='paying-left paying-price'>尾款：￥{{item.tail_price}}</view>
-							<view wx:if='{{item.sale_status === "待支付全款"}}' class='paying-left paying-price'>全款：￥{{item.price}}</view>
-							<view class='paying-right order-btn paying-btn' bindtap='toPay' data-bill_id='{{item.id}}' data-settle='{{item.sale_status}}'>去付款</view>
+							<block wx:if='{{item.sale_status === "待支付定金"}}'>
+								<view class='paying-left paying-price'>定金:￥{{item.earnest_price}}</view>
+								<view class='paying-right'>
+									<navigator class='requirement-btn order-btn' wx:if='{{item.showRequirement && !item.product_name}}' hover-class='none' url='../requirement/requirement?order_id={{item.id}}'>填写需求简表</navigator>
+									<navigator wx:if='{{item.pay_type === "定金"}}'  class='paying-right order-btn paying-verify-btn' hover-class='none' url='../order_verify/order_verify?pay_id={{item.pay_id}}&order_id={{item.id}}'>{{item.pay_verify === '待审核' ? '审核中' : item.pay_verify}}</navigator>
+									<view wx:else class='paying-right order-btn paying-btn' bindtap='showPaymentWays' data-order_id='{{item.id}}' data-sale_status='{{item.sale_status}}' data-pay_type='定金' data-pay_price='{{item.earnest_price}}'>去付款</view>
+								</view>
+							</block>
+							<block wx:if='{{item.sale_status === "待支付尾款"}}'>
+								<view class='paying-left paying-price'>尾款:￥{{item.tail_price}}</view>
+								<view class='paying-right'>
+									<navigator class='requirement-btn order-btn' wx:if='{{item.showRequirement && !item.product_name}}' hover-class='none' url='../requirement/requirement?order_id={{item.id}}'>填写需求简表</navigator>
+									<navigator wx:if='{{item.pay_type === "尾款"}}'  class='order-btn paying-verify-btn' hover-class='none' url='../order_verify/order_verify?pay_id={{item.pay_id}}&order_id={{item.id}}'>{{item.pay_verify === '待审核' ? '审核中' : item.pay_verify}}</navigator>
+									<view wx:else class='order-btn paying-btn' bindtap='showPaymentWays' data-order_id='{{item.id}}' data-sale_status='{{item.sale_status}}' data-pay_type='尾款' data-pay_price='{{item.tail_price}}'>去付款</view>
+								</view>
+							</block>
+							<block wx:if='{{item.sale_status === "待支付全款"}}'>
+								<view class='paying-left paying-price'>全款:￥{{item.price}}</view>
+								<view class='paying-right'>
+									<navigator class='requirement-btn order-btn' wx:if='{{item.showRequirement && !item.product_name}}' hover-class='none' url='../requirement/requirement?order_id={{item.id}}'>填写需求简表</navigator>
+									<navigator wx:if='{{item.pay_type === "全款"}}'  class='order-btn paying-verify-btn' hover-class='none' url='../order_verify/order_verify?pay_id={{item.pay_id}}&order_id={{item.id}}'>{{item.pay_verify === '待审核' ? '审核中' : item.pay_verify}}</navigator>
+									<view wx:else class='order-btn paying-btn' bindtap='showPaymentWays' data-order_id='{{item.id}}' data-sale_status='{{item.sale_status}}' data-pay_type='全款' data-pay_price='{{item.price}}'>去付款</view>
+								</view>
+								
+							</block>
 						</view>
-						<navigator wx:if='{{item.sale_status === "待寄送样品"}}' class='sending' hover-class='none' url='../order_detail/order_detail?order_id={{item.id}}'>
-							<view class='sending-address order-btn sending-btn'>查看样品寄送地址</view>
-						</navigator>
+						<view class='sending' wx:if='{{item.sale_status === "待寄送样品"}}'>
+							<navigator class='requirement-btn order-btn' wx:if='{{item.showRequirement && !item.product_name}}' hover-class='none' url='../requirement/requirement?order_id={{item.id}}'>填写需求简表</navigator>
+							<navigator class='sending-address order-btn sending-btn' hover-class='none' url='../order_detail/order_detail?order_id={{item.id}}'>查看寄送地址</navigator>
+						</view>
+						
 					</view>
 				</view>
 			</block>
@@ -55,6 +79,42 @@
 				<template is='data-empty' data='{{dataEmptyIcon: "/images/empty-bill.png", dataEmptyText: "目前还没有相关订单"}}' />
 			</block>
 		</view>
+		<view class='payment-ways' bindtap='hidePaymentWays' hidden='{{!paymentWay}}'>
+			<view class='payment-ways-inner'>
+				<view class='payment-ways-wechat payment-ways-item' catchtap='toPay' data-payment_way='wechat'>
+				<view class='way'>
+					<image class='way-icon' src='../../images/wechat-pay.png' mode='widthFix'></image>
+					<view class='way-info'>
+						<view class='way-label h2'>微信支付</view>
+					</view>
+				</view>
+				<image class='select-icon' mode='widthFix' src='{{paymentWay.way === "wechat" ? "../../images/checked.png" : "../../images/check.png"}}'></image>
+			</view>
+			<view class='payment-ways-voucher payment-ways-item' catchtap='toPay' data-payment_way='voucher'>
+				<view class='way'>
+					<image class='way-icon' src='../../images/bank-pay.png' mode='widthFix'></image>
+					<view class='way-info'>
+						<view class='way-info-label h2'>对公付款<text class='way-info-tip'>（金额超过3000元，请选择此项）</text></view>
+						<view class='way-info-tip' style='color: #999;'>需要上传银行付款回单</view>
+					</view>
+				</view>
+				<image class='select-icon' mode='widthFix' src='{{paymentWay.way === "voucher" ? "../../images/checked.png" : "../../images/check.png"}}'></image>
+			</view>
+			<view class='payment-ways-confirm h2' catchtap='hidePaymentWays'>取消</view>
+			</view>
+		</view>
 	</view>
 
+	<view class='navbar'>
+		<view class='navbar-mark transition {{sideNav.fold ? "" : "navbar-mark-unfold"}}' bindtap='sideNavHide'></view>
+		<view class='tab navbar-tab {{sideNav.fold ? "" : "tab-bg"}}' bindtap='sideNavToggle' >
+			<image class='tab-icon' src='{{sideNav.fold ? "../../images/nav-icon.png" : "../../images/close.png"}}' mode='widthFix'></image>
+		</view>
+		<view class='nav'>
+			<navigator open-type='switchTab' class='nav-item navbar-tab transition {{sideNav.fold ? "" : "nav-item-unfold"}} {{sideNav.fold ? "" : "nav-item" + index}}' wx:for='{{sideNav.nav}}' wx:key='{{index + "sideNav"}}' hover-class='none' url='{{item.url}}'>
+				<image class='nav-item-icon' src='{{item.icon}}' mode='widthFix'></image>
+				<view class='nav-item-label'>{{item.label}}</view>
+			</navigator>
+		</view>
+	</view>
 </view>

@@ -18,6 +18,12 @@ Page({
 		video: {},
 		baseInfo: [],
 		sample: [],
+		waterfallImgs: [],
+		waterfallDatas: [[], []],
+		colWidth: 171,
+		colsHeight: [0, 0],
+		waterfallShow: false,
+		imgLoadIndex: -1,
 		sampleMore: true,
 		isFav: false,
 		showShare: false,
@@ -67,6 +73,25 @@ Page({
 		this.onLoad(event)
 	},
 
+	getWaterfallImgs(datas) {
+		let waterfallImgs = datas.map(item => {
+			return {
+				imgUrl: item.waterfall_image,
+				heading: item.name,
+				content: '￥' + item.price,
+				linkUrl: `../detail/detail?video_id=${item.id}&classify_id=${item.classify_id}`
+			}
+		})
+
+		return waterfallImgs
+	},
+
+	waterfallImgLoad(e) {
+		let dataset = e.currentTarget.dataset;
+		let index = ++this.data.imgLoadIndex;
+		app.drawWaterfall(this.data.colWidth, this.data.colsHeight, e.detail, dataset.datas, index, this.data.waterfallImgs.length, this.data.waterfallDatas, this)
+	},
+
 	viewMore() {
 		app.loading()
 		sample_search.pageNum = ++sample_search.pageNum; 
@@ -86,10 +111,18 @@ Page({
 					classify_id: item.classify_id
 				}
 			}))
+			
+			this.data.waterfallImgs.push(...this.getWaterfallImgs(res.data.data))
 			this.setData({
-				sample: this.data.sample
+				sample: this.data.sample,
+				waterfallImgs: this.data.waterfallImgs
 			})
-			wx.hideLoading()
+			
+			
+			if (res.data.data.length === 0) {
+				wx.hideLoading()
+			}
+			
 		}).catch(err => {
 			console.log(err)
 		})
@@ -418,6 +451,7 @@ Page({
 					}
 				})
 
+
 				if (!!infos[4].data.result && infos[4].data.result.length !== 0) {
 					isFav = true;
 				}
@@ -428,10 +462,13 @@ Page({
 					video,
 					baseInfo,
 					sample,
+					waterfallImgs: this.getWaterfallImgs(sample),
 					isFav,
 					sampleMore
 				})
-				wx.hideLoading()
+				if(sample.length === 0) {
+					wx.hideLoading()
+				}
 			}).catch(err => {
 				console.log('讲解、err')
 				console.log(err)

@@ -5,6 +5,7 @@ image {
 	width: 32rpx;
 	height: auto;
 	vertical-align: middle;
+	font-size: 0
 }
 
 /* page: black 和 white */
@@ -56,7 +57,6 @@ page {
 	font-size: 18px;
 	font-weight: 500;
 	line-height: 25px;
-	padding: 8rpx 0 0 0;
 }
 .h3 {
 	font-size: 16px;

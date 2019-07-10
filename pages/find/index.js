@@ -1,5 +1,5 @@
 //index.js
-const { each } = require('../../utils/util.js');
+const { each } = require('../../utils/util');
 const { query } = require('../../common')
 
 var app = getApp()
@@ -46,6 +46,7 @@ Page({
       path: '/pages/find/index'
     }
   },
+	
   onReady: function () {
     const that = this;
     wx.showLoading({
@@ -132,14 +133,6 @@ Page({
 
 		})
 
-    /*
-    wx.getSystemInfo({
-        success: function (res) {
-            that.setData({
-                sliderOffset: res.windowWidth / that.data.tabs.length * that.data.activeIndex
-            });
-        }
-    });*/
   },
 
 	showWebView(e) {
@@ -178,7 +171,5 @@ Page({
       activeIndex: e.currentTarget.id
     });
   },
-
-	
 
 });

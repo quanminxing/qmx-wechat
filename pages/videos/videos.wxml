@@ -37,10 +37,16 @@
 
 		<!-- 列表 -->
 		<view class='content bgc-101010'>
-			<block wx:if='{{videos.length === 0}}'>
+			<block wx:if='{{waterfallImgs.length === 0}}'>
 				<template is='data-empty' />
 			</block>
-			<view class='videos waterfall' wx:else>
+			<block wx:else>
+				<template is='waterfall' data='{{waterfallImgs, waterfallDatas, waterfallShow, colWidth}}' />
+			</block>
+			
+			<!-- <view wx:if='{{videos.length === 0}}'>{{videos.length}}</view> -->
+
+			<!-- <view class='videos waterfall'>
 				<view class='list-left'>
 					<navigator class='list-item' wx:for='{{videos}}' wx:for-item='video' wx:key='{{video.waterfall_image + index}}' wx:if='{{index % 2 === 0}}' hover-class='none' url='../detail/detail?video_id={{video.id}}&classify_id={{video.classify_id}}'>
 						<image class='list-item-img' src='{{video.waterfall_image}}' mode='widthFix'></image>
@@ -59,7 +65,7 @@
 						</view>
 					</navigator>
 				</view>
-			</view>
+			</view> -->
 		</view>
 	</view>
 </view>

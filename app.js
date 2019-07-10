@@ -4,10 +4,8 @@ App({
 		userInfo: null,
 		phone: '17034642312',
 		tabBarParam: {},  // switchTab 跳转参数
-		//domain: 'http://192.168.2.183',
-		//domain:'http://localhost:7001',
-		domain: 'https://admin.qmxpower.com',
-		// domain: 'https://test.qmxpower.com'
+		// domain: 'https://admin.qmxpower.com',
+		domain: 'https://test.qmxpower.com'
 	},
 
 
@@ -16,12 +14,13 @@ App({
 	 */
 	// toast 提示
 	showToast(toast, time = 2000) {
+		toast.duration = time
 		return new Promise(resolve => {
 			wx.showToast(toast);
-			setTimeout(() => {
-				wx.hideToast();
-				resolve();
-			}, time)
+			// setTimeout(() => {
+			// 	wx.hideToast();
+			// 	resolve();
+			// }, time)
 		})  
 	},
 
@@ -155,6 +154,7 @@ App({
 	getUserInfo() {
 		wx.getSetting({
 			success: res => {
+				console.log('用户信息')
 				console.log(res)
 				if (res.authSetting['scope.userInfo']) {
 					// 已授权
@@ -177,6 +177,44 @@ App({
 				}
 			}
 		})
+	},
+
+	// 瀑布流布局: 先将图片渲染到页面，从而触发image的bindload事件获得图片宽高信息，再重新计算渲染
+	drawWaterfall(colWidth, colsHeight, imgDetail, imgData, index, imgsLength, waterfallDatas, page) {
+		console.log('瀑布流')
+		console.log(index)
+		console.log(imgsLength)
+		
+		if (colsHeight[0] > colsHeight[1]) {
+			colsHeight[1] += colWidth * imgDetail.height / imgDetail.width;
+			waterfallDatas[1].push(imgData);
+		} else {
+			colsHeight[0] += colWidth * imgDetail.height / imgDetail.width;
+			waterfallDatas[0].push(imgData);
+		}
+
+		if (!page.data.waterfallShow) {
+			page.setData({
+				waterfallShow: true
+			})
+		}
+		if(index == (imgsLength - 1)) {
+		// if (imgsLength == waterfallDatas[0] + waterfallDatas[1]) {
+			page.setData({
+				colsHeight,
+				waterfallDatas
+			})
+			setTimeout(() => {
+				wx.hideLoading()
+			}, 2000)
+			console.log('最后一个')
+			console.log(waterfallDatas)
+		} else if (index % 6 === 0) {
+			page.setData({
+				waterfallDatas
+			})
+		}
+		
 	},
 
 	/**
@@ -241,7 +279,6 @@ App({
     const that = this;
     wx.login({
       success: function (e) {
-				console.log(e.code)
         let opts = {
           url: that.globalData.domain + '/api/login',
           data: {
@@ -250,9 +287,9 @@ App({
           method: 'POST',
           header: { 'Content-Type': 'application/x-www-form-urlencoded' },
           success: function (res) {
+						console.log('登录信息：openid')
 						console.log(res)
             that.globalData.openid = res.data.openid;
-						console.log(that)
             typeof cb == "function" && cb(res.data.openid);
           },
           fail: function (res) {

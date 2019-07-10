@@ -8,6 +8,7 @@
           <button class="" bindtap="sendmail">提交</button>
         </view>
         <view class="sep"></view>
- 
+
 </view>
+
 

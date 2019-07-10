@@ -50,3 +50,67 @@
 		</view>
 	</view>
 </template>
+
+<!-- 瀑布流布局 -->
+<template name='waterfall'>
+	<view class='waterfall-hide' style='height: 0; overflow: hidden;'>
+		<image class='waterfall-hide' mode='widthFix' wx:for='{{waterfallImgs}}' wx:key='{{index + "waterfallImgs"}}' src='{{item.imgUrl}}' bindload='waterfallImgLoad' data-datas='{{item}}' data-index='{{index}}'></image>
+	</view>
+	<view class='waterfall'>
+		<view wx:if='{{waterfallShow}}' wx:for='{{waterfallDatas}}' wx:for-item='waterfallCol' wx:for-index='waterfallColIndex' wx:key='{{"waterfallcol" + waterfallColIndex}}' class='waterfall-col' style='width:{{colWidth * 2 + "rpx"}}'>
+			<navigator class='waterfall-item' wx:for='{{waterfallCol}}' wx:for-item='waterfallItem' wx:for-index='waterfallItemIndex' wx:key='{{"waterfallItem" + waterfallItemIndex}}' hover-class='none' url='{{waterfallItem.linkUrl}}'>
+				<image class='waterfall-item-img' src='{{waterfallItem.imgUrl}}' mode='widthFix'></image>
+				<view class='waterfall-item-caption'>
+					<view class='waterfall-item-heading'>{{waterfallItem.heading}}</view>
+					<view class='waterfall-item-content' wx:if='{{waterfallItem.content}}'>{{waterfallItem.content}}</view>
+					<view class='waterfall-item-extra' wx:if='{{waterfallItem.extra}}'>{{waterfallItem.extra}}</view>
+				</view>
+			</navigator>
+		</view>
+	</view>
+</template>
+
+<!-- graph -->
+<template name='graph'>
+	<view class='graph'>
+		<view class='graph-heading' wx:if='{{heading}}'>{{heading}}</view>
+		<image class='graph-img' src='{{img}}'></image>
+		<view class='graph-preview' bindtap='previewGraph' data-img='{{img}}'>
+			<image class='graph-preview-icon' src='../../images/full-screem.png' mode='widthFix'></image>
+			<text class='graph-preview-text'>全屏观看</text>
+		</view>
+	</view>
+</template>
+
+<!-- payreceipt -->
+<template name='payreceipt'>
+	<view class='payreceipt'>
+		<view class='payreceipt-info'>
+			<view class='payreceipt-info-header'>
+				<view class='payreceipt-info-heading'>{{infoHeading ? infoHeading : '收款账号'}}</view>
+				<view class='payreceipt-info-copy' bindtap='copyPayment' data-info='户名：杭州全民星网络科技发展有限公司；开户行：工商银行杭州科创支行；账户：1202220909900128297'>
+					<image class='copy-icon' src='../../images/copy.png' mode='widthFix'></image>
+					<text class='copy-text'>复制信息</text>
+				</view>
+			</view>
+			<view class='payreceipt-info-contetn'>
+				<view class='payreceipt-info-item'>
+				 	<view class='item-label'>户名：</view>
+					<view class='item-value'>杭州全民星网络科技发展有限公司</view>
+				</view>
+				<view class='payreceipt-info-item'>
+				 	<view class='item-label'>开户行：</view>
+					<view class='item-value'>工商银行杭州科创支行</view>
+				</view>
+				<view class='payreceipt-info-item'>
+				 	<view class='item-label'>账户：</view>
+					<view class='item-value'>1202220909900128297</view>
+				</view>
+			</view>
+		</view>
+		<view class='payreceipt-graph'>
+			<view class='payreceipt-graph-heading'>示例图片如下：</view>
+			<template is='graph' data='{{img: "https://file.qmxpower.com/image/1561443811000bank_record_example.jpg", heading}}' />
+		</view>
+	</view>
+</template>
