@@ -32,7 +32,7 @@
 	color: #999;
 }
 .requirement-scale .selected-icon {
-	width: 32rpx;
+	width: 48rpx;
 }
 
 .tips {

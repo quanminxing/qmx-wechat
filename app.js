@@ -4,8 +4,8 @@ App({
 		userInfo: null,
 		phone: '17034642312',
 		tabBarParam: {},  // switchTab 跳转参数
-		// domain: 'https://admin.qmxpower.com',
-		domain: 'https://test.qmxpower.com'
+		domain: 'https://admin.qmxpower.com',
+		// domain: 'https://test.qmxpower.com'
 	},
 
 

@@ -123,12 +123,12 @@ Page({
 		
 		if (submit) {
 			let url = submitData.product_url;
-			let index = url.search('￥后到')
+			let index = url.search('后到')
 			if(index > 0) {
 				if (url.search('淘♂寳♀') > 0) {
-					submitData.product_url = url.replace(url.slice(index + 3), '淘宝')
+					submitData.product_url = url.replace(url.slice(index + 2), '淘宝')
 				} else if (url.search('手机天猫') > 0) {
-					submitData.product_url = url.replace(url.slice(index + 3), '手机天猫')
+					submitData.product_url = url.replace(url.slice(index + 2), '手机天猫')
 				}
 			}
 			
