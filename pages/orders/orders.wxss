@@ -89,6 +89,7 @@
 .orders-item-footer .sending-btn {
 	display: inline-block;
 	width: 96px;
+	margin: 0 0 0 24rpx;
 	border: 1px solid #999;
 	color: #666;
 }

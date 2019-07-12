@@ -269,6 +269,7 @@ App({
 			});
 		})  
   },
+
 	// 错误监听
 	onError(err) {
 		console.log(err)
