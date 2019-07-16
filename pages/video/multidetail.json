@@ -1,6 +1,0 @@
-  {
-    "usingComponents": {
-      "tx-video": "plugin://txvideo/video"
-    },
-    "navigationBarTitleText": "选择样片"
-  }

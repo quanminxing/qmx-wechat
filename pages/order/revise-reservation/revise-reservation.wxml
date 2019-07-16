@@ -1,0 +1,23 @@
+<import src='../../../template/template' />
+
+<view class='page page-white' hidden='{{!pageShow}}'>
+	<block wx:if='{{pageErr}}'>
+		<template is='page-err' />
+	</block>
+
+	<view wx:else class='reserve'>
+		<view class='reserve-item' wx:for='{{reserve}}' wx:key='*this'>
+			<view class='necessity'>{{item.necessity ? "* " : ""}}</view>
+			<view class='label h3'>{{item.label}}</view>
+			<view class='value'>
+				<input class='h3 value-input' type='{{item.type ? item.type : "text"}}' value='{{item.value}}' placeholder='{{item.placeholder}}' placeholder-class='placeholder' data-source='{{item}}' bindinput='formInput'></input>
+			</view>
+			<image class='clear' src='/images/clear.png' mode='widthFix' bindtap='clear' data-index='{{item.index}}' hidden='{{!item.value}}'></image>
+		</view>
+	</view>
+
+	<view class='confirm'>
+		<button class='confirm-btn' bindtap='confirm'>确认</button>
+	</view>
+
+</view>

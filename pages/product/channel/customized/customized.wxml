@@ -1,0 +1,32 @@
+<!--index.wxml-->
+<view class='page'>
+	<view class='page-err pos-rel' wx:if='{{pageErr}}' bindtap='reload'>
+		<view class='block-center'>
+			<image class='page-err-icon' src='/images/reload.png' mode='widthFix'></image>
+			<view class='page-err-text h3'>网络异常，轻触屏幕重新加载</view>
+		</view>
+	</view>
+
+	<view class='page-content' wx:else>
+		<view class='videos waterfall'>
+			<view class='list-left'>
+				<navigator class='list-item' wx:for='{{videos}}' wx:for-item='video' wx:key='{{video.waterfall_image + index}}' wx:if='{{index % 2 === 0}}' hover-class='none' url='../detail/detail?video_id={{video.id}}&classify_id={{video.classify_id}}'>
+					<image class='list-item-img' src='{{video.waterfall_image}}' mode='widthFix'></image>
+					<view class='list-item-caption'>
+						<view class='list-item-title h4'>{{video.name}}</view>
+						<view class='list-item-price'>样片价格：{{video.price}}</view>
+					</view>
+				</navigator>
+			</view>
+			<view class='list-right'>
+				<navigator class='list-item' wx:for='{{videos}}' wx:for-item='video' wx:key='{{video.waterfall_image + index}}' wx:if='{{index % 2 !== 0}}' hover-class='none' url='../detail/detail?video_id={{video.id}}&classify_id={{video.classify_id}}'>
+					<image class='list-item-img' src='{{video.waterfall_image}}' mode='widthFix'></image>
+					<view class='list-item-caption'>
+						<view class='list-item-title h4'>{{video.name}}</view>
+						<view class='list-item-price'>样片价格：{{video.price}}</view>
+					</view>
+				</navigator>
+			</view>
+		</view>
+	</view>
+</view>

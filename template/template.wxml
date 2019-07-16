@@ -114,3 +114,19 @@
 		</view>
 	</view>
 </template>
+
+<!-- login -->
+<template name='login'>
+	<view class='login'>
+		<view class='login-inner'>
+			<view class='login-header'>登陆或注册</view>
+			<view class='login-content'>登录后，享受完整功能</view>
+			<view class='login-footer'>
+				<view class='login-btn'>
+					<image class='login-btn-icon' mode='widthFix' src=''></image>
+					<text class='login-btn-label'>微信账号快速登陆</text>
+				</view>
+			</view>
+		</view>
+	</view>
+</template>

@@ -1,0 +1,86 @@
+.arrow-right {
+	flex-shrink: 0;
+	width: 32rpx;
+}
+.page-padding {
+	padding: 0 24rpx;
+}
+
+.userinfo {
+	margin: 64rpx 0 86rpx 0;
+}
+.userinfo .arrow-right {
+	margin: 0 0 0 20rpx;
+}
+.userinfo .media {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+}
+.userinfo .media-img {
+	width: 126rpx;
+	height: 126rpx;
+	margin: 0 20rpx;
+	border-radius: 50%;
+	overflow: hidden;
+}
+.userinfo .media-heading {
+	margin: 0 0 20rpx 0;
+	font-size: 20px;
+	font-weight: 500;
+	line-height: 28px;
+}
+
+.order-content {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin: 28rpx 0 46rpx 0;
+}
+.order-item {
+	text-align: center;
+}
+.order-all-label {
+	vertical-align: middle;
+	color: #999;
+}
+.order-item .pos-rel {
+	display: inline-block;
+}
+.order-content .thumb-img {
+	width: 56rpx;
+}
+.order-content .thumb-text {
+	padding: 16rpx 0 0 0;
+	color: #ddd;
+}
+.order-content .order-flag {
+	position: absolute;
+	top: -8px;
+	right: -8px;
+	width: 16px;
+	height: 16px;
+	line-height: 16px;
+	background-color: #F15348;
+	border-radius: 50%;
+	color: #ddd;
+}
+.order-content .order-flag9 {
+	width: 24px;
+	/* padding: 0 10rpx; */
+	border-radius: 8px;
+}
+.account {
+	/* padding: 0 24rpx 28rpx 24rpx; */
+	/* margin: 0 0 28rpx 0; */
+	/* border-bottom: 20rpx solid #2b2b2b; */
+}
+.account-item, .service-item {
+	padding: 10rpx 0;
+}
+.service-item button {
+	padding: 0;
+	background-color: transparent;
+	border-radius: 0;
+	color: #fff;
+}

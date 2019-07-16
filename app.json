@@ -1,39 +1,27 @@
 {
 	"pages": [
-		"pages/find/index",
-		"pages/videos/videos",
-		"pages/find/search",
-		"pages/find/business",
-		"pages/find/flow",
-		"pages/index/login",
-		"pages/my/fav",
-		"pages/my/log",
-		"pages/my/bill",
-		"pages/brief/index",
-		"pages/brief/confirm",
-		"pages/brief/success",
-		"pages/video/index",
-		"pages/video/detail",
-		"pages/video/multidetail",
-		"pages/video/confirm",
-		"pages/account/index",
-		"pages/account/info",
-		"pages/account/setting",
-		"pages/account/contact",
-		"pages/account/feedback",
-		"pages/account/webview",
-		"pages/prices/prices",
-		"pages/customized/customized",
-		"pages/detail/detail",
-		"pages/search/search",
-		"pages/fav/fav",
-		"pages/track/track",
-		"pages/orders/orders",
-		"pages/order_detail/order_detail",
-		"pages/reserve_modify/reserve_modify",
-		"pages/upload_payment/upload_payment",
-		"pages/order_verify/order_verify",
-		"pages/requirement/requirement"
+		"pages/index/index",
+		"pages/product/channel/index/index",
+		"pages/product/channel/customized/customized",
+		"pages/product/detail/detail",
+		"pages/product/store/videos/videos",
+		"pages/product/store/search/search",
+		"pages/order/confirm/confirm",
+		"pages/order/demand/demand",
+		"pages/order/receipt/upload/upload",
+		"pages/order/receipt/verify/verify",
+		"pages/order/revise-reservation/revise-reservation",
+		"pages/order/success/success",
+		"pages/customer/my/my",
+		"pages/customer/myorders/detail/detail",
+		"pages/customer/myorders/orders/orders",
+		"pages/customer/fav/fav",
+		"pages/customer/footmark/footmark",
+		"pages/customer/info/infos/infos",
+		"pages/customer/info/setting/setting",
+		"pages/mix/about/about",
+		"pages/mix/business/business",
+		"pages/mix/contact/contact"
 	],
 	"window": {
 		"backgroundTextStyle": "light",
@@ -47,21 +35,21 @@
 		"selectedColor": "#fff",
 		"list": [
 			{
-				"iconPath": "./images/home.png",
-				"selectedIconPath": "./images/home_press.png",
-				"pagePath": "pages/find/index",
+				"iconPath": "/images/home.png",
+				"selectedIconPath": "/images/home_press.png",
+				"pagePath": "pages/index/index",
 				"text": "首页"
 			},
 			{
-				"iconPath": "./images/dsp.png",
-				"selectedIconPath": "./images/dsp_press.png",
-				"pagePath": "pages/videos/videos",
+				"iconPath": "/images/dsp.png",
+				"selectedIconPath": "/images/dsp_press.png",
+				"pagePath": "pages/product/store/videos/videos",
 				"text": "样片库"
 			},
 			{
-				"iconPath": "./images/wd.png",
-				"selectedIconPath": "./images/wd_press.png",
-				"pagePath": "pages/account/index",
+				"iconPath": "/images/wd.png",
+				"selectedIconPath": "/images/wd_press.png",
+				"pagePath": "pages/customer/my/my",
 				"text": "我的"
 			}
 		]
@@ -69,6 +57,6 @@
 	"debug": true,
 	"sitemapLocation": "sitemap.json",
 	"networkTimeout": {
-		"request": 10000
+		"request": 6000
 	}
 }

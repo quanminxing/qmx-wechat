@@ -33,90 +33,13 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 11,
+			"current": 0,
 			"list": [
 				{
 					"id": -1,
-					"name": "订单",
-					"pathName": "pages/orders/orders",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": 1,
-					"name": "详情页",
-					"pathName": "pages/detail/detail",
-					"query": "video_id=513&classify_id=3",
-					"scene": null
-				},
-				{
-					"id": 2,
-					"name": "详情页-海报",
-					"pathName": "pages/detail/detail",
-					"query": "scene=video_id:513,classify_id:3",
-					"scene": 1012
-				},
-				{
-					"id": -1,
-					"name": "详情页-海报",
-					"pathName": "pages/orders/orders",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": 4,
-					"name": "详情页-订单",
-					"pathName": "pages/order_detail/order_detail",
-					"query": "order_id=532",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "预留信息-修改",
-					"pathName": "pages/refund_modify/refund_modify",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "反馈",
-					"pathName": "pages/account/feedback",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "样片库",
-					"pathName": "pages/videos/videos",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "上传回款单",
-					"pathName": "pages/upload_payment/upload_payment",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "审核结果",
-					"pathName": "pages/order_verify/order_verify",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "订单列表",
-					"pathName": "pages/orders/orders",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": 11,
-					"name": "需求简表",
-					"pathName": "pages/requirement/requirement",
-					"query": "order_id=532",
+					"name": "route-test",
+					"pathName": "pages/index/index",
+					"query": "test='rest'",
 					"scene": null
 				}
 			]

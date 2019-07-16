@@ -1,0 +1,103 @@
+<!--pages/video/confirm.wxml 下单页 -->
+<view class='container'>
+	<view wx:if='{{tvc}}' class="tvc">
+		<view class="tvc-header">
+			您选择了TVC、视频定制服务，您可以选择以下两种方式与我们联系：
+		</view>
+		<view class="sep"></view>
+		<view class="tvc-contact phone-call" bindtap='phoneCall' data-phoneNum='17034642312'>
+			1) 拨打电话：拨打咨询电话<text class="tvc-phone"> 17034642312 </text>直接与我们联系
+		</view>
+		<view class="tvc-contact stay-info">
+			2) 预留信息：按下面信息格式填写您的信息，客户经理会在24小时内与您联系沟通需求
+		</view>
+	</view>
+
+	<view wx:if='{{!tvc}}' class='header'>
+		<view class='h3'>{{video.name}}</view>
+	</view>
+
+	<view class='content'>
+		<view wx:if='{{!tvc}}' class='detail bd-line'>
+			<view class='detail-item clear h4' wx:for='{{baseInfo}}' wx:key='{{item.name}} + indexx'>
+			
+				<view class='detail-item-left'>{{item.label}}</view>
+				<view class='detail-item-right'>{{item.name}}</view>
+			</view>
+		</view>
+
+		<view class='brief'>
+			<view class='brief-item' wx:for='{{formInfo}}' wx:key='*this' bindtap='{{item.type === "picker" ? "showWorkerPicker" : ""}}'>
+				<view class='brief-required'>{{item.necessity ? '*' : ''}}</view>
+				<view class='brief-tag brief-info'>{{item.label}}</view>
+					<input class='brief-input brief-info {{item.type === "picker" ? "brief-picker" : ""}}' type='{{item.type}}' placeholder-class='brief-input-placehoder' placeholder='{{item.placeholder}}' data-variables='{{item}}' value='{{item.value}}' focus='{{item.focus}}' cursor-spacing='{{cursorSpacing}}' bindinput='formInput' cursor='{{cursor}}' disabled='{{item.type === "picker"}}'></input>
+					<view class='brief-picker-arrow' wx:if='{{item.type === "picker"}}'>
+						<image class='arrow-icon' src='/images/arrow-right.png' mode='widthFix'></image>
+					</view>
+			</view>
+		</view>
+	</view>
+
+	<view class='worker-picker' hidden='{{!workerPicker}}' bindtap='hideWorkerPicker' data-close='{{true}}'>
+		<view class='worker-picker-container pos-rel'>
+			<view class='worker-picker-close' data-close='{{true}}'>
+				<image class='close-icon' src='/images/close.png' mode='widthFix' data-close='{{true}}'></image>
+			</view>
+			<view class='worker-picker-header'>
+				<view class='worker-picker-title h3'>请选择你的推荐人</view>
+				<view class='worker-picker-searchbar'>
+					<icon class='searchbar-icon' type='search' size='14'></icon>
+					<input class='searchbar-input h3' type='text' placeholder='请输入你想要搜索的推荐人' bindinput='searchWorker'></input>
+				</view>
+			</view>
+			<view class='worker-picker-content'>
+				<view class='worker-picker-empty h3' wx:if='{{workers.length === 0}}'>没有对应的推荐人</view>
+				<block wx:else>
+					<!-- 所有推荐人 -->
+					<scroll-view wx:if='{{!workerPickerSearch}}' class='worker-picker-list h3' scroll-y>
+						<view wx:for='{{workers}}' wx:key='*this' class='worker-picker-item {{briefInfo.work_id == item.id ? "worker-picker-selected" : ""}}' data-id='{{item.id}}' data-name='{{item.cname}}' bindtap='pickWorker'>
+							<view class='list-left'>
+								<text>{{item.id}}</text>
+								<text style='padding: 0 30rpx;'>{{item.cname}}</text>
+							</view>
+							<view class='list-right' wx:if='{{briefInfo.work_id == item.id}}'>
+								<image class='selected-icon' src='/images/correct.png' mode='widthFix'></image>
+							</view>
+						</view>
+					</scroll-view>
+					<!-- 搜索的推荐人 -->
+					<block wx:else>
+						<view class='worker-picker-empty h3' hidden='{{workerSearch.length !== 0}}'>没有对应的推荐人</view>
+						<scroll-view hidden='{{workerSearch.length === 0}}' class='worker-picker-list h3' scroll-y>
+							<view wx:for='{{workerSearch}}' wx:key='*this' class='worker-picker-item {{briefInfo.work_id == item.id ? "worker-picker-selected" : ""}}' data-id='{{item.id}}' data-name='{{item.cname}}' bindtap='pickWorker'>
+								<view class='list-left'>
+									<text>{{item.id}}</text>
+									<text style='padding: 0 30rpx;'>{{item.cname}}</text>
+								</view>
+								<view class='list-right' wx:if='{{briefInfo.work_id == item.id}}'>
+									<image class='selected-icon' src='/images/correct.png' mode='widthFix'></image>
+								</view>
+							</view>
+						</scroll-view>
+					</block>
+				</block>
+			</view>
+		</view>
+	</view>
+	
+	<view class='footer'>
+		<!-- 空标签兼容iphonex -->
+		<view class='toolbar-bottom'></view>
+		<block wx:if='{{!tvc}}'>
+			<view class='promise'>服务承诺：提交订单后，客户经理会在24小时内与您联系</view>
+			<view class='toolbar'>
+				<view class='total-price confirm-info'>总计：<text class='price'>￥{{video.price}}</text></view>
+				<view class='confirm confirm-info' bindtap='submit'>确认订单</view>
+			</view>
+		</block>
+		<view wx:else class="toolbar">
+			<view class='confirm confirm-info' bindtap='submit'>确认</view>
+		</view>
+		
+	</view>
+</view>

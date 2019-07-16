@@ -1,5 +1,5 @@
 /**app.wxss**/
-@import 'style/weui.wxss';
+@import './css/weui.wxss';
 /* image */
 image {
 	width: 32rpx;

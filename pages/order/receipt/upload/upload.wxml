@@ -1,0 +1,32 @@
+<import src='../../../../template/template.wxml' />
+
+<view class='page page-white'>
+	<view class='payment-tip'>请将对应付款金额汇款至以下收款账号，再上传付款回单</view>
+	<view class='payment'>
+		<view class='payment-info h4'>
+			<text>{{payment.type}}：</text>
+			<text>￥{{payment.price}}</text>
+		</view>
+		<view class='payment-voucher'>
+			<view wx:if='{{!payment.voucher}}' class='payment-voucher-add'>
+				<view class='block-center' bindtap='uploadVoucher'>
+					<image src='/images/add.png' class='add-icon' mode='widthFix'></image>
+					<view class='add-text'>上传图片大小请控制在10M以内</view>
+				</view>
+			</view>
+			<view wx:else class='payment-voucher-show'>
+				<template is='graph' data='{{img: payment.voucher}}' />
+				<view class='re-upload' bindtap='uploadVoucher'>
+					<image class='re-upload-icon' src='/images/re-upload.png' mode='widthFix'></image>
+					<text class='re-upload-text'>重新上传</text>
+				</view>
+			</view>
+		</view>
+		<view class='payment-example'>
+			<template is='payreceipt' />
+		</view>
+	</view>
+	<view class='payment-submit h3 {{submit ? "" : "payment-submit-disabled"}}' bindtap='submitVoucher'>
+		<text>提交</text>
+	</view>
+</view>

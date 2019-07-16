@@ -1,8 +1,0 @@
-  {
-    "usingComponents": {
-      "tx-video": "plugin://txvideo/video"
-    },
-    "navigationBarTitleText": "视频详情",
-    "navigationBarBackgroundColor": "#101010",
-    "navigationBarTextStyle": "white"
-  }

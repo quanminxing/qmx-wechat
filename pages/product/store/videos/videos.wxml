@@ -1,0 +1,71 @@
+<import src='../../../../template/template' />
+
+<view class='page' wx:if='{{pageShow}}'>
+	<block wx:if='{{pageErr}}'>
+		<template is='page-err' />
+	</block>
+
+	<view class='page-content' wx:else>
+		<!-- 头部：搜索+分类 -->
+		<view class='header bgc-101010'>
+			<!-- 搜索 -->
+			<view class='searchbar bgc-101010'>
+				<navigator class='search' hover-class='none' url='../search/search'>
+					<image class='search-icon' src='/images/search.png'></image>
+					<text class='search-placeholder h4'>{{search}}</text>
+				</navigator>
+			</view>
+
+			<!-- 分类 -->
+			<view class='itemize color-fff bgc-101010 pos-rel'>
+				<view wx:for='{{itemize}}' wx:for-item='itemize' wx:for-index='itemizeIndex' wx:key='{{itemize.className + itemizeIndex}}' class='{{itemize.className}} itemize-item' bindtap='showItemizeSub' data-index='{{itemizeIndex}}'>
+					<view class='itemize-item-label'>
+						<text class='itemize-item-text h3 {{itemize.show ? "itemize-show" : ""}}'>{{itemize.label}}</text>
+						<image class='itemize-item-icon' src='{{itemize.icon}}'></image>
+					</view>
+					<view class='itemize-sub {{itemize.show ? "show" : ""}}'>
+						<view class='itemize-sub-mark' hidden='{{!itemize.show}}'></view>
+						<view class='itemize-sub-item' wx:for='{{itemize.sub}}' wx:for-item='itemizeSub' wx:key='{{itemizeSub + index}}' data-origin='itemizeSub' data-itemize='{{itemizeIndex}}' data-itemizeSub='{{index}}'>
+							
+							<text class='itemize-sub-text h4 {{itemizeSub.selected ? "itemize-show" : ""}}' data-origin='itemizeSub' data-itemize='{{itemizeIndex}}' data-itemizeSub='{{index}}'>{{itemizeSub.label}}</text>
+							<image class='itemize-sub-icon' src='/images/correct.png' mode='widthFix' wx:if='{{itemizeSub.selected}}' data-origin='itemizeSub' data-itemize='{{itemizeIndex}}' data-itemizeSub='{{index}}'></image>
+						</view>
+					</view>
+				</view>
+			</view>
+		</view>
+
+		<!-- 列表 -->
+		<view class='content bgc-101010'>
+			<block wx:if='{{waterfallImgs.length === 0}}'>
+				<template is='data-empty' />
+			</block>
+			<block wx:else>
+				<template is='waterfall' data='{{waterfallImgs, waterfallDatas, waterfallShow, colWidth}}' />
+			</block>
+			
+			<!-- <view wx:if='{{videos.length === 0}}'>{{videos.length}}</view> -->
+
+			<!-- <view class='videos waterfall'>
+				<view class='list-left'>
+					<navigator class='list-item' wx:for='{{videos}}' wx:for-item='video' wx:key='{{video.waterfall_image + index}}' wx:if='{{index % 2 === 0}}' hover-class='none' url='../detail/detail?video_id={{video.id}}&classify_id={{video.classify_id}}'>
+						<image class='list-item-img' src='{{video.waterfall_image}}' mode='widthFix'></image>
+						<view class='list-item-caption'>
+							<view class='list-item-title h4'>{{video.name}}</view>
+							<view class='list-item-price'>样片价格：￥ {{video.price}}</view>
+						</view>
+					</navigator>
+				</view>
+				<view class='list-right'>
+					<navigator class='list-item' wx:for='{{videos}}' wx:for-item='video' wx:key='{{video.waterfall_image + index}}' wx:if='{{index % 2 !== 0}}' hover-class='none' url='../detail/detail?video_id={{video.id}}&classify_id={{video.classify_id}}'>
+						<image class='list-item-img' src='{{video.waterfall_image}}' mode='widthFix'></image>
+						<view class='list-item-caption'>
+							<view class='list-item-title h4'>{{video.name}}</view>
+							<view class='list-item-price'>样片价格：￥ {{video.price}}</view>
+						</view>
+					</navigator>
+				</view>
+			</view> -->
+		</view>
+	</view>
+</view>

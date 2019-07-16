@@ -1,183 +1,213 @@
 //app.js
 App({
 	globalData: {
-		userInfo: null,
-		phone: '17034642312',
+		userInfo: {},
+		register: true,
+		servicePhone: '17034642312',
 		tabBarParam: {},  // switchTab 跳转参数
-		domain: 'https://admin.qmxpower.com',
-		// domain: 'https://test.qmxpower.com'
+		// domain: 'https://admin.qmxpower.com',
+		domain: 'https://test.qmxpower.com'
 	},
 
+	/* ----------start-------
 
-	/**
-	 * 全局函数
-	 */
+		以下代码根据1.4.0版本需求修改或新增
+		除此之外，其他所有页面和代码均为1.4.0版本以前的
+	
+	*/
+
 	// toast 提示
-	showToast(toast, time = 2000) {
-		toast.duration = time
+	showToast(tip, duration = 2000, mask=true, icon='none',image='') {
+
 		return new Promise(resolve => {
-			wx.showToast(toast);
-			// setTimeout(() => {
-			// 	wx.hideToast();
-			// 	resolve();
-			// }, time)
-		})  
+			let options = {
+				title: tip,
+				duration,
+				mask,
+				icon,
+				success() {
+					resolve()
+				}
+			}
+			if (!!image) {
+				options.image = image
+			}
+		})
+		wx.showToast(options)
 	},
 
 	// loading 提示
-	loading(title = '加载中', mark = true) {
-		wx.showLoading({
-			title,
-			mark,
+	loading(title = '加载中', mask = true) {
+		return new Promise(resolve => {
+			wx.showLoading({
+				title,
+				mask,
+				success() {
+					resolve()
+				}
+			})
 		})
+		
 	},
 
-	// request 请求
-	query(url, data = null, method = 'GET', responseType) {
+	// request 封装
+	query(url, method='GET', data='', responseType='') {
 		return new Promise((resolve, reject) => {
-			let timer = null;
 			let queryData = {
 				url: this.globalData.domain + url,
 				method,
-				success: res => {
-					clearTimeout(timer)
-					if(!!res.data.status ) {
-						if (res.data.status === 200) {
-							console.log('数据请求成功')
-							console.log(res)
-							resolve(res)
-						} else {
-							
-							console.log(res)
-							reject(res)
-						}
+				success(res) {
+					let resData = res.data;
+					if (resData.status === 200) {
+						resolve(resData.data)
 					} else {
-						if (res.statusCode === 200) {
-							console.log('数据请求成功')
-							resolve(res)
-						} else {
-							console.log('数据请求出错res')
-							reject(res)
-						}
-						
+						reject(resData)
 					}
 				},
-				fail: err => {
-					clearTimeout(timer)
-					console.log('数据请求出错err')
-					console.log(err)
+				fail(err) {
 					reject(err)
 				}
 			}
-			if (!!data) {
-				queryData.data = data
-			}
-			if (method === 'POST') {
-				queryData.header = {
-					'content-type': 'application/json'
-				}
-			}
-			if (!!responseType) {
-				queryData.responseType = responseType
-			}
-			let requesTask = wx.request(queryData);
 
-			timer = setTimeout(() => {
-				requesTask.abort();
-				console.log('数据请求网络超时')
-				reject('网络超时');
-			}, 5000);
-		})		
-	},
+			if(!!data) queryData.data = data;
+			if(!!responseType) queryData.responseType = responseType
 
-	// 登录
-	appLogin() {
-		wx.login({
-			success: res => {
-				console.log(res)
-				this.query('/api/login', { js_code: res.code }, 'POST')
-				.then(res => {
-					console.log('login 返回 res 信息')
-					console.log(res)
-					if (res.statusCode === 200) {
-						this.globalData.openid = res.data.openid
-					}
-					if (this.loginCallback) {
-						console.log('login 登陆成功后执行的回调')
-						this.loginCallback(res)
-					}
-					if (this.userInfoCallback) {
-						console.log('获取用户信息成功后执行的回调')
-						this.userInfoCallback(res)
-					}
-
-					console.log('globalData 信息：openid')
-					console.log(this.globalData)
-				})
-				.catch(err => {
-					console.log(err)
-				})
-			}
+			wx.request(queryData)
 		})
 	},
 
-	// 获取用户信息
-	callUserInfo() {
-		const getInfo = () => {
-			wx.getUserInfo({
-				withCredentials: true,
-				success: res => {
-					this.globalData.userInfo = res.userInfo
-					console.log('globalData 信息：userInfo')
-					console.log(this.globalData)
-				},
-				fail: err => {
-					console.log(err)
-				}
-			})
-		}
-		wx.checkSession({
-			success: () => {
-				// 登录有效
-				console.log('登录有效')
-				getInfo();
-			},
-			fail: () => {
-				// 登录失效
-				console.log('登录失效')
-				this.userInfoCallback = function () {
-					getInfo();
-				}
-			}
-		})	
-	},
-	getUserInfo() {
-		wx.getSetting({
-			success: res => {
-				console.log('用户信息')
-				console.log(res)
-				if (res.authSetting['scope.userInfo']) {
-					// 已授权
-					console.log('已授权')
-					this.callUserInfo();
-				} else {
-					// 未授权
-					console.log('未授权')
-					wx.showModal({
-						title: '授权提示',
-						content: '尚未进行授权，请点击确定进入授权页面进行授权',
-						success: res => {
-							if (res.confirm) {
-								wx.navigateTo({
-									url: '/pages/index/login',
-								})
+	// 登陆
+	appLogin(shareCode) {
+		let domain = this.globalData.domain;
+		const login = () => {
+			return new Promise((resolve, reject) => {
+				wx.login({
+					timeout: 6000,
+					success: (loginRes) => {
+						wx.request({
+							url: domain + '/api/loginByWechat',
+							method: 'POST',
+							data: {
+								js_code: loginRes.code,
+								shareCode: shareCode || ''
+							},
+							success: (res) => {
+								let resData = res.data;
+								if (resData.status === 200) {
+									let userInfo = resData.data;
+									this.globalData.userInfo = userInfo
+									wx.setStorage({
+										key: 'userInfo',
+										data: userInfo,
+									})
+									resolve(resData.data)
+								} else {
+									reject()
+								}
+							},
+							fail: () => {
+								reject()
 							}
-						}
+						})
+					},
+					fail: (loginErr) => {
+						console.log(loginErr)
+						reject()
+					}
+				})
+			})
+		};
+		const logincb = (sessionToken) => {
+			if(this.logincb) {
+				this.logincb(sessionToken)
+			}
+		}
+		const sharecb = (shareCode) => {
+			if (!!this.sharecb) {
+				this.sharecb(shareCode)
+			}
+		}
+
+		return new Promise((resolve, reject) => {
+			let storageUserInfo = wx.getStorageSync('userInfo');
+			console.log('storage 的 userInfo 信息')
+			console.log(storageUserInfo)
+			if (storageUserInfo) {
+				console.log('------------------已登录-------------------------')
+				this.globalData.userInfo = storageUserInfo
+
+				if (!storageUserInfo.user.phone) {
+					// ---------------没有注册手机号: login后才能解密-------------------------
+					login().then(userInfo => {
+
+						this.globalData.register = false;
+
+						sharecb(userInfo.user.shareCode)
+						logincb(userInfo.sessionToken);
+						resolve(userInfo)
+					}).catch(err => {
+
+						this.showToast('网络异常，请检查网络后重试')
+
+						sharecb('')
+						logincb(storageUserInfo.sessionToken);
+						resolve(storageUserInfo)
+						reject()
 					})
+				} else {
+					// ------------------已注册手机号------------------------------
+					this.globalData.register = true;
+
+					sharecb(storageUserInfo.user.shareCode)
+					logincb(storageUserInfo.sessionToken);
+					resolve(storageUserInfo)
 				}
+			} else {
+				console.log('------------------未登陆---------------------------------')
+				login().then(userInfo => {
+					if (!storageUserInfo.user.phone) {
+						// --------------- 没有注册手机号 -------------------------
+						this.globalData.register = false;
+					}
+
+					sharecb(userInfo.user.shareCode)
+					logincb(userInfo.sessionToken);
+					resolve(userInfo)
+				}).catch(err => {
+					
+					this.showToast('网络异常，请检查网络后重试')
+					sharecb('')
+					reject()
+				})
 			}
 		})
 	},
+
+	shareMessage(path, shareCode, params = '', title = '宜拍短视频公共', imageUrl='') {
+		let returnData = {
+			title,
+			path: `${path}?shareCode=${shareCode}`
+		}
+		if (!!params) {
+			for(let key in params) {
+				returnData.path += `&${key}=${params[key]}`
+			}
+		}
+		if(!!imageUrl) {
+			returnData.imageUrl = imageUrl
+		}
+
+		return returnData
+	},
+
+	/* ----------end-------
+	
+		以上代码根据1.4.0版本需求修改或新增
+		除此之外，其他所有页面和代码均为1.4.0版本以前的
+	
+	*/
+
+	
 
 	// 瀑布流布局: 先将图片渲染到页面，从而触发image的bindload事件获得图片宽高信息，再重新计算渲染
 	drawWaterfall(colWidth, colsHeight, imgDetail, imgData, index, imgsLength, waterfallDatas, page) {
@@ -217,15 +247,12 @@ App({
 		
 	},
 
-	/**
-	 * 生命周期函数
-	 */
-  onLaunch: function () {
-		// 登录
-		this.appLogin();
 
-		// 获取用户信息
-		this.getUserInfo();
+  onLaunch: function (e) {
+		console.log(e)
+		let queryParams = e.query
+		this.appLogin(queryParams.shareCode || '').then()
+		
 
 		// 小程序新版本更新提示
 		const updateManager = wx.getUpdateManager();
@@ -253,19 +280,12 @@ App({
 		})
   },
 	
-	/**
-	 * app全局监听函数
-	 */
-
 	// 监听页面不存在
   onPageNotFound(res) {
-		let toast = {
-			title: '该页面不存在，即将跳转到首页！',
-			icon: 'none'
-		}
-		this.showtToast(toast, 1500).then(() => {
+		
+		this.showToast('该页面不存在，即将跳转到首页！', 1500).then(() => {
 			wx.switchTab({
-				url: 'pages/find/index',
+				url: 'pages/index/index',
 			});
 		})  
   },
@@ -274,31 +294,5 @@ App({
 	onError(err) {
 		console.log(err)
 	},
-
-  login(cb){
-    
-    const that = this;
-    wx.login({
-      success: function (e) {
-        let opts = {
-          url: that.globalData.domain + '/api/login',
-          data: {
-            js_code: e.code,
-          },
-          method: 'POST',
-          header: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          success: function (res) {
-						console.log('登录信息：openid')
-						console.log(res)
-            that.globalData.openid = res.data.openid;
-            typeof cb == "function" && cb(res.data.openid);
-          },
-          fail: function (res) {
-            console.log('获取登录信息失败');
-          }
-        }
-        wx.request(opts);
-      }
-    });
-  },
+  
 })

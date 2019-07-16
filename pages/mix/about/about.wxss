@@ -1,0 +1,5 @@
+/* pages/find/business.wxss */
+
+image {
+	width: 100vw;
+}

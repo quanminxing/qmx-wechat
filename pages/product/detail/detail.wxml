@@ -1,0 +1,109 @@
+<!--pages/detail/detail.wxml-->
+<import src='../../../template/template' />
+
+<view class='page {{isScroll ? "" : "no-scroll"}}' hidden='{{!pageShow}}'>
+  <view class='page-err pos-rel' wx:if='{{pageErr}}' bindtap='reload'>
+    <view class='block-center'>
+      <image class='page-err-icon' src='/images/reload.png' mode='widthFix'></image>
+      <view class='page-err-text h3'>网络异常，轻触屏幕重新加载</view>
+    </view>
+  </view>
+
+  <view wx:else class='page-content'>
+    <view class='summary'>
+      <view class='summary-video'>
+        <video src='{{video.url}}' id='videoPlayer' bindplay='playVideo'></video>
+      </view>
+      <view class='summary-caption clear'>
+        <view class="summary-price float-r price-color" hover-class="none" hover-stop-propagation="false">
+          ¥ {{video.price}}
+        </view>
+        <view class="summary-name" hover-class="none" hover-stop-propagation="false">
+          {{video.name}}
+        </view>
+      </view>
+    </view>
+    <view class='base-info'>
+      <view class='base-info-header h3' wx:if='{{video.classify_id != 2}}'>参数说明</view>
+      <view class='base-info-content {{video.classify_id == 2 ? "classify-type" : "no-classify"}}'>
+        <view class='base-info-item clear h4' wx:for='{{baseInfo}}' wx:key='{{item.name}} + indexx'>
+          <view class='item-right float-r'>{{item.name}}</view>
+          <view class='item-left'>{{item.label}}</view>
+        </view>
+      </view>
+    </view>
+    <view class='detail'>
+      <view class='detail-script' wx:if='{{!!video.script_url}}'>
+        <view class='script-header'>产品说明</view>
+        <image class='script-img' src='{{video.script_url}}' mode='widthFix'></image>
+      </view>
+      <view class='detail-sample' wx:if='{{video.classify_id == 2}}'>
+        <view class='sample-header'>参考以下真实客片，精准锁定需求</view>
+        <view class='sample-empty h4' wx:if='{{sample.length === 0}}'>
+          <view>相关真实样片暂未上传</view>
+          <view>若要查看此品类其他真实样片
+            <text class='sample-empty-link' bindtap='toVideos'>点击这里</text>
+          </view>
+        </view>
+        <block wx:else>
+          <template is='waterfall' data='{{waterfallImgs, waterfallDatas, waterfallShow, colWidth}}' />
+          <view class='view-more h3' bindtap='viewMore' hidden='{{!sampleMore}}'>加载更多</view>
+        </block>
+      </view>
+      <view class='detail-tip'>
+        <view class='detail-tip-flow'>
+          <view class='flow-header'>服务流程</view>
+          <view class='flow-contetn'>
+            <image class='flow-img' src='https://file.qmxpower.com/image/20190429180335.png' mode='widthFix'></image>
+          </view>
+        </view>
+        <view class='detail-tip-regard' wx:if='{{!!video.regard.length > 0}}'>
+          <view class='regard-header h3'>短视频制作注意事项</view>
+          <view class='regard-content h4'>
+            <view class='regard-item' wx:for='{{video.regard}}' wx:key='{{index}} + "regard"' wx:if='{{!!item}}'>{{item}}</view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class='toolbar-bottom'></view>
+    <view class='toolbar bgc-101010'>
+      <view class='share toolbar-item' bindtap='showShare'>
+        <image class='share-icon' src='/images/share-icon.png' mode='widthFix'></image>
+        <view class='share-text toolbar-item-text'>分享</view>
+      </view>
+      <view class='fav toolbar-item' bindtap='toggleFav'>
+        <image class='fav-icon' src='{{isFav ? "/images/fav-press.png" : "/images/fav.png"}}' mode='widthFix'></image>
+        <view class='fav-text toolbar-item-text'>{{isFav ? "已" : ""}}收藏</view>
+      </view>
+      <navigator class='place-order toolbar-item h2' bindtap='paceOrder' url="/pages/video/confirm?id={{video.id}}&classify_id={{video.classify_id}}">立即下单</navigator>
+    </view>
+
+    <!-- 分享modal -->
+    <view class='modal-share' hidden='{{!showShare}}'>
+      <view class='modal-share-mark modal-mark' bindtap='hideshare'></view>
+      <view class='modal-share-content'>
+        <button class='modal-share-item' open-type='share'>
+          <image class='item-icon' src='/images/wechat.png' mode='widthFix'></image>
+          <text class='item-text h2'>转发给好友或群聊</text>
+        </button>
+        <view class='modal-share-item' bindtap='creatPoster'>
+          <image class='item-icon' src='/images/friends.png' mode='widthFix'></image>
+          <text class='item-text h2'>生成海报</text>
+        </view>
+      </view>
+      <view class='modal-share-footer'>
+        <view class='share-cancel h2' bindtap='hideshare'>取消</view>
+      </view>
+    </view>
+
+    <!-- 海报poster -->
+    <view class='modal-poster' wx:if='{{showPoster}}'>
+      <view class='modal-poster-mark modal-mark' bindtap='hidePoster'></view>
+      <view class='modal-poster-content center-block' hidden='{{!posterSuccess}}'>
+        <canvas class='poster' canvas-id='friends-poster'></canvas>
+        <button class='save-btn h2' bindtap='saveposter'>立即保存</button>
+      </view>
+    </view>
+  </view>
+
+</view>

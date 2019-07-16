@@ -1,0 +1,76 @@
+.page-content {
+	padding: 0 0 100rpx 0;
+}
+.requirement-item {
+	padding: 0 24rpx;
+}
+.requirement-label {
+	padding: 32rpx 0 24rpx 0;
+}
+.requirement-sign {
+	color: #F15348;
+}
+.requirement-value {
+	padding: 0 0 16rpx 0;
+	border-bottom: 2rpx solid #eee;
+	color: #999;
+}
+.requirement-scale {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	text-align: center;
+}
+.requirement-scale .scale-icon {
+	width: 120rpx;
+}
+.requirement-scale .scale-label {
+	margin: 8rpx 0 0 0;
+	font-size: 10px;
+	color: #999;
+}
+.requirement-scale .selected-icon {
+	width: 48rpx;
+}
+
+.tips {
+	padding: 64rpx 24rpx 140rpx 24rpx;
+}
+.tips-heading {
+	color: #F4756D;
+	font-weight: 500;
+}
+.tips-content {
+	overflow: hidden;
+}
+.tips-item {
+	margin: 16rpx 0;
+	color: #666;
+}
+.tips .view-more {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	padding: 33px 0 0 0;
+	background: linear-gradient(180deg,rgba(255,255,255,0.8) 0%,rgba(255,255,255,1) 65%,rgba(255,255,255,1) 100%);
+	color: #4A9EFF;
+	text-align: center;
+}
+.tips .view-more-icon {
+	width: 22px;
+	margin: 0 8rpx 0 0;
+}
+.tips .view-more-label {
+	vertical-align: middle;
+}
+
+.page-footer .toolbar {
+	background-color: #F4756D;
+	color: #fff;
+	text-align: center;
+	line-height: 100rpx;
+}
+.page-footer .bgc-ccc {
+	background-color: #ccc;
+}
